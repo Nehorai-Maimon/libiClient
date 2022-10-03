@@ -1,0 +1,28 @@
+/* .container {
+    display: flex;
+    justify-content: center;
+} */
+
+.inputs {
+    font-family: 'heebo';
+    font-size: 12px;
+    width: 320px;
+    padding: 7px;
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+
+.inputs:focus {
+    outline: none;
+}
+
+.inputs::placeholder {
+    color: grey
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
