@@ -57,6 +57,17 @@
     justify-content: space-between;
 }
 
+.removeBtn {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center
+}
+
+.removeImg {
+    height: 15px;
+}
+
 textarea {
     font-family: 'heebo';
     font-size: 12px;
