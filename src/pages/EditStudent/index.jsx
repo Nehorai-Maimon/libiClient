@@ -6,6 +6,7 @@ import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
 import styles from "./style.module.css"
 import remove from '../../images/delete.png'
 import student from '../../fakeData'
+import students from '../../fakeData';
 
 
 function EditStudent() {
@@ -15,6 +16,8 @@ function EditStudent() {
     const [contact, setContact] = useState({});
     const [medication, setMedication] = useState({});
 
+
+    const student = students[0]
     //אוביקט מידע על חניך. יתקבל מהשרת
     // const student = {
     //     firstName: "מיכל", lastName: "שגיא", id: "123456789", gender: "נקבה", date: "15/10/1993", phone: "0525000000", email: "michal@gmail.com",

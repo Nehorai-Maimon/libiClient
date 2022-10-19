@@ -4,6 +4,7 @@ import Header from './components/common/Header';
 import Login from './pages/Login';
 import Test from './Test';
 import UserContext from './context/UserContext';
+import EditStudent from './pages/EditStudent';
 
 
 function Layout() {
@@ -29,6 +30,7 @@ function Layout() {
 
                             <Route path="/login" element={<Navigate to="/michal" />} />
                             <Route path="/michal" element={<Test />} />
+                            <Route path="/edit" element={<EditStudent />} />
 
                         </>}
                 </Routes>
