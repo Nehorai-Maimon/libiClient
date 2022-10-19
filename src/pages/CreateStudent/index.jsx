@@ -12,6 +12,8 @@ function CreateStudent() {
     const [data, setData] = useState({});
     const [status, setStatus] = useState(true)
     const [file, setFile] = useState({});
+    const [contact, setContact] = useState({});
+    const [medication, setMedication] = useState({});
     const [listMedication, setListMedication] = useState([{ med: "" },]);
     const [listContact, setListContact] = useState([{ con: "" },]);
 
@@ -23,10 +25,10 @@ function CreateStudent() {
         newList.splice(index, 1);
         setListContact(newList);
         return (
-            delete data[`contactFirstName${index + 1}`],
-            delete data[`contactLastName${index + 1}`],
-            delete data[`contactPhone${index + 1}`],
-            delete data[`relative${index + 1}`])
+            delete data.contact[`contactFirstName${index + 1}`],
+            delete data.contact[`contactLastName${index + 1}`],
+            delete data.contact[`contactPhone${index + 1}`],
+            delete data.contact[`relative${index + 1}`])
     }
 
     const addMedication = () => {
@@ -38,8 +40,8 @@ function CreateStudent() {
         newList.splice(index, 1);
         setListMedication(newList);
         return (
-            delete data[`medication${index + 1}`],
-            delete data[`medicationTime${index + 1}`])
+            delete data.medication[`medication${index + 1}`],
+            delete data.medication[`medicationTime${index + 1}`])
     }
 
     const submit = () => {
@@ -52,6 +54,22 @@ function CreateStudent() {
         const value = event.target.value;
         setData(values => ({ ...values, [name]: value }));
     }
+    const handleChangeDate = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setFile(values => ({ ...values, [name]: value }));
+    }
+    const handleChangeContact = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setContact(values => ({ ...values, [name]: value }));
+    }
+    const handleChangeMedication = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setMedication(values => ({ ...values, [name]: value }));
+    }
+
 
 
     useEffect(() => {
@@ -65,6 +83,16 @@ function CreateStudent() {
         const value = file
         setData(values => ({ ...values, [name]: value }));
     }, [file])
+    useEffect(() => {
+        const name = "contact"
+        const value = contact
+        setData(values => ({ ...values, [name]: value }));
+    }, [contact])
+    useEffect(() => {
+        const name = "medication"
+        const value = medication
+        setData(values => ({ ...values, [name]: value }));
+    }, [medication])
 
 
     const onChangeFile = (e) => {
@@ -81,10 +109,11 @@ function CreateStudent() {
         )
     }
 
+
     return (
         <div>
             <form >
-                <div className={styles.title}>יצירת חניך חדש / עריכת חניך קיים
+                <div className={styles.title}>יצירת חניך חדש
                     <div className={styles.save}>
                         <SwitchBtn label={"סטטוס פעיל"} status={status} setStatus={setStatus} />
                         <button name="submit" className={styles.btn} onClick={() => submit()} >שמירה</button>
@@ -123,10 +152,10 @@ function CreateStudent() {
 
                                                     src={remove} alt={"delete"} />}
                                         </div>
-                                        <Input placeholder={"שם פרטי"} required={true} name={`contactFirstName${index + 1}`} onChange={handleChange} />
-                                        <Input placeholder={"שם משפחה"} required={true} name={`contactLastName${index + 1}`} onChange={handleChange} />
-                                        <Input placeholder={"טלפון"} required={true} name={`contactPhone${index + 1}`} type={"number"} onChange={handleChange} />
-                                        <Select placeholder={"קירבה לחניך"} required={true} options={["אבא", "אמא", "אח", "אחות"]} name={`relative${index + 1}`} onChange={handleChange} />
+                                        <Input placeholder={"שם פרטי"} required={true} name={`contactFirstName${index + 1}`} onChange={handleChangeContact} />
+                                        <Input placeholder={"שם משפחה"} required={true} name={`contactLastName${index + 1}`} onChange={handleChangeContact} />
+                                        <Input placeholder={"טלפון"} required={true} name={`contactPhone${index + 1}`} type={"number"} onChange={handleChangeContact} />
+                                        <Select placeholder={"קירבה לחניך"} required={true} options={["אבא", "אמא", "אח", "אחות"]} name={`relative${index + 1}`} onChange={handleChangeContact} />
 
                                     </>)
                             })}
@@ -140,10 +169,10 @@ function CreateStudent() {
                     <div className={styles.containers}>
                         <div className={styles.container}>
                             <div className={styles.subTitle}>טפסים ואישורים</div>
-                            <File placeholder={"אישור לצילום החניך"} name={"pictures"} onChangeDate={handleChange} onChangeFile={onChangeFile} />
-                            <File placeholder={"אבחון פסיכולוגי"} name={"psychological"} onChangeDate={handleChange} onChangeFile={onChangeFile} />
-                            <File placeholder={"אבחון פסיכיאטרי"} name={"psychiatric"} onChangeDate={handleChange} onChangeFile={onChangeFile} />
-                            <File placeholder={"אישור רווחה"} name={"welfare certificate"} onChangeDate={handleChange} onChangeFile={onChangeFile} />
+                            <File placeholder={"אישור לצילום החניך"} name={"pictures"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
+                            <File placeholder={"אבחון פסיכולוגי"} name={"psychological"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
+                            <File placeholder={"אבחון פסיכיאטרי"} name={"psychiatric"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
+                            <File placeholder={"אישור רווחה"} name={"welfare certificate"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
 
 
 
@@ -179,10 +208,10 @@ function CreateStudent() {
                                                     <img className={styles.removeImg} onClick={() => removeMedication(index)}
                                                         src={remove} alt={"delete"} />}
                                             </div>
-                                            <Input placeholder={"שם התרופה"} required={true} name={`medication${index + 1}`} onChange={handleChange} />
+                                            <Input placeholder={"שם התרופה"} required={true} name={`medication${index + 1}`} onChange={handleChangeMedication} />
                                             <Input placeholder={"שעת נטילה"} required={true} name={`medicationTime${index + 1}`}
                                                 onFocus={(e) => (e.target.type = "time")}
-                                                onBlur={(e) => (e.target.type = "text")} onChange={handleChange} />
+                                                onBlur={(e) => (e.target.type = "text")} onChange={handleChangeMedication} />
                                         </>
                                     )
                                 })}
