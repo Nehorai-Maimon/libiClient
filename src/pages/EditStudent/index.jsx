@@ -158,26 +158,7 @@ function EditStudent() {
                                 <div className={styles.subTitle}>פרטי איש קשר</div>
                             </div>
 
-                            {/* {student.contact.map((e, index) => {
-                                return (
-                                    <>
-                                        <div className={styles.removeBtn}>
 
-                                            {student.contact.length > 1 &&
-                                                <div key={index} className={styles.subTitle}>איש קשר מספר {index + 1}</div>}
-                                            {student.contact.length - 1 == index && index > 0 &&
-                                                <img className={styles.removeImg} onClick={() => removeContact(index)}
-
-                                                    src={remove} alt={"delete"} />}
-                                        </div>
-                                        <Input defaultValue={student.contact[index].name} placeholder={"שם פרטי"} required={true} name={`contactFirstName${index + 1}`} onChange={handleChange} />
-                                        <Input defaultValue={student.contact[index].last} placeholder={"שם משפחה"} required={true} name={`contactLastName${index + 1}`} onChange={handleChange} />
-                                        <Input placeholder={"טלפון"} required={true} name={`contactPhone${index + 1}`} type={"number"} onChange={handleChange} />
-                                        <Select placeholder={"קירבה לחניך"} required={true} options={["אבא", "אמא", "אח", "אחות"]} name={`relative${index + 1}`} onChange={handleChange} />
-
-                                    </>
-                                )
-                            })} */}
                             {listContact.map((e, index) => {
                                 return (
                                     <>

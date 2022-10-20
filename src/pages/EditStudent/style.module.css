@@ -50,6 +50,7 @@
     margin-bottom: 10px;
     border: solid;
     border-radius: 3px;
+
 }
 
 .addBtn {
@@ -66,6 +67,7 @@
 
 .removeImg {
     height: 15px;
+    cursor: pointer;
 }
 
 textarea {

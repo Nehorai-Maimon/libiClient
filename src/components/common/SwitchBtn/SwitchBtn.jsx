@@ -6,7 +6,7 @@ import styles from "./style.module.css"
 function SwitchBtn({ label, status, setStatus }) {
 
     return (
-        <div>
+        <div className={styles.switch}>
             <Form>
                 <Form.Check
                     name="status"

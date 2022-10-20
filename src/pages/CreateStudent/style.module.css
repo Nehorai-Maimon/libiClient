@@ -61,11 +61,12 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
-    align-items: center
+    align-items: center;
 }
 
 .removeImg {
     height: 15px;
+    cursor: pointer;
 }
 
 textarea {
