@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Test from './Test';
 import UserContext from './context/UserContext';
 import EditStudent from './pages/EditStudent';
+import CreateStudent from './pages/CreateStudent';
 
 
 function Layout() {
@@ -31,6 +32,7 @@ function Layout() {
                             <Route path="/login" element={<Navigate to="/michal" />} />
                             <Route path="/michal" element={<Test />} />
                             <Route path="/edit" element={<EditStudent />} />
+                            <Route path="/new" element={<CreateStudent />} />
 
                         </>}
                 </Routes>

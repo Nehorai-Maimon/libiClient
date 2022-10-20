@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 table {
@@ -34,4 +35,59 @@ tr:nth-child(even) {
 
 tr:hover {
     background-color: rgb(250, 230, 230);
+}
+
+.noResult {
+    display: table-caption;
+    margin: 5%;
+}
+
+.filters {
+    display: flex;
+    width: 90%;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+}
+
+.subfilter {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 25px;
+}
+
+.search {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 25px;
+}
+
+button {
+    height: 35px;
+    min-width: 35px;
+    font-size: 10px;
+    font-family: 'heebo';
+    padding: 10px;
+    border: solid;
+    border-radius: 3px;
+    background-color: white;
+    /* border-color: rgb(250, 230, 230); */
+    ;
+}
+
+button:hover {
+    background-color: rgb(250, 230, 230);
+}
+
+.select {
+    font-family: 'heebo';
+    font-size: 12px;
+    width: 75px;
+    padding: 7px;
+    text-align: right;
+    margin-bottom: 15px;
+    color: gray;
+    cursor: pointer;
+
 }
