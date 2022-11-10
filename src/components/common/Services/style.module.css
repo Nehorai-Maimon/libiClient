@@ -1,0 +1,45 @@
+.subTitle {
+    text-align: right;
+    font-family: 'heebo';
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.addBtn {
+    display: flex;
+    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.removeBtn {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 10px;
+}
+
+.removeImg {
+    height: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.btnadd {
+    height: 35px;
+    min-width: 35px;
+    font-size: 15px;
+    font-family: 'heebo';
+    padding: 6px;
+    border: solid;
+    border-radius: 3px;
+    background-color: white;
+    margin-top: 15px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 20px;
+}

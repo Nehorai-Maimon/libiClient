@@ -1,7 +1,7 @@
 .addFile {
     font-family: 'heebo';
     font-size: 12px;
-    width: 380px;
+    width: 350px;
     padding: 7px;
     text-align: right;
     margin-bottom: 15px;
@@ -31,4 +31,9 @@
     padding: 7px;
     text-align: right;
     margin-bottom: 15px;
+}
+
+.fileName {
+    text-align: right;
+    border: none;
 }

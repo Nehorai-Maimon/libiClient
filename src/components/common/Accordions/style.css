@@ -1,0 +1,29 @@
+.accordionContainer {
+    min-width: 380px;
+}
+
+.accordion-button {
+    flex-direction: row-reverse;
+}
+
+.accordion-button::after {
+    margin-right: 5%;
+}
+
+.btnadd {
+    height: 35px;
+    min-width: 35px;
+    font-size: 15px;
+    font-family: 'heebo';
+    padding: 6px;
+    border: solid;
+    border-radius: 3px;
+    background-color: white;
+    margin-top: 15px;
+}
+
+.removeBtn {
+    height: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}

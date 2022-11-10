@@ -1,8 +1,10 @@
 .createStudent {
-    width: 95%;
     display: flex;
     flex-direction: row-reverse;
-    gap: 6%;
+    gap: 20px;
+    justify-content: center;
+    margin-left: 70px;
+    margin-right: 70px;
 
 }
 
@@ -25,25 +27,26 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    gap: 40px;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    /* margin-top: 12px; */
-}
+/* .container { */
+/* display: flex; */
+/* flex-direction: column; */
+/* margin-top: 12px; */
+/* } */
 
-.subTitle {
+/* .subTitle {
     font-size: 12px;
     font-family: 'heebo';
     text-align: right;
     margin: 14px;
     margin-right: 2px;
-}
+} */
 
-.btn {
+.btnadd {
     width: 90px;
-    font-size: 10px;
+    font-size: 15px;
     font-family: 'heebo';
     padding: 3px;
     margin-top: 10px;
@@ -52,22 +55,22 @@
     border-radius: 3px;
 }
 
-.addBtn {
+/* .addBtn {
     display: flex;
     justify-content: space-between;
-}
+} */
 
-.removeBtn {
+/* .removeBtn {
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
     align-items: center;
-}
+} */
 
-.removeImg {
+/* .removeImg {
     height: 15px;
     cursor: pointer;
-}
+} */
 
 textarea {
     font-family: 'heebo';
@@ -78,11 +81,12 @@ textarea {
     margin-bottom: 15px;
 }
 
-.subContainer {
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 40px;
-}
+/* .subContainer { */
+/* display: flex; */
+/* flex-direction: row-reverse; */
+/* gap: 40px; */
+/* flex-direction: column; */
+/* } */
 
 .save {
     display: flex;

@@ -1,0 +1,35 @@
+.btnPopup {
+    margin-top: 15px;
+    font-family: 'heebo';
+    border-color: black;
+    height: 35px;
+    font-size: 15px;
+    padding: 6px;
+    border-radius: 3px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 15px;
+    color: black;
+    border: solid 2px;
+}
+
+.popupHeader {
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.modal-header .btn-close {
+    margin: 0px;
+}
+
+.modal-body {
+    text-align: right;
+    margin-right: 20px;
+}
+
+.modal-footer {
+    justify-content: flex-start;
+}
+
+.selectService {
+    margin-top: 10px;
+}
