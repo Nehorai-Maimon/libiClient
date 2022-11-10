@@ -5,6 +5,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Select from "../../components/common/Select";
 import Input from "../../components/common/Input";
+import emailjs from 'emailjs-com'
+import { CSVLink } from "react-csv";
+
+
 
 
 
@@ -27,6 +31,8 @@ function Table() {
     const [gender, setGender] = useState("מין")
     const [ageMin, setAgeMin] = useState(1)
     const [ageMax, setAgeMax] = useState(120)
+    const csvData =
+        filterStudents;
 
 
     useEffect(() => {
@@ -46,6 +52,28 @@ function Table() {
         options.push(i)
     }
 
+    function sendEmail(to_name,
+        message,
+        to_email,) {
+
+        emailjs.send("michal12345", "template_rbnr5tr",
+            {
+                to_name,
+                message,
+                to_email,
+
+            },
+            "gmKs6WXjj7TUG7mWV")
+
+            .then((response) => {
+                console.log('SUCCESS!', response.status, response.text);
+            })
+            .catch((err) => {
+                console.log('FAILED...', err);
+            });
+
+    }
+
     return (
         <div>
             <div className={styles.container}>
@@ -59,6 +87,9 @@ function Table() {
                     <div className={styles.search}>
                         <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} />
                         <button onClick={() => setFilterStudentd(students)}>הצג את כולם</button>
+
+
+                        <CSVLink data={csvData}>Download me</CSVLink>
                     </div>
                 </div>
                 <table>
@@ -72,6 +103,7 @@ function Table() {
                         <th>טלפון</th>
                         <th>מסמכים ואישורים</th>
                         <th>עריכה</th>
+                        <th>שליחת תזכורת</th>
                     </tr>
                     {filterStudents.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
 
@@ -87,6 +119,7 @@ function Table() {
                                     <td>{val.contact[0].contactPhone}</td>
                                     <td>{"??"}</td>
                                     <td><button onClick={() => navigate('/edit')}>📝</button></td>
+                                    <td><button onClick={() => sendEmail(val.firstName, val.file.map(e => "   *   " + e.fileName), val.email)}>✉️</button></td>
                                 </tr>
                             )
                         })

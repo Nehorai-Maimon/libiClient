@@ -66,9 +66,9 @@ tr:hover {
 button {
     height: 35px;
     min-width: 35px;
-    font-size: 10px;
+    font-size: 15px;
     font-family: 'heebo';
-    padding: 10px;
+    padding: 6px;
     border: solid;
     border-radius: 3px;
     background-color: white;
