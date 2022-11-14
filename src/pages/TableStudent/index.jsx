@@ -31,9 +31,18 @@ function Table() {
     const [gender, setGender] = useState("מין")
     const [ageMin, setAgeMin] = useState(1)
     const [ageMax, setAgeMax] = useState(120)
-    const csvData =
-        filterStudents;
+    // const csvData =
+    //     filterStudents;
 
+    let studentsToDownload = []
+    filterStudents.map(e => {
+        return (
+            studentsToDownload.push({ תז: e.id, שם: e.firstName, שם_משפחה: e.lastName, מין: e.gender, איש_קשר: e.contact[0].contactFirstName + " " + e.contact[0].contactLastName + "-" + e.contact[0].relative, איש_קשר_טלפון: e.contact[0].contactPhone, שירותים: e.arrServices })
+        )
+    })
+    // console.log(studentsToDownload);
+    const csvData =
+        studentsToDownload;
 
     useEffect(() => {
         let res = students.filter((e, i) => gender !== "מין" ? e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
