@@ -25,6 +25,10 @@ function StudentDetails({ setData, student }) {
                         <Select defaultValue={student?.gender} placeholder={"מין"} required={true} options={["זכר", "נקבה"]} name={"gender"} onChange={handleChange} />
                         <Input defaultValue={student?.date} placeholder={"תאריך לידה"} required={true} name={"DateOfBirth"} onFocus={(e) => (e.target.type = "date")}
                             onBlur={(e) => (e.target.type = "text")} onChange={handleChange} />
+                        <Input defaultValue={student?.hmo} placeholder={"קופת חולים"} required={false} name={"hmo"} type={"number"} onChange={handleChange} />
+                        <Input defaultValue={student?.address} placeholder={"ישוב, רחוב, מס בית"} required={false} name={"address"} type={"number"} onChange={handleChange} />
+                        <Input defaultValue={student?.diagnosis} placeholder={"אבחנה"} required={false} name={"diagnosis"} type={"number"} onChange={handleChange} />
+                        <Select defaultValue={student?.sensitivity} placeholder={"רגישות רפואית"} required={true} options={["כן", "לא"]} name={"sensitivity"} onChange={handleChange} />
                         <Input defaultValue={student?.phone} placeholder={"טלפון (רשות)"} required={false} name={"phone"} type={"number"} onChange={handleChange} />
                         <Input defaultValue={student?.email} placeholder={"(רשות) אימייל"} required={false} name={"email"} type={"email"} onChange={handleChange} />
                     </Accordion.Body>

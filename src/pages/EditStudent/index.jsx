@@ -8,14 +8,15 @@ import AboutStudent from '../../components/common/Accordions/AboutStudent';
 import Medications from '../../components/common/Accordions/medications';
 import Accordions from '../../components/common/Accordions/files';
 
+//TO DO:מחיקת איש קשר ותרופה בעריכה
 
 
 function EditStudent() {
-    const [data, setData] = useState({});
+    const student = students[0]
+    const [data, setData] = useState(student);
     const [status, setStatus] = useState(true)
 
 
-    const student = students[0]
     //אוביקט מידע על חניך. יתקבל מהשרת
     // const student = {
     //     firstName: "מיכל", lastName: "שגיא", id: "123456789", gender: "נקבה", date: "15/10/1993", phone: "0525000000", email: "michal@gmail.com",
@@ -125,63 +126,63 @@ function EditStudent() {
 
     return (
         <div>
-            <form >
-                <div className={styles.title}>עריכת חניך קיים
-                    <div className={styles.save}>
-                        <SwitchBtn label={"סטטוס פעיל"} status={status} setStatus={setStatus} />
-                        <button name="submit" className={styles.btnadd} onClick={() => submit()} >שמירה</button>
+            {/* <form > */}
+            <div className={styles.title}>עריכת חניך קיים
+                <div className={styles.save}>
+                    <SwitchBtn label={"סטטוס פעיל"} status={status} setStatus={setStatus} />
+                    <button name="submit" className={styles.btnadd} onClick={() => submit()} >שמירה</button>
+                </div>
+            </div>
+            <div className={styles.createStudent}>
+                <div className={styles.containers}>
+                    <div className={styles.container}>
+
+                        <StudentDetails setData={setData} student={student} />
+
+                    </div>
+
+                    <div className={styles.container}>
+
+
+                        <ContactDetails listContactEdit={listContactEdit} setListContactEdit={setListContactEdit} setData={setData} data={data} removeContactEdit={removeContactEdit} />
+
                     </div>
                 </div>
-                <div className={styles.createStudent}>
-                    <div className={styles.containers}>
-                        <div className={styles.container}>
 
-                            <StudentDetails setData={setData} student={student} />
-
-                        </div>
-
-                        <div className={styles.container}>
-
-
-                            <ContactDetails removeContactEdit={removeContactEdit} listContactEdit={listContactEdit} setListContactEdit={setListContactEdit} setData={setData} />
-
-                        </div>
-                    </div>
-
-                    <div className={styles.containers}>
-                        <div className={styles.container}>
-                            {/* <div className={styles.subTitle}>טפסים ואישורים</div>
+                <div className={styles.containers}>
+                    <div className={styles.container}>
+                        {/* <div className={styles.subTitle}>טפסים ואישורים</div>
                             <File defaultValueDate={student.file[0]?.date} placeholder={"אישור לצילום החניך"} name={"pictures"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
                             <File defaultValueDate={student.file[1]?.date} placeholder={"אבחון פסיכולוגי"} name={"psychological"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
                             <File defaultValueDate={student.file[2]?.date} placeholder={"אבחון פסיכיאטרי"} name={"psychiatric"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
                             <File defaultValueDate={student.file[3]?.date} placeholder={"אישור רווחה"} name={"welfare certificate"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} /> */}
-                            <AboutStudent student={student} setData={setData} />
+                        <AboutStudent student={student} setData={setData} />
 
 
-
-
-
-                        </div>
-
-                        <div className={styles.container}>
-
-                            <Medications listMedicationEdit={listMedicationEdit} setData={setData} data={data} />
-
-
-                        </div>
 
 
 
                     </div>
-                    <div className={styles.containers}>
-                        <div className={styles.container}>
 
-                            <Accordions student={student} setData={setData} data={data} />
-                        </div>
+                    <div className={styles.container}>
+
+                        <Medications listMedicationEdit={listMedicationEdit} setData={setData} data={data} />
+
+
                     </div>
+
+
 
                 </div>
-            </form>
+                <div className={styles.containers}>
+                    <div className={styles.container}>
+
+                        <Accordions student={student} setData={setData} data={data} />
+                    </div>
+                </div>
+
+            </div>
+            {/* </form> */}
         </div>
     )
 }

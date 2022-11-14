@@ -6,12 +6,15 @@ import remove from '../../../images/delete.png'
 
 
 function Medications({ setData, data, listMedicationEdit }) {
-    const [medication, setMedication] = useState({});
+    const [medication, setMedication] = useState([{ name: "", time: "" }]);
+    const [med, setMed] = useState("");
+    const [time, setTime] = useState("");
     const [listMedication, setListMedication] = useState([{ med: "" },]);
 
     useEffect(() => {
         if (listMedicationEdit) {
             setListMedication(listMedicationEdit)
+            setMedication(listMedicationEdit)
         }
     }, [])
 
@@ -21,18 +24,34 @@ function Medications({ setData, data, listMedicationEdit }) {
 
     const removeMedication = (index) => {
         const newList = [...listMedication]
-        newList.splice(index, 1);
+        newList.splice(index, 1)
         setListMedication(newList);
         return (
-            delete data.medication[`medication${index + 1}`],
-            delete data.medication[`medicationTime${index + 1}`])
+            medication.splice(index, 1)
+
+        )
+        // delete data.medication[`medication${index + 1}`],
+        // delete data.medication[`medicationTime${index + 1}`])
     }
 
-    const handleChangeMedication = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setMedication(values => ({ ...values, [name]: value }));
+
+
+
+    function save(index) {
+        if (index <= medication.length - 1) {
+            if (med) { medication[index].name = med }
+            if (time) { medication[index].time = time }
+        }
+        else {
+            medication.push({ name: med, time: time })
+        }
     }
+    // const handleChangeMedication = (event) => {
+    //     const name = event.target.name;
+    //     const value = event.target.value;
+    //     setMedication(values => ({ ...values, [name]: value }));
+    //     console.log(medication)
+    // }
 
 
 
@@ -59,16 +78,18 @@ function Medications({ setData, data, listMedicationEdit }) {
                                         <Accordion.Header>תרופה מספר {index + 1}</Accordion.Header>
                                         <Accordion.Body>
                                             <>
-                                                <Input defaultValue={listMedication[index]?.name} placeholder={"שם התרופה"} required={true} name={`medication${index + 1}`} onChange={handleChangeMedication} />
+                                                <Input defaultValue={listMedication[index]?.name} placeholder={"שם התרופה"} required={true} name={`medication${index + 1}`} onChange={e => setMed(e.target.value)} />
                                                 <Input defaultValue={listMedication[index]?.time} placeholder={"שעת נטילה"} required={true} name={`medicationTime${index + 1}`}
                                                     onFocus={(e) => (e.target.type = "time")}
-                                                    onBlur={(e) => (e.target.type = "text")} onChange={handleChangeMedication} />
+                                                    onBlur={(e) => (e.target.type = "text")} onChange={e => setTime(e.target.value)} />
                                                 <div>
                                                     {listMedication.length - 1 == index && index > 0 &&
                                                         <img className="removeBtn" onClick={() => removeMedication(index)}
 
                                                             src={remove} alt={"delete"} />}
                                                 </div>
+                                                <button onClick={() => save(index)} className={"styles.btnadd"}>שמירה</button>
+
 
                                             </>
 
