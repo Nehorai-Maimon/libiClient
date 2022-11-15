@@ -10,8 +10,8 @@ function General({ setData, data, student }) {
         setData(values => ({ ...values, [name]: value }));
         console.log("done", data);
     }
-    let arrfile = [{ name: "צילום ת.ז ילד/הורה", date: false }, { name: "ויתור סודיות", date: false }, { name: "אישור רווחה", date: true }]
-    if (data.sensitivity === "כן") { arrfile.push({ name: "רגישות רפואית", date: false }) }
+    let arrfile = [{ name: "צילום ת.ז ילד/הורה", date: false }, { name: "ויתור סודיות", date: false }]
+    if (data.sensitivity === "כן") { arrfile.push({ name: "רגישות רפואית", date: true }) }
 
     return (
         <div>כללי

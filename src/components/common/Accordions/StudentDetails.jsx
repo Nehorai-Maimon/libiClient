@@ -1,17 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Input from '../Input';
 import Select from '../Select';
 
 
-function StudentDetails({ setData, student }) {
+function StudentDetails({ data, setData, student }) {
 
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
         setData(values => ({ ...values, [name]: value }));
     }
+    const [service, setService] = useState("")
+    const handleChangeSer = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setService(values => ({ ...values, [name]: value }));
+    }
 
+    useEffect(() => {
+        const name = "service";
+        const value = service
+        setData(values => ({ ...values, [name]: value }));
+    }, [service])
 
     return (
         <div className="accordionContainer">
@@ -31,6 +42,9 @@ function StudentDetails({ setData, student }) {
                         <Select defaultValue={student?.sensitivity} placeholder={"רגישות רפואית"} required={true} options={["כן", "לא"]} name={"sensitivity"} onChange={handleChange} />
                         <Input defaultValue={student?.phone} placeholder={"טלפון (רשות)"} required={false} name={"phone"} type={"number"} onChange={handleChange} />
                         <Input defaultValue={student?.email} placeholder={"(רשות) אימייל"} required={false} name={"email"} type={"email"} onChange={handleChange} />
+                        <Select defaultValue={student?.service} placeholder={"מוכר בשירות"} required={false} options={["מש'ה", "אוטיזם", "שיקום", "אחר"]} name={"service"} onChange={handleChangeSer} />
+                        {service.service === "אחר" ? <Input placeholder={"פירוט..."} required={true} name={"other"} onChange={handleChangeSer} /> : ""
+                        }
                     </Accordion.Body>
                 </Accordion.Item>
 

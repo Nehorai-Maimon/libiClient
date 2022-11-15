@@ -14,7 +14,7 @@ function Housing({ setData, data }) {
 
     return (
         <div>
-            <BasicFiles arrfile={[{ name: "אישור לצילום החניך", date: false }, { name: "אישור רווחה", date: true }]} setService={setHousing} onClick={submit} />
+            <BasicFiles arrfile={[{ name: "תעודת נכה", date: false }, { name: "אישור רווחה", date: true }]} setService={setHousing} onClick={submit} />
         </div>
     )
 }

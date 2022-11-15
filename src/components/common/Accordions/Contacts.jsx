@@ -10,7 +10,7 @@ import remove from '../../../images/delete.png'
 function ContactDetails({ setData, data, listContactEdit }) {
 
     const [con, setCon] = useState([]);
-    const [contact, setContact] = useState([{ contactFirstName: "", contactLastName: "", contactPhone: "", relative: "" }]);
+    const [contact, setContact] = useState([{ contactFirstName: "", contactLastName: "", contactPhone: "", relative: "", comment: "" }]);
     const [listContact, setListContact] = useState([{ con: "" },]);
 
 
@@ -57,10 +57,12 @@ function ContactDetails({ setData, data, listContactEdit }) {
             if (con.contactLastName) { contact[index].contactLastName = con.contactLastName }
             if (con.contactPhone) { contact[index].contactPhone = con.contactPhone }
             if (con.relative) { contact[index].relative = con.relative }
+            if (con.comment) { contact[index].comment = con.comment }
         }
         else {
-            contact.push({ contactFirstName: con.contactFirstName, contactLastName: con.contactLastName, contactPhone: con.contactPhone, relative: con.relative })
+            contact.push({ contactFirstName: con.contactFirstName, contactLastName: con.contactLastName, contactPhone: con.contactPhone, relative: con.relative, comment: con.comment })
         }
+        setCon([{ contactFirstName: "", contactLastName: "", contactPhone: "", relative: "", comment: "" }])
 
     }
 
@@ -92,6 +94,7 @@ function ContactDetails({ setData, data, listContactEdit }) {
                                                 <Input defaultValue={listContact[index]?.contactLastName} placeholder={"שם משפחה"} name={`contactLastName`} onChange={handleChangeContact} />
                                                 <Input defaultValue={listContact[index]?.contactPhone} placeholder={"טלפון"} name={`contactPhone`} type={"number"} onChange={handleChangeContact} />
                                                 <Select defaultValue={listContact[index]?.relative} placeholder={"קירבה לחניך"} options={["אבא", "אמא", "אח", "אחות"]} name={`relative`} onChange={handleChangeContact} />
+                                                <Input defaultValue={listContact[index]?.comment} placeholder={"הערות"} name={`comment`} type={"text"} onChange={handleChangeContact} />
                                                 {/* <Input defaultValue={listContact[index]?.contactFirstName} placeholder={"שם פרטי"} name={`contactFirstName${index + 1}`} onChange={handleChangeContact} />
                                                 <Input defaultValue={listContact[index]?.contactLastName} placeholder={"שם משפחה"} name={`contactLastName${index + 1}`} onChange={handleChangeContact} />
                                                 <Input defaultValue={listContact[index]?.contactPhone} placeholder={"טלפון"} name={`contactPhone${index + 1}`} type={"number"} onChange={handleChangeContact} />

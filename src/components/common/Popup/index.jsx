@@ -18,7 +18,7 @@ function Popup({ setArr, arrServices }) {
         console.log(arrServices)
 
     }
-    const [options, setOptions] = useState(["דיור", "תעסוקה", "מעון יום"])
+    const [options, setOptions] = useState(["דיור", "תעסוקה", "מעון", "מרכז יום", "מועדונית"])
     let intersection = options.filter(x => !arrServices.includes(x));
 
     useEffect(() => {

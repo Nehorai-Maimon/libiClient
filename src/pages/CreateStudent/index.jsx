@@ -42,7 +42,7 @@ function CreateStudent() {
                 <div className={styles.createStudent}>
                     <div className={styles.containers}>
                         <div className={styles.container}>
-                            <StudentDetails setData={setData} />
+                            <StudentDetails data={data} setData={setData} />
 
                         </div>
 
