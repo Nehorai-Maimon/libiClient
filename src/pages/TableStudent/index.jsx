@@ -1,7 +1,7 @@
 import styles from "./style.module.css"
 import students from '../../fakeData'
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useEffect } from "react";
 import Select from "../../components/common/Select";
 import Input from "../../components/common/Input";
@@ -26,11 +26,11 @@ function Table() {
         }
         return age;
     }
-
     const [filterStudents, setFilterStudentd] = useState(students)
     const [gender, setGender] = useState("מין")
     const [ageMin, setAgeMin] = useState(1)
     const [ageMax, setAgeMax] = useState(120)
+    const [services, setServices] = useState("שירותים")
     // const csvData =
     //     filterStudents;
 
@@ -45,10 +45,13 @@ function Table() {
         studentsToDownload;
 
     useEffect(() => {
-        let res = students.filter((e, i) => gender !== "מין" ? e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-            getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin)
+        let res = students.filter((e, i) =>
+            services !== "שירותים" && gender === "מין" ? e?.arrServices?.includes(services) && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
+                services !== "שירותים" ? e?.arrServices?.includes(services) && e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
+                    gender !== "מין" ? e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
+                        getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin)
         setFilterStudentd(res)
-    }, [gender, ageMin, ageMax])
+    }, [gender, ageMin, ageMax, services])
 
 
     const filterSearch = (value) => {
@@ -56,10 +59,17 @@ function Table() {
         )
     }
 
+    const resate = () => {
+        setFilterStudentd(students)
+
+    }
+
     let options = []
     for (let i = 1; i <= 120; i++) {
         options.push(i)
     }
+
+    const servicesOp = ["שירותים", "תעסוקה", "דיור", "מעון", "מועדונית"]
 
     function sendEmail(to_name,
         message,
@@ -92,10 +102,11 @@ function Table() {
                         <Select className={styles.select} placeholder={"מין"} options={["מין", "זכר", "נקבה"]} name={"gender"} onChange={(e) => setGender(e.target.value)} />
                         <Select className={styles.select} placeholder={"מגיל"} options={options} onChange={(e) => setAgeMin(e.target.value)} />
                         <Select className={styles.select} placeholder={"עד גיל"} options={options} onChange={(e) => setAgeMax(e.target.value)} />
+                        <Select className={styles.select} placeholder={"שירותים"} options={servicesOp} onChange={(e) => setServices(e.target.value)} />
                     </div>
                     <div className={styles.search}>
                         <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} />
-                        <button onClick={() => setFilterStudentd(students)}>הצג את כולם</button>
+                        <button onClick={resate}>הצג את כולם</button>
 
 
                         <CSVLink data={csvData}>Download me</CSVLink>
@@ -110,6 +121,7 @@ function Table() {
                         <th>מין</th>
                         <th>איש קשר</th>
                         <th>טלפון</th>
+                        {/* <th>שירותים</th> */}
                         <th>מסמכים ואישורים</th>
                         <th>עריכה</th>
                         <th>שליחת תזכורת</th>
@@ -126,6 +138,7 @@ function Table() {
                                     <td>{val.gender}</td>
                                     <td>{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
                                     <td>{val.contact[0].contactPhone}</td>
+                                    {/* <td>{val.arrServices?.map(e => ` ${e} *`)}</td> */}
                                     <td>{"??"}</td>
                                     <td><button onClick={() => navigate('/edit')}>📝</button></td>
                                     <td><button onClick={() => sendEmail(val.firstName, val.file.map(e => "   *   " + e.fileName), val.email)}>✉️</button></td>
