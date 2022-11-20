@@ -21,39 +21,47 @@ function BasicFiles({ setService, onClick, arrfile = [], student }) {
         )
     }
 
-    const [file, setFile] = useState({});
-    const [fileOp, setFileOp] = useState({});
+    const [file, setFile] = useState([]);
+    const [fileOp, setFileOp] = useState([]);
     const onChangeFile = (e) => {
         const name = e.target.name
         const fileSize = (e.target.files[0].size / 1000) + "KB";
-        setFile((current) => ({
-            ...current,
-            [name]: {
-                fileName: e.target.files[0].name,
-                size: fileSize,
-                type: e.target.files[0].type
-            }
-        })
-        )
+
+        // setFile((current) => ({
+        //     ...current,
+        //     [name]: {
+        //         fileName: e.target.files[0].name,
+        //         size: fileSize,
+        //         type: e.target.files[0].type
+        //     }
+        // })
+        // )
+
+        file.push({ name: name, file: e.target.files[0].name, date: "" })
+
+
 
     }
 
     const handleChangeDate = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setFile(values => ({ ...values, [name]: value }));
+        file[file.length - 1].date = value
+        // setFile(values => ({ ...values, [name]: value }));
     }
     const handleChangeFileOp = (e) => {
         const name = e.target.name
         const fileSize = (e.target.files[0].size / 1000) + "KB";
-        setFileOp(values => ({
-            ...values, [name]: {
-                fileNameInput: fileName,
-                fileName: e.target.files[0].name,
-                size: fileSize,
-                type: e.target.files[0].type
-            }
-        }))
+        // setFileOp(values => ({
+        //     ...values, [name]: {
+        //         fileNameInput: fileName,
+        //         fileName: e.target.files[0].name,
+        //         size: fileSize,
+        //         type: e.target.files[0].type
+        //     }
+        // }))
+        fileOp.push({ name: fileName, file: e.target.files[0].name })
+
         setFileName("")
     }
 
@@ -66,7 +74,9 @@ function BasicFiles({ setService, onClick, arrfile = [], student }) {
     useEffect(() => {
         const name = "filesOp"
         const value = fileOp
-        setFile(values => ({ ...values, [name]: value }));
+        setService(values => ({ ...values, [name]: value }));
+
+        // setFile(values => ({ ...values, [name]: value }));
     }, [fileOp])
 
 
