@@ -173,20 +173,20 @@ function StudentView() {
                             </>
                             )
                         })}
-                        <div className={styles.boxFile}>
+                        {missingFiles.length > 0 &&
+                            <div className={styles.boxFile}>
+                                <div className={styles.titleMissing}>חוסרים</div>
 
-                            <div className={styles.titleMissing}>חוסרים</div>
+                                {missingFiles?.map(e => {
+                                    return (<>
 
-                            {missingFiles?.map(e => {
-                                return (<>
-
-                                    <div className={styles.subContainer}>
-                                        <div className={styles.line}>  <span className={styles.questionMissing}>{e} </span></div>
-                                    </div>
-                                </>
-                                )
-                            })}
-                        </div>
+                                        <div className={styles.subContainer}>
+                                            <div className={styles.line}>  <span className={styles.questionMissing}>{e} </span></div>
+                                        </div>
+                                    </>
+                                    )
+                                })}
+                            </div>}
                     </div>
 
 
