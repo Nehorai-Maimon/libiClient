@@ -11,7 +11,7 @@ function General({ setData, data, student }) {
         console.log("done", data);
     }
     let arrfile = [{ name: "צילום ת.ז ילד/הורה", date: false }, { name: "ויתור סודיות", date: false }]
-    if (data.sensitivity === "כן") { arrfile.push({ name: "רגישות רפואית", date: true }) }
+    if (data?.sensitivity?.sensitivity === "כן" || student?.sensitivity?.sensitivity === "כן") { arrfile.push({ name: "רגישות רפואית", date: true }) }
 
     return (
         <div>כללי

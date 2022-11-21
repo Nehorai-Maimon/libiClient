@@ -82,13 +82,13 @@ function Medications({ setData, data, listMedicationEdit }) {
                                                 <Input defaultValue={listMedication[index]?.time} placeholder={"שעת נטילה"} required={true} name={`medicationTime${index + 1}`}
                                                     onFocus={(e) => (e.target.type = "time")}
                                                     onBlur={(e) => (e.target.type = "text")} onChange={e => setTime(e.target.value)} />
-                                                <div>
+                                                <div className='save'>
                                                     {listMedication.length - 1 == index && index > 0 &&
                                                         <img className="removeBtn" onClick={() => removeMedication(index)}
 
                                                             src={remove} alt={"delete"} />}
+                                                    <button onClick={() => save(index)} className={"styles.btnadd"}>שמירה</button>
                                                 </div>
-                                                <button onClick={() => save(index)} className={"styles.btnadd"}>שמירה</button>
 
 
                                             </>

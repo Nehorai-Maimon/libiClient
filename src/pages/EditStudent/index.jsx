@@ -8,7 +8,6 @@ import AboutStudent from '../../components/common/Accordions/AboutStudent';
 import Medications from '../../components/common/Accordions/medications';
 import Accordions from '../../components/common/Accordions/files';
 
-//TO DO:מחיקת איש קשר ותרופה בעריכה
 
 
 function EditStudent() {
@@ -17,16 +16,9 @@ function EditStudent() {
     const [status, setStatus] = useState(true)
 
 
-    //אוביקט מידע על חניך. יתקבל מהשרת
-    // const student = {
-    //     firstName: "מיכל", lastName: "שגיא", id: "123456789", gender: "נקבה", date: "15/10/1993", phone: "0525000000", email: "michal@gmail.com",
-    //     contact: [{ contactFirstName: "a", contactLastName: "1", contactPhone: "0505000000", relative: "אמא" }, { contactFirstName: "b", contactLastName: "2", contactPhone: "0505222222", relative: "אבא" }],
-    //     file: [{ fileName: "אישור צילום", date: "23/04/2028" }, { fileName: "אבחון פסיכולוגי", date: "30/07/2030" }],
-    //     textA: "בלה בלה בלה", textB: "בלה בלה בלה", textC: "בלה בלה בלה",
-    //     medication: [{ name: "a", time: "12:00" }, { name: "b", time: "14:30" }, { name: "c", time: "13:15" }]
-    // }
 
-    const [listContactEdit, setListContactEdit] = useState(student.contact.map(e => ({ contactFirstName: e.contactFirstName, contactLastName: e.contactLastName, contactPhone: e.contactPhone, relative: e.relative })));
+
+    const [listContactEdit, setListContactEdit] = useState(student.contact.map(e => ({ contactFirstName: e.contactFirstName, contactLastName: e.contactLastName, contactPhone: e.contactPhone, contactEmail: e.contactEmail, relative: e.relative, comment: e.comment, apotropus: e.apotropus })));
     const [listMedicationEdit, setListMedication] = useState(student.medication.map(e => ({ name: e.name, time: e.time })));
 
     const removeContactEdit = (index) => {

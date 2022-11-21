@@ -10,9 +10,10 @@ import remove from '../../../images/delete.png'
 function ContactDetails({ setData, data, listContactEdit }) {
 
     const [con, setCon] = useState([]);
-    const [contact, setContact] = useState([{ contactFirstName: "", contactLastName: "", contactPhone: "", relative: "", comment: "" }]);
+    const [contact, setContact] = useState([{ contactFirstName: "", contactLastName: "", contactPhone: "", contactEmail: "", relative: "", comment: "" }]);
     const [listContact, setListContact] = useState([{ con: "" },]);
 
+    const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {
         if (listContactEdit) {
@@ -56,14 +57,16 @@ function ContactDetails({ setData, data, listContactEdit }) {
             if (con.contactFirstName) { contact[index].contactFirstName = con.contactFirstName }
             if (con.contactLastName) { contact[index].contactLastName = con.contactLastName }
             if (con.contactPhone) { contact[index].contactPhone = con.contactPhone }
+            if (con.contactEmail) { contact[index].contactEmail = con.contactEmail }
             if (con.relative) { contact[index].relative = con.relative }
             if (con.comment) { contact[index].comment = con.comment }
+            contact[index].apotropus = isChecked
         }
         else {
-            contact.push({ contactFirstName: con.contactFirstName, contactLastName: con.contactLastName, contactPhone: con.contactPhone, relative: con.relative, comment: con.comment })
+            contact.push({ contactFirstName: con.contactFirstName, contactLastName: con.contactLastName, contactPhone: con.contactPhone, contactEmail: con.contactEmail, relative: con.relative, comment: con.comment, apotropus: isChecked })
         }
-        setCon([{ contactFirstName: "", contactLastName: "", contactPhone: "", relative: "", comment: "" }])
-
+        setCon([{ contactFirstName: "", contactLastName: "", contactPhone: "", contactEmail: "", relative: "", comment: "" }])
+        setIsChecked(false)
     }
 
     useEffect(() => {
@@ -93,14 +96,20 @@ function ContactDetails({ setData, data, listContactEdit }) {
                                                 <Input defaultValue={listContact[index]?.contactFirstName} placeholder={"שם פרטי"} name={`contactFirstName`} onChange={handleChangeContact} />
                                                 <Input defaultValue={listContact[index]?.contactLastName} placeholder={"שם משפחה"} name={`contactLastName`} onChange={handleChangeContact} />
                                                 <Input defaultValue={listContact[index]?.contactPhone} placeholder={"טלפון"} name={`contactPhone`} type={"number"} onChange={handleChangeContact} />
-                                                <Select defaultValue={listContact[index]?.relative} placeholder={"קירבה לחניך"} options={["אבא", "אמא", "אח", "אחות"]} name={`relative`} onChange={handleChangeContact} />
+                                                <Input defaultValue={listContact[index]?.contactEmail} placeholder={"אימייל"} name={`contactEmail`} type={"email"} onChange={handleChangeContact} />
+                                                <Input defaultValue={listContact[index]?.relative} placeholder={"קירבה לחניך"} name={`relative`} onChange={handleChangeContact} />
+                                                {/* <Select defaultValue={listContact[index]?.relative} placeholder={"קירבה לחניך"} options={["אבא", "אמא", "אח", "אחות"]} name={`relative`} onChange={handleChangeContact} /> */}
                                                 <Input defaultValue={listContact[index]?.comment} placeholder={"הערות"} name={`comment`} type={"text"} onChange={handleChangeContact} />
+
+                                                <div className="checkboxstyle"><input type="checkbox" defaultValue={listContact[index]?.apotropus} defaultChecked={listContact[index]?.apotropus} onChange={() => setIsChecked(!isChecked)} />
+                                                    <span>אפוטרופוס</span></div>
+
                                                 {/* <Input defaultValue={listContact[index]?.contactFirstName} placeholder={"שם פרטי"} name={`contactFirstName${index + 1}`} onChange={handleChangeContact} />
                                                 <Input defaultValue={listContact[index]?.contactLastName} placeholder={"שם משפחה"} name={`contactLastName${index + 1}`} onChange={handleChangeContact} />
                                                 <Input defaultValue={listContact[index]?.contactPhone} placeholder={"טלפון"} name={`contactPhone${index + 1}`} type={"number"} onChange={handleChangeContact} />
                                                 <Select defaultValue={listContact[index]?.relative} placeholder={"קירבה לחניך"} options={["אבא", "אמא", "אח", "אחות"]} name={`relative${index + 1}`} onChange={handleChangeContact} /> */}
                                             </>
-                                            <div >
+                                            <div className='save' >
 
 
                                                 {listContact.length - 1 == index && index > 0 &&

@@ -27,3 +27,34 @@
     cursor: pointer;
     margin-bottom: 15px;
 }
+
+.save {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.checkboxcon {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row-reverse;
+}
+
+.checkboxstyle {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 14px;
+    font-family: 'heebo';
+    font-size: small;
+
+}
+
+.titleCheck {
+    display: flex;
+    justify-content: flex-start;
+    direction: rtl;
+    font-family: "heebo";
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
