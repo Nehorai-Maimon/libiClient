@@ -33,7 +33,7 @@ function StudentDetails({ data, setData, student }) {
 
 
 
-    const [address, setAddress] = useState({})
+    const [address, setAddress] = useState({ city: student?.address?.city, address: student?.address?.address, other: student?.address?.other })
     const handleChangeAddress = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -45,7 +45,7 @@ function StudentDetails({ data, setData, student }) {
         const value = address
         setData(values => ({ ...values, [name]: value }));
     }, [address])
-    const [sensitivity, setSensitivity] = useState({})
+    const [sensitivity, setSensitivity] = useState({ sensitivity: student?.sensitivity?.sensitivity, more: student?.sensitivity?.more })
     const handleChangeSensitivity = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -72,10 +72,10 @@ function StudentDetails({ data, setData, student }) {
                             onBlur={(e) => (e.target.type = "text")} onChange={handleChange} />
                         <Select defaultValue={student?.hmo} placeholder={"קופת חולים"} required={false} name={"hmo"} options={["כללית", "לאומית", "מכבי", "מאוחדת"]} onChange={handleChange} />
                         <Select defaultValue={student?.address.city} placeholder={"ישוב"} required={false} name={"city"} options={cityOp} onChange={handleChangeAddress} />
-                        {address.city === "אחר" ? <Input placeholder={"ישוב..."} required={true} name={"other"} onChange={handleChangeAddress} /> : ""
+                        {address.city === "אחר" ? <Input defaultValue={student?.address?.other} placeholder={"ישוב..."} required={true} name={"other"} onChange={handleChangeAddress} /> : ""
                         }
                         <Input defaultValue={student?.address?.address} placeholder={" רחוב, מס בית"} required={false} name={"address"} type={"text"} onChange={handleChangeAddress} />
-                        <Input defaultValue={student?.diagnosis} placeholder={"אבחנה"} required={false} name={"diagnosis"} type={"number"} onChange={handleChange} />
+                        <Input defaultValue={student?.diagnosis} placeholder={"אבחנה"} required={false} name={"diagnosis"} type={"text"} onChange={handleChange} />
                         <Select defaultValue={student?.sensitivity?.sensitivity} placeholder={"רגישות רפואית"} required={true} options={["כן", "לא"]} name={"sensitivity"} onChange={handleChangeSensitivity} />
                         {sensitivity?.sensitivity === "כן" || student?.sensitivity?.sensitivity === "כן" ? <Input defaultValue={student?.sensitivity?.more} placeholder={"פירוט..."} required={true} name={"more"} onChange={handleChangeSensitivity} /> : ""
                         }

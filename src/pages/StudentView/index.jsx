@@ -27,7 +27,7 @@ function StudentView() {
                             <div className={styles.line}>  <span className={styles.question}>ישוב: </span>{student?.address?.city == "אחר" ? student?.address?.other : student?.address?.city}</div>
                             <div className={styles.line}>  <span className={styles.question}>כתובת: </span>{student?.address?.address}</div>
                             <div className={styles.line}>  <span className={styles.question}>קופת חולים: </span>{student?.hmo}</div>
-                            <div className={styles.line}>  <span className={styles.question}>רגישות רפואית: </span>{student?.sensitivity?.sensitivity + ". " + student?.sensitivity?.more}</div>
+                            <div className={styles.line}>  <span className={styles.question}>רגישות רפואית: </span>{student?.sensitivity?.sensitivity == "כן" ? student?.sensitivity?.sensitivity + ". " + student?.sensitivity?.more : student?.sensitivity?.sensitivity}</div>
                         </div>
                         <div className={styles.subContainer}>
                             <div className={styles.line}>  <span className={styles.question}>טלפון: </span>{student?.phone}</div>
@@ -38,6 +38,7 @@ function StudentView() {
                         </div>
                         <div className={styles.subContainer}>
                             <div className={styles.line}>  <span className={styles.question}>מוכר בשירות: </span>{student?.service.map(e => "▪️" + e + " ")}</div>
+                            <div className={styles.line}>  <span className={styles.question}>אבחנה : </span>{student?.diagnosis}</div>
                         </div>
                     </div>
                     <div className={styles.box}>
