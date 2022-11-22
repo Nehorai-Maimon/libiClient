@@ -65,11 +65,6 @@ function Table() {
         setFilterStudentd(res)
     }, [gender, ageMin, ageMax, services, city])
 
-    // useEffect(() => {
-    //     let resCity = students.filter(e => city !== "ישוב" ? e?.address?.city === city && filterStudents : filterStudents)
-    //     setFilterStudentd(resCity)
-
-    // }, [city])
 
 
     const filterSearch = (value) => {
@@ -204,7 +199,7 @@ function Table() {
                                         <td className={styles.red} onClick={() => navigate('/view', { state: difference })}>{difference.map(e => e + ", ")}</td>}
                                     <td><button onClick={() => navigate('/edit')}>📝</button></td>
 
-                                    <td> {difference.length !== 0 ? <button onClick={() => sendEmail(val.firstName, val.file.map(e => "   *   " + e.fileName), val.email)}>✉️</button> : ""}</td>
+                                    <td className={difference.length === 0 ? styles.disabled : ""}> <button className={difference.length === 0 ? styles.disabled : ""} disabled={difference.length === 0} onClick={() => sendEmail(val.firstName, difference.map(e => "   *   " + e), val.email)}>✉️</button> </td>
                                 </tr>
 
                             )

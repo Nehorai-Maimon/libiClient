@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import BasicFiles from './basic'
 
-function Housing({ setData, data }) {
+function Housing({ setData, data, remove }) {
     const [housing, setHousing] = useState({})
 
     const submit = () => {
@@ -14,7 +14,7 @@ function Housing({ setData, data }) {
 
     return (
         <div>
-            <BasicFiles arrfile={[{ name: "תעודת נכה", date: false }, { name: "אישור רווחה", date: true }]} setService={setHousing} onClick={submit} />
+            <BasicFiles arrfile={[{ name: "תעודת נכה", date: false }, { name: "אישור רווחה", date: true }]} setService={setHousing} onClick={submit} remove={remove} />
         </div>
     )
 }

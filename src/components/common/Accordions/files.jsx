@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Popup from '../Popup';
+import PopupRemove from '../Popup remove';
 import BasicFiles from '../Services/basic';
 import Club from '../Services/club';
 import Daycare from '../Services/daycare';
@@ -28,6 +29,19 @@ function Accordions({ setData, data, student }) {
     }, [arrServices])
 
 
+    // const removeService = (index, e) => {
+    //     const newList = [...arrServices]
+    //     newList.splice(index, 1);
+    //     setArr(newList);
+    //     return (
+    //         e === "תעסוקה" ? delete data.employment :
+    //             e === "דיור" ? delete data.housing :
+    //                 e === "מעון" ? delete data.daycare :
+    //                     e === "מועדונית" ? delete data.club : ""
+    //     )
+    // }
+
+
     return (
         <div className="accordionContainer">
             <Accordion defaultActiveKey={0}>
@@ -37,9 +51,11 @@ function Accordions({ setData, data, student }) {
 
                         <Accordion defaultActiveKey={0}>
                             {arrServices.map((e, index) => {
+
                                 return (
                                     <Accordion.Item eventKey={index}>
-                                        <Accordion.Header>{e}</Accordion.Header>
+                                        <Accordion.Header>{<div className='remove'>{e}  {index > 0 && <PopupRemove service={e} data={data} index={index} setArr={setArr} arrServices={arrServices} />}</div>}</Accordion.Header>
+
                                         <Accordion.Body>
                                             {e === "כללי" && <General student={student} setData={setData} data={data} />}
                                             {e === "דיור" && <Housing setData={setData} data={data} />}
@@ -48,6 +64,7 @@ function Accordions({ setData, data, student }) {
                                             {e === "מועדונית" && <Club student={student} setData={setData} data={data} />}
                                         </Accordion.Body>
                                     </Accordion.Item>
+
 
                                 )
                             })}

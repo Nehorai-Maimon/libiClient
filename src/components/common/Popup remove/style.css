@@ -1,0 +1,29 @@
+.popupHeader {
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    font-family: 'heebo';
+
+}
+
+.modal-header .btn-close {
+    margin: 0px;
+}
+
+.modal-body {
+    text-align: right;
+    margin-right: 20px;
+    font-family: 'heebo';
+    direction: rtl;
+    padding: 30px;
+    line-height: 40px;
+}
+
+.modal-footer {
+    justify-content: flex-start;
+    font-family: 'heebo';
+
+}
+
+.selectService {
+    margin-top: 10px;
+}

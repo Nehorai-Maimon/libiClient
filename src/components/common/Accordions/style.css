@@ -7,7 +7,7 @@
 }
 
 .accordion-button::after {
-    margin-right: 5%;
+    margin-right: 12%;
 }
 
 .btnadd {
@@ -25,7 +25,7 @@
 .removeBtn {
     height: 15px;
     cursor: pointer;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
 }
 
 .save {
@@ -57,4 +57,11 @@
     font-family: "heebo";
     margin-right: 10px;
     margin-bottom: 10px;
+}
+
+.remove {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    justify-content: space-between;
 }
