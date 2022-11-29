@@ -8,7 +8,7 @@ import UserContext from '../../context/UserContext'
 function Login() {
 
     const [userLogin, setUserLogin] = useState("")
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const navigate = useNavigate()
 

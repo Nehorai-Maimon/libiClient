@@ -1,19 +1,19 @@
 import styles from "./style.module.css"
-import { students } from '../../fakeData'
+import { students } from '../../../fakeData'
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { useEffect } from "react";
-import Select from "../../components/common/Select";
-import Input from "../../components/common/Input";
+import Select from "../Select";
+import Input from "../Input";
 import emailjs from 'emailjs-com'
 import { CSVLink } from "react-csv";
-import excel_icon from '../../images/Excel.png'
+import excel_icon from '../../../images/Excel.png'
 
 
 
 
 
-function Table() {
+function TableStudentProj({ studentArr, setStudentArr }) {
     const navigate = useNavigate();
 
     // מערכים של טפסי החובה, לפי שירות
@@ -38,18 +38,21 @@ function Table() {
     const [ageMax, setAgeMax] = useState(120)
     const [services, setServices] = useState("שירותים")
     const [city, setCity] = useState("ישוב")
+
+
+    const [checkAll, setCheckAll] = useState(false)
     // const csvData =
     //     filterStudents;
 
-    let studentsToDownload = []
-    filterStudents.map(e => {
-        return (
-            studentsToDownload.push({ תז: e.id, שם: e.firstName, שם_משפחה: e.lastName, מין: e.gender, איש_קשר: e.contact[0].contactFirstName + " " + e.contact[0].contactLastName + "-" + e.contact[0].relative, איש_קשר_טלפון: e.contact[0].contactPhone, שירותים: e.arrServices })
-        )
-    })
+    // let studentsToDownload = []
+    // filterStudents.map(e => {
+    //     return (
+    //         studentsToDownload.push({ תז: e.id, שם: e.firstName, שם_משפחה: e.lastName, מין: e.gender, איש_קשר: e.contact[0].contactFirstName + " " + e.contact[0].contactLastName + "-" + e.contact[0].relative, איש_קשר_טלפון: e.contact[0].contactPhone, שירותים: e.arrServices })
+    //     )
+    // })
     // console.log(studentsToDownload);
-    const csvData =
-        studentsToDownload;
+    // const csvData =
+    //     studentsToDownload;
 
     useEffect(() => {
         let res = students.filter((e, i) =>
@@ -86,27 +89,27 @@ function Table() {
     const cityOp = ["ישוב", "אדם", "אחיה", "אלון", "אש קודש", "בית אל", "בית אריה – עופרים", "בית חורון", "גבעון החדשה", "גבעת הראל", "גבעת הרואה", "דולב", "חרשה", "חשמונאים", "טלמון", "כוכב השחר", "כוכב יעקב", "כפר אדומים", "כפר האורנים", "כרם רעים", "מבוא חורון", "מגרון", "מעלה לבונה", "מעלה מכמש", "מצפה דני", "מצפה יריחו", "מצפה כרמים", "מתיתיהו", "נוה צוף-חלמיש", "נופי פרת", "נחליאל", "נילי", "נעלה", "נריה", "עדי עד", "עטרת", "עלי", "עלמון – ענתות", "עמיחי", "עפרה", "פסגות", "קידה", "רימונים", "שבות רחל", "שילה", "תל ציון", "אחר"]
 
 
-    function sendEmail(to_name,
-        message,
-        to_email,) {
+    // function sendEmail(to_name,
+    //     message,
+    //     to_email,) {
 
-        emailjs.send("michal12345", "template_rbnr5tr",
-            {
-                to_name,
-                message,
-                to_email,
+    //     emailjs.send("michal12345", "template_rbnr5tr",
+    //         {
+    //             to_name,
+    //             message,
+    //             to_email,
 
-            },
-            "gmKs6WXjj7TUG7mWV")
+    //         },
+    //         "gmKs6WXjj7TUG7mWV")
 
-            .then((response) => {
-                console.log('SUCCESS!', response.status, response.text);
-            })
-            .catch((err) => {
-                console.log('FAILED...', err);
-            });
+    //         .then((response) => {
+    //             console.log('SUCCESS!', response.status, response.text);
+    //         })
+    //         .catch((err) => {
+    //             console.log('FAILED...', err);
+    //         });
 
-    }
+    // }
 
     // for (let i = 0; i < filterStudents.length; i++) {
     //     let generalArr = []
@@ -121,12 +124,42 @@ function Table() {
     //     }
     // }
 
+    const addToArr = (id) => {
+        if (studentArr.filter(e => e === id).length == 0) {
+            // studentArr.push(id)
+            setStudentArr([...studentArr, id])
+        } else {
+
+            const newList = [...studentArr]
+            newList.splice(studentArr.indexOf(id), 1);
+            setStudentArr(newList);
+
+        }
+    }
+    const TocheckAll = () => {
+        setCheckAll(!checkAll)
+        if (!checkAll) {
+            const newList = []
+            filterStudents.forEach(e => newList.push(e.id))
+            setStudentArr(newList)
+        } else {
+            setStudentArr([])
+        }
+    }
+
+    useEffect(() => {
+        console.log(studentArr)
+    }, [studentArr])
+
+
+
+
     return (
         <div>
             <div className={styles.container}>
                 <div className={styles.filters}>
                     <div className={styles.subfilter}>
-                        <button onClick={() => navigate('/new')}>➕</button>
+                        {/* <button onClick={() => navigate('/new')}>➕</button> */}
                         <Select className={styles.select} placeholder={"מין"} options={["מין", "זכר", "נקבה"]} name={"gender"} onChange={(e) => setGender(e.target.value)} />
                         <Select className={styles.select} placeholder={"מגיל"} options={options} onChange={(e) => setAgeMin(e.target.value)} />
                         <Select className={styles.select} placeholder={"עד גיל"} options={options} onChange={(e) => setAgeMax(e.target.value)} />
@@ -138,12 +171,13 @@ function Table() {
                         <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} />
 
 
-                        <CSVLink data={csvData}><img
-                            src={excel_icon} alt="Excel" className={styles.icon} /></CSVLink>
+                        {/* <CSVLink data={csvData}><img
+                            src={excel_icon} alt="Excel" className={styles.icon} /></CSVLink> */}
                     </div>
                 </div>
                 <table>
                     <tr>
+                        <th><input type="checkbox" name='checkAll' onChange={() => TocheckAll()} /></th>
                         <th>תעודת זהות</th>
                         <th>שם פרטי</th>
                         <th>שם משפחה</th>
@@ -152,9 +186,9 @@ function Table() {
                         <th>איש קשר</th>
                         <th>טלפון</th>
                         {/* <th>שירותים</th> */}
-                        <th>מסמכים ואישורים</th>
-                        <th>עריכה</th>
-                        <th>שליחת תזכורת</th>
+                        {/* <th>מסמכים ואישורים</th> */}
+                        {/* <th>עריכה</th> */}
+                        {/* <th>שליחת תזכורת</th> */}
                     </tr>
                     {filterStudents.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
 
@@ -186,6 +220,8 @@ function Table() {
 
                             return (
                                 < tr key={key} >
+                                    <td><input type="checkbox" name='check' checked={studentArr.includes(val.id)} onChange={() => addToArr(val.id)} /></td>
+                                    {/* <td><input type="checkbox" name='check' onChange={() => { if (studentArr.filter(e => e === val.id).length == 0) { studentArr.push(val.id) }; console.log(studentArr) }} /></td> */}
                                     <td onClick={() =>
                                         navigate('/view', { state: difference })}>{val.id}</td>
                                     <td onClick={() => navigate('/view', { state: difference })}>{val.firstName}</td>
@@ -194,12 +230,12 @@ function Table() {
                                     <td onClick={() => navigate('/view', { state: difference })}>{val.gender}</td>
                                     <td onClick={() => navigate('/view', { state: difference })}>{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
                                     <td onClick={() => navigate('/view', { state: difference })}>{val.contact[0].contactPhone}</td>
-                                    {difference.length == 0 ?
+                                    {/* {difference.length == 0 ?
                                         <td onClick={() => navigate('/view', { state: difference })}>{"✅"}</td> :
                                         <td className={styles.red} onClick={() => navigate('/view', { state: difference })}>{difference.map(e => e + ", ")}</td>}
                                     <td><button onClick={() => navigate('/edit')}>📝</button></td>
 
-                                    <td className={difference.length === 0 ? styles.disabled : ""}> <button className={difference.length === 0 ? styles.disabled : ""} disabled={difference.length === 0} onClick={() => sendEmail(val.firstName, difference.map(e => "   *   " + e), val.email)}>✉️</button> </td>
+                                    <td className={difference.length === 0 ? styles.disabled : ""}> <button className={difference.length === 0 ? styles.disabled : ""} disabled={difference.length === 0} onClick={() => sendEmail(val.firstName, difference.map(e => "   *   " + e), val.email)}>✉️</button> </td> */}
                                 </tr>
 
                             )
@@ -211,4 +247,4 @@ function Table() {
     );
 }
 
-export default Table;
+export default TableStudentProj;

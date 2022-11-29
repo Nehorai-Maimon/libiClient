@@ -3,6 +3,7 @@ import styles from "./style.module.css"
 import logo from '../../../images/logo-1.png'
 import userImg from '../../../images/user.jpg'
 import UserContext from "../../../context/UserContext";
+import PopupProject from "../PopupAddProject";
 
 
 const Header = () => {

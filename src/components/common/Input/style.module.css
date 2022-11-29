@@ -6,7 +6,8 @@
 .inputs {
     font-family: 'heebo';
     font-size: 12px;
-    width: 320px;
+    width: 280px;
+    /* width: 320px; */
     padding: 7px;
     text-align: right;
     margin-bottom: 15px;

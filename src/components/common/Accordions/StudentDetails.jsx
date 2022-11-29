@@ -45,6 +45,20 @@ function StudentDetails({ data, setData, student }) {
         const value = address
         setData(values => ({ ...values, [name]: value }));
     }, [address])
+
+    const [days, setDays] = useState({ year: student?.days[student.days.length - 1].year, days: student?.days[student.days.length - 1].days })
+
+    const handleChangeDays = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setDays(values => ({ ...values, [name]: value }));
+    }
+
+    useEffect(() => {
+        const name = "days";
+        const value = days
+        setData(values => ({ ...values, [name]: value }));
+    }, [days])
     const [sensitivity, setSensitivity] = useState({ sensitivity: student?.sensitivity?.sensitivity, more: student?.sensitivity?.more })
     const handleChangeSensitivity = (event) => {
         const name = event.target.name;
@@ -81,6 +95,8 @@ function StudentDetails({ data, setData, student }) {
                         }
                         <Input defaultValue={student?.phone} placeholder={"טלפון (רשות)"} required={false} name={"phone"} type={"number"} onChange={handleChange} />
                         <Input defaultValue={student?.email} placeholder={"(רשות) אימייל"} required={false} name={"email"} type={"email"} onChange={handleChange} />
+                        <Input defaultValue={student?.days[student.days.length - 1].days} placeholder={"מס' ימי נופשון"} name={"days"} type={"number"} onChange={handleChangeDays} />
+                        <Input defaultValue={student?.days[student.days.length - 1].year} placeholder={"לשנת..."} name={"year"} type={"number"} onChange={handleChangeDays} />
                         <span className='titleCheck'>מוכר בשירות:</span>
                         <div className='checkboxcon'>
                             <div className="checkboxstyle"><input type="checkbox" name='אוטיזם' defaultValue={student?.service.includes("אוטיזם")} defaultChecked={student?.service.includes("אוטיזם")} onChange={() => setService1(!service1)} />
@@ -94,6 +110,7 @@ function StudentDetails({ data, setData, student }) {
                         </div>
                         {service4 || filterarr?.length > 0 ? <Input defaultValue={filterarr?.length > 0 ? filterarr[0] : ""} placeholder={"...פירוט"} required={true} name={"other"} onChange={(e) => setService4(e.target.value)} /> : ""
                         }
+
                         <div className='save'>
                             <button onClick={() => save()} className={"styles.btnadd"}>שמירה</button></div>
 

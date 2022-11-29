@@ -1,9 +1,20 @@
 .accordionContainer {
-    min-width: 380px;
+    /* min-width: 280px; */
+    width: min-content
+}
+
+.accordion {
+    /* width: min-content */
+    min-width: 350px;
+
 }
 
 .accordion-button {
     flex-direction: row-reverse;
+}
+
+.accordion-body {
+    padding: 33px;
 }
 
 .accordion-button::after {

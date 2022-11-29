@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from "./style.module.css"
-import students from '../../fakeData'
+import { students, projects } from '../../fakeData'
 import { useLocation } from 'react-router-dom';
 
 
@@ -12,8 +12,30 @@ function StudentView() {
 
     console.log("view", missingFiles);
 
+    //פרויקטים בהם השתתף החניך
+    const projectsByStudent = projects.filter(e => e.studentsPart.includes(student.id))
+    console.log(projectsByStudent)
+
+    //פרויקטים ששולמו
+    const projectsPaidByStudent = projects.filter(e => e.studentsPaid.includes(student.id))
+    console.log(projectsPaidByStudent)
+
+    const countDaysFunction = (year) => {
+        let countDays = 0
+        for (let i of projectsPaidByStudent) {
+            if (i.fromDate.slice(0, 4) === year) {
+                countDays += Number(i.days)
+            }
+            console.log(i.fromDate.slice(0, 4), i.fromDate.slice(0, 4) === year);
+        }
+        return countDays
+    }
+
+    //כדי להציג את ימי הנופשון של השנה הנוכחית
+    const currentYear = new Date().getFullYear();
+    console.log(currentYear);
     return (
-        <div>
+        <div className={styles.con}>
             <div className={styles.titleStudent}> {student.firstName + " " + student.lastName}</div>
             <div className={styles.main}>
                 <div className={styles.container}>
@@ -40,6 +62,13 @@ function StudentView() {
                             <div className={styles.line}>  <span className={styles.question}>מוכר בשירות: </span>{student?.service.map(e => "▪️" + e + " ")}</div>
                             <div className={styles.line}>  <span className={styles.question}>אבחנה : </span>{student?.diagnosis}</div>
                         </div>
+                        {student?.days?.map(e => e.year == currentYear ? (
+                            <div className={styles.subContainer}>
+                                <div className={styles.line}>  <span className={styles.question}>זכאי לימי נופשון לשנת {e.year}: </span>{e.days} </div>
+                                <div className={styles.line}>  <span className={styles.question}>מתוכם מומשו : </span>{countDaysFunction(e.year)}</div>
+                                <div className={styles.line}>  <span className={styles.question}>מתוכם נותרו : </span>{e.days - countDaysFunction(e.year)}</div>
+                            </div>) : ""
+                        )}
                     </div>
                     <div className={styles.box}>
                         <div className={styles.title}>אנשי קשר</div>
@@ -77,6 +106,17 @@ function StudentView() {
                 </div>
 
                 <div className={styles.container}>
+                    <div className={styles.box}>
+                        <div className={styles.title}>השתתפות בפרויקטים </div>
+
+                        {projectsByStudent?.map(e =>
+                            <div className={styles.subContainer}>
+                                <div className={styles.line}>  <span className={styles.question}>▪️ </span>{e.name + "  |  " + e.fromDate + "  -  " + e.untilDate + "  |  " + e.days + "  ימי נופשון  "}</div>
+                            </div>)}
+
+
+
+                    </div>
                     <div className={styles.box}>
                         <div className={styles.title}>מטרות ויעדים</div>
 

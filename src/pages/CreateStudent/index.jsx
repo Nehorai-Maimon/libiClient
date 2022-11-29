@@ -31,7 +31,7 @@ function CreateStudent() {
 
 
     return (
-        <div>
+        <div className={styles.main}>
             <form >
                 <div className={styles.title}>יצירת חניך חדש
                     <div className={styles.save}>

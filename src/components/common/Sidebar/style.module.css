@@ -1,0 +1,30 @@
+.headerContainer {
+
+
+    height: 100%;
+    width: 7%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: white;
+    overflow-x: hidden;
+    padding-top: 20px;
+    z-index: 1;
+    box-shadow: 1px -2px 14px 0px black
+}
+
+.headerInnerWidth {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    margin-top: 150%;
+
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
