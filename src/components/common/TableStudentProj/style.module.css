@@ -1,11 +1,12 @@
 .container {
-    width: 95%;
-    margin-top: 5%;
+    /* width: 95%; */
+    width: 1400px;
+    /* margin-top: 5%; */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    zoom: 80%;
+    zoom: 60%;
 }
 
 table {
@@ -47,7 +48,7 @@ tr:hover {
 .filters {
     display: flex;
     width: 90%;
-    flex-direction: row-reverse;
+    /* flex-direction: row-reverse; */
     justify-content: space-between;
     margin-bottom: 15px;
 
@@ -65,8 +66,8 @@ tr:hover {
     gap: 25px;
 }
 
-button {
-    height: 35px;
+.all {
+    /* height: 35px; */
     min-width: 35px;
     font-size: 15px;
     font-family: 'heebo';
@@ -74,8 +75,9 @@ button {
     border: solid;
     border-radius: 3px;
     background-color: white;
-    /* border-color: rgb(250, 230, 230); */
-    ;
+    height: 40px;
+    line-height: normal;
+    margin-top: 7px;
 }
 
 button:hover {

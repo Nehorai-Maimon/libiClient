@@ -37,7 +37,7 @@ function Layout() {
                     {user &&
                         <>
 
-                            <Route path="/login" element={<Navigate to="/michal" />} />
+                            <Route path="/login" element={<Navigate to="/table" />} />
                             <Route path="/michal" element={<Test />} />
                             <Route path="/table" element={<Table />} />
                             <Route path="/edit" element={<EditStudent />} />

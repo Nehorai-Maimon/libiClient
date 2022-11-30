@@ -16,10 +16,15 @@ import excel_icon from '../../../images/Excel.png'
 function TableStudentIn({ studentsIn }) {
     const project = projects[0]
 
-    const filterStudents = students.filter(e => studentsIn?.includes(e.id))
+    let filter = students.filter(e => studentsIn?.includes(e.id))
 
+    const [filterStudents, setfilterStudents] = useState(filter)
     const [studentsPart, setStudentsPart] = useState(project?.studentsPart || [])
     const [studentsPaid, setStudentsPaid] = useState(project?.studentsPaid || [])
+
+    useEffect(() => {
+        setfilterStudents(students.filter(e => studentsIn?.includes(e.id)))
+    }, [studentsIn])
 
     //age
     function getAge(dateString) {
@@ -46,6 +51,42 @@ function TableStudentIn({ studentsIn }) {
     // console.log(studentsToDownload);
     // const csvData =
     //     studentsToDownload;
+
+
+    const [part, setPart] = useState("כולם")
+    const [paid, setPaid] = useState("כולם")
+
+    useEffect(() => {
+        if (part == "השתתף" && paid == "כולם") {
+            setfilterStudents(filter.filter(e => studentsPart.includes(e.id)))
+        }
+        else if (part == "כולם" && paid == "שילם") {
+            setfilterStudents(filter.filter(e => studentsPaid.includes(e.id)))
+        }
+        else if (part == "כולם" && paid == "לא שילם") {
+            setfilterStudents(filter.filter(e => !(studentsPaid.includes(e.id))))
+        }
+        else if (part == "לא השתתף" && paid == "כולם") {
+            setfilterStudents(filter.filter(e => !(studentsPart.includes(e.id))))
+        }
+        else if (part == "השתתף" && paid == "שילם") {
+            setfilterStudents(filter.filter(e => (studentsPart.includes(e.id) && studentsPaid.includes(e.id))))
+        }
+        else if (part == "השתתף" && paid == "לא שילם") {
+            setfilterStudents(filter.filter(e => (studentsPart.includes(e.id) && !(studentsPaid.includes(e.id)))))
+        }
+        else if (part == "לא השתתף" && paid == "לא שילם") {
+            setfilterStudents(filter.filter(e => (!(studentsPart.includes(e.id)) && !(studentsPaid.includes(e.id)))))
+        }
+        else if (part == "לא השתתף" && paid == "שילם") {
+            setfilterStudents(filter.filter(e => (!(studentsPart.includes(e.id)) && (studentsPaid.includes(e.id)))))
+        }
+        else {
+            if (part == "כולם" && paid == "כולם") {
+                setfilterStudents(filter)
+            }
+        }
+    }, [part, paid])
 
 
 
@@ -95,15 +136,13 @@ function TableStudentIn({ studentsIn }) {
     return (
         <div>
             <div className={styles.container}>
-                {/* <div className={styles.filters}> */}
-                {/* <div className={styles.subfilter}>
-                        <Select className={styles.select} placeholder={"מין"} options={["מין", "זכר", "נקבה"]} name={"gender"} onChange={(e) => setGender(e.target.value)} />
-                        <Select className={styles.select} placeholder={"מגיל"} options={options} onChange={(e) => setAgeMin(e.target.value)} />
-                        <Select className={styles.select} placeholder={"עד גיל"} options={options} onChange={(e) => setAgeMax(e.target.value)} />
-                        <Select className={styles.select} placeholder={"שירותים"} options={servicesOp} onChange={(e) => setServices(e.target.value)} />
-                        <Select className={styles.select} placeholder={"ישוב"} options={cityOp} onChange={(e) => setCity(e.target.value)} />
-                        <button onClick={resate}>הצג את כולם</button>
-                    </div> */}
+                <div className={styles.filters}>
+                    <div className={styles.subfilter}>
+                        <Select className={styles.select} placeholder={"השתתפו"} options={["כולם", "השתתף", "לא השתתף"]} name={"part"} onChange={(e) => setPart(e.target.value)} />
+                        <Select className={styles.select} placeholder={"שילמו"} options={["כולם", "שילם", "לא שילם"]} name={"paid"} onChange={(e) => setPaid(e.target.value)} />
+                    </div>
+                    <button onClick={() => { setfilterStudents(filter) }}>הצג את כולם</button>
+                </div>
                 {/* <div className={styles.search}> */}
                 {/* <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} /> */}
 

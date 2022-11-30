@@ -159,13 +159,12 @@ function TableStudentProj({ studentArr, setStudentArr }) {
             <div className={styles.container}>
                 <div className={styles.filters}>
                     <div className={styles.subfilter}>
-                        {/* <button onClick={() => navigate('/new')}>➕</button> */}
+                        <button className={styles.all} onClick={resate}>הצג את כולם</button>
                         <Select className={styles.select} placeholder={"מין"} options={["מין", "זכר", "נקבה"]} name={"gender"} onChange={(e) => setGender(e.target.value)} />
                         <Select className={styles.select} placeholder={"מגיל"} options={options} onChange={(e) => setAgeMin(e.target.value)} />
                         <Select className={styles.select} placeholder={"עד גיל"} options={options} onChange={(e) => setAgeMax(e.target.value)} />
                         <Select className={styles.select} placeholder={"שירותים"} options={servicesOp} onChange={(e) => setServices(e.target.value)} />
                         <Select className={styles.select} placeholder={"ישוב"} options={cityOp} onChange={(e) => setCity(e.target.value)} />
-                        <button onClick={resate}>הצג את כולם</button>
                     </div>
                     <div className={styles.search}>
                         <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} />

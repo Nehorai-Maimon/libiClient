@@ -6,6 +6,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from '../../components/common/Select';
 import Input from '../../components/common/Input';
+import { CSVLink } from "react-csv";
+import excel_icon from '../../images/Excel.png'
+
 
 
 
@@ -18,6 +21,13 @@ function Projects() {
 
     const [type, setType] = useState("אירוע")
     const [status, setStatus] = useState("סטטוס")
+    const [year, setYear] = useState("שנה")
+
+    const currentYear = new Date().getFullYear();
+    let years = ["שנה"]
+    for (let i = currentYear; i <= 2030; i++) {
+        years.push(i)
+    }
 
     const filterSearch = (value) => {
         setFilterProject(projects.filter(e => e.name.includes(value))
@@ -28,15 +38,30 @@ function Projects() {
         setFilterProject(projects)
 
     }
+
+
     useEffect(() => {
         let res = projects.filter(e =>
-            type !== "אירוע" && status === "סטטוס" ? e.type === type :
-                type === "אירוע" && status !== "סטטוס" ? e.status === status :
-                    type !== "אירוע" ? e.type === type && e.status === status :
-                        status !== "סטטוס" ? e.status === status && e.type === type :
-                            projects)
+            year !== "שנה" && type === "אירוע" ? e.fromDate.slice(0, 4) == year :
+                year !== "שנה" && status === "סטטוס" ? e.fromDate.slice(0, 4) == year :
+                    year !== "שנה" && status !== "סטטוס" ? e.fromDate.slice(0, 4) == year && e.type === type && e.status === status :
+                        type !== "אירוע" && status === "סטטוס" ? e.type === type :
+                            type === "אירוע" && status !== "סטטוס" ? e.status === status :
+                                type !== "אירוע" ? e.type === type && e.status === status :
+                                    status !== "סטטוס" ? e.status === status && e.type === type :
+                                        projects)
         setFilterProject(res)
-    }, [type, status])
+    }, [type, status, year])
+
+    let projectsToDownload = []
+    filterProject.map(e => {
+        return (
+            projectsToDownload.push({ שם_הפרויקט: e.name, סוג: e.type, ימי_נופשון: e.days, מתאריך: e.fromDate, עד_תאריך: e.untilDate, סטטוס: e.status, השתתפו: e.studentsPart.length, שילמו: e.studentsPaid.length })
+        )
+    })
+    // console.log(studentsToDownload);
+    const csvData =
+        projectsToDownload;
 
 
 
@@ -48,6 +73,7 @@ function Projects() {
                     <div ><PopupProject /></div>
                     <Select className={styles.select} placeholder={"סוג אירוע"} options={['אירוע', "שבת", "קייטנה", "נופשון"]} name={"type"} onChange={(e) => setType(e.target.value)} />
                     <Select className={styles.select} placeholder={"סטטוס"} options={['סטטוס', "פתוח", "סגור"]} name={"status"} onChange={(e) => setStatus(e.target.value)} />
+                    <Select className={styles.select} placeholder={"שנה"} options={years} name={"year"} onChange={(e) => setYear(e.target.value)} />
 
                     <button onClick={resate}>הצג הכל</button>
                 </div>
@@ -55,8 +81,8 @@ function Projects() {
                     <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} />
 
 
-                    {/* <CSVLink data={csvData}><img
-                        src={excel_icon} alt="Excel" className={styles.icon} /></CSVLink> */}
+                    <CSVLink data={csvData}><img
+                        src={excel_icon} alt="Excel" className={styles.icon} /></CSVLink>
                 </div>
             </div>
             <table>

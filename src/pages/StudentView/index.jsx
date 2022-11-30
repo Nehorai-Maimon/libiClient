@@ -34,6 +34,7 @@ function StudentView() {
     //כדי להציג את ימי הנופשון של השנה הנוכחית
     const currentYear = new Date().getFullYear();
     console.log(currentYear);
+
     return (
         <div className={styles.con}>
             <div className={styles.titleStudent}> {student.firstName + " " + student.lastName}</div>

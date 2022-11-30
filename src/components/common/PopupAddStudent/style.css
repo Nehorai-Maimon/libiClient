@@ -1,3 +1,8 @@
+.modal.show .modal-dialog {
+    display: flex;
+    justify-content: center;
+}
+
 .popupHeader {
     justify-content: space-between;
     flex-direction: row-reverse;
