@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/esm/Button';
+import { useNavigate } from 'react-router-dom';
 import Popup from '../Popup';
 import PopupRemove from '../Popup remove';
 import BasicFiles from '../Services/basic';
 import Club from '../Services/club';
-import Daycare from '../Services/daycare';
+import Daycare from '../../../pages/Daycare/daycare';
 import Employment from '../Services/employment';
 import General from '../Services/general';
 import Housing from '../Services/housing';
@@ -12,7 +14,7 @@ import './style.css'
 
 
 function Accordions({ setData, data, student }) {
-
+    const navigate = useNavigate()
 
     const [arrServices, setArr] = useState(["כללי"])
 
@@ -60,7 +62,8 @@ function Accordions({ setData, data, student }) {
                                             {e === "כללי" && <General student={student} setData={setData} data={data} />}
                                             {e === "דיור" && <Housing setData={setData} data={data} />}
                                             {e === "תעסוקה" && <Employment setData={setData} data={data} />}
-                                            {e === "מעון" && <Daycare student={student} setData={setData} data={data} />}
+                                            {e === "מעון" && <button onClick={() => navigate('/dayCare')}>ניהול מעון</button>}
+                                            {/* {e === "מעון" && <Daycare student={student} setData={setData} data={data} />} */}
                                             {e === "מועדונית" && <Club student={student} setData={setData} data={data} />}
                                         </Accordion.Body>
                                     </Accordion.Item>

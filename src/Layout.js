@@ -11,6 +11,7 @@ import Sidebar from './components/common/Sidebar';
 import Projects from './pages/Project';
 import Table from './pages/TableStudent';
 import ProjectView from './pages/ProjectView';
+import Daycare from './pages/Daycare/daycare';
 
 
 function Layout() {
@@ -45,6 +46,7 @@ function Layout() {
                             <Route path="/view" element={<StudentView />} />
                             <Route path="/projects" element={<Projects />} />
                             <Route path="/projectView" element={<ProjectView />} />
+                            <Route path="/dayCare" element={<Daycare />} />
 
                         </>}
                 </Routes>
