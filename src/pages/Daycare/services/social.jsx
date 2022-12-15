@@ -3,16 +3,15 @@ import AccordionYears from '../Accordion'
 import FixedFiles from '../fixedFiles'
 import InnerAcc_Social from './innerAc_social'
 
-function DayCare_Social({ data, years }) {
-    const [social, setSocial] = useState("social")
+function DayCare_Social({ data, years, service }) {
 
     let arrfileFixed = [{ name: "אינטייק סוציאלי" }]
     let arrfile = []
 
     return (
         <div>
-            <FixedFiles data={data} arrfile={arrfileFixed} service={social} />
-            <AccordionYears years={years} children={<InnerAcc_Social data={data} arrfile={arrfile} service={social} />} />
+            <FixedFiles data={data} arrfile={arrfileFixed} service={service} />
+            <AccordionYears years={years} data={data} arrfile={arrfile} service={service} />
         </div>
     )
 }

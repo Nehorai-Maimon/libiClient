@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
 import styles from "./style.module.css"
-import { students } from '../../fakeData';
+import { daycare, students } from '../../fakeData';
 import StudentDetails from '../../components/common/Accordions/StudentDetails'
 import ContactDetails from '../../components/common/Accordions/Contacts'
 import AboutStudent from '../../components/common/Accordions/AboutStudent';

@@ -4,7 +4,6 @@ import FixedFiles from '../fixedFiles'
 import InnerAcc_para from './innerAc_para'
 
 function DayCare_Para({ data, years, service }) {
-    // const [speech, setSpeech] = useState("speech")
 
     let arrfileFixed = []
     let arrfile = [{ name: "טבלת GAS" }, { name: "טופס קידוד" }]
@@ -13,7 +12,7 @@ function DayCare_Para({ data, years, service }) {
         <div>
             <FixedFiles data={data} arrfile={arrfileFixed} service={service} />
 
-            <AccordionYears years={years} children={<InnerAcc_para data={data} service={service} arrfile={arrfile} />} />
+            <AccordionYears years={years} data={data} service={service} arrfile={arrfile} />
 
         </div>
     )

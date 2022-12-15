@@ -12,7 +12,7 @@ function DayCare_Services({ data, years, service }) {
         <div>
             <FixedFiles data={data} arrfile={arrfileFixed} service={service} />
 
-            <AccordionYears years={years} children={<InnerAcc_services data={data} arrfile={arrfile} service={service} />} />
+            <AccordionYears years={years} data={data} service={service} arrfile={arrfile} />
         </div>
     )
 }

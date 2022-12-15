@@ -67,4 +67,119 @@ const projects = [{
 
 }]
 
-export { students, projects };
+const daycare = [{
+    student: 1,
+    general: [{ fixed: [{ files: [{ fileName: "שאלון תזונתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }, { filesOp: [{ fileName: "שאלון תזונתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, class: "תינוקות", tsa: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" } }],
+        [{ year: 2023, class: "בוגרים", tsa: { date: "19/10/2023", author: "מיכל", content: "bla bla bla" } }]]
+    }],
+
+    speech: [{ fixed: [{ filesOp: [{ fileName: "אבחון קלינאית תקשורת", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "קלינאית תקשורת" }, start: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2022", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "קלינאית תקשורת" }, start: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2023", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] }]]
+
+    }],
+
+    occupation: [{ fixed: [{ filesOp: [{ fileName: "אבחון מרפאה בעיסוק ", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "ריפוי בעיסוק" }, start: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2022", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "ריפוי בעיסוק" }, start: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2023", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] }]]
+
+    }],
+
+    physiotherapy: [{ fixed: [{ filesOp: [{ fileName: "אבחון פיזיוטרפיסט ", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "פיזיוטרפיה" }, start: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2022", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "פיזיוטרפיה" }, start: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2023", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] }]]
+
+    }],
+
+    dietician: [{ fixed: [{ filesOp: [{ fileName: "שאלון תזונתי", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "דיאטנית" }, filesOp: [{ fileName: "תפריט", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "דיאטנית" }, filesOp: [{ fileName: "תפריט", file: "bla bla" }] }]]
+
+    }],
+
+    teacher: [{ fixed: [{ filesOp: [] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "גננת" }, filesOp: [{ fileName: "בלה", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "גננת" }, filesOp: [{ fileName: "בלה", file: "bla bla" }] }]]
+
+    }],
+
+    medical: [{ fixed: [{ filesOp: [{ fileName: "שאלון רפואי", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "רפואי" }, filesOp: [{ fileName: "בלה", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "רפואי" }, filesOp: [{ fileName: "בלה", file: "bla bla" }] }]]
+
+    }],
+
+    social: [{ fixed: [{ files: [{ fileName: " אינטייק סוציאלי", file: "bla bla" }] }, { filesOp: [{ fileName: "שאלון משפחתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "עו''ס" }, weekly_summary: [{ date: "12/12/2022", author: "מיכל", content: "עו''ס" }, { date: "19/12/2022", author: "מיכל", content: "bla bla bla" }], goals: { date: "12/12/2022", author: "מיכל", content: "עו''ס מטרות" } },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "עו''ס" }, weekly_summary: [{ date: "12/12/2023", author: "מיכל", content: "עו''ס" }, { date: "19/12/2023", author: "מיכל", content: "bla bla bla" }], goals: { date: "12/12/2023", author: "מיכל", content: "עו''ס מטרות" } }]]
+    }]
+},
+{
+    student: 2,
+    general: [{ fixed: [{ files: [{ fileName: "שאלון תזונתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }, { filesOp: [{ fileName: "שאלון תזונתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, class: "תינוקות", tsa: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" } }],
+        [{ year: 2023, class: "בוגרים", tsa: { date: "19/10/2023", author: "מיכל", content: "bla bla bla" } }]]
+    }],
+
+    speech: [{ fixed: [{ filesOp: [{ fileName: "אבחון קלינאית תקשורת", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "קלינאית תקשורת" }, start: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2022", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "קלינאית תקשורת" }, start: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2023", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] }]]
+
+    }],
+
+    occupation: [{ fixed: [{ filesOp: [{ fileName: "אבחון מרפאה בעיסוק ", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "ריפוי בעיסוק" }, start: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2022", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "ריפוי בעיסוק" }, start: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2023", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] }]]
+
+    }],
+
+    physiotherapy: [{ fixed: [{ filesOp: [{ fileName: "אבחון פיזיוטרפיסט ", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "פיזיוטרפיה" }, start: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2022", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2022", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "פיזיוטרפיה" }, start: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, middle: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, end: { date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, weekly_summary: [{ date: "12/12/2023", author: "מיכל", content: "bla bla bla" }, { date: "19/12/2023", author: "מיכל", content: "bla bla bla" }], files: [{ fileName: "טבלת GAS", file: "bla bla" }, { fileName: "טופס קידוד", file: "bla bla" }] }]]
+
+    }],
+
+    dietician: [{ fixed: [{ filesOp: [{ fileName: "שאלון תזונתי", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "דיאטנית" }, filesOp: [{ fileName: "תפריט", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "דיאטנית" }, filesOp: [{ fileName: "תפריט", file: "bla bla" }] }]]
+
+    }],
+
+    teacher: [{ fixed: [{ filesOp: [] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "גננת" }, filesOp: [{ fileName: "בלה", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "גננת" }, filesOp: [{ fileName: "בלה", file: "bla bla" }] }]]
+
+    }],
+
+    medical: [{ fixed: [{ filesOp: [{ fileName: "שאלון רפואי", file: "bla bla" }] }] },
+    {
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "רפואי" }, filesOp: [{ fileName: "בלה", file: "bla bla" }] },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "רפואי" }, filesOp: [{ fileName: "בלה", file: "bla bla" }] }]]
+
+    }],
+
+    social: [{ fixed: [{ files: [{ fileName: " אינטייק סוציאלי", file: "bla bla" }] }, { filesOp: [{ fileName: "שאלון משפחתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    {
+
+        years: [[{ year: 2022, tsa: { date: "12/12/2022", author: "מיכל", content: "עו''ס" }, weekly_summary: [{ date: "12/12/2022", author: "מיכל", content: "עו''ס" }, { date: "19/12/2022", author: "מיכל", content: "bla bla bla" }], goals: { date: "12/12/2022", author: "מיכל", content: "עו''ס מטרות" } },
+        { year: 2023, tsa: { date: "12/12/2023", author: "מיכל", content: "עו''ס" }, weekly_summary: [{ date: "12/12/2023", author: "מיכל", content: "עו''ס" }, { date: "19/12/2023", author: "מיכל", content: "bla bla bla" }], goals: { date: "12/12/2023", author: "מיכל", content: "עו''ס מטרות" } }]]
+    }]
+}
+]
+export { students, projects, daycare };

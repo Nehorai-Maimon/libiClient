@@ -62,7 +62,8 @@ function Accordions({ setData, data, student }) {
                                             {e === "כללי" && <General student={student} setData={setData} data={data} />}
                                             {e === "דיור" && <Housing setData={setData} data={data} />}
                                             {e === "תעסוקה" && <Employment setData={setData} data={data} />}
-                                            {e === "מעון" && <button onClick={() => navigate('/dayCare')}>ניהול מעון</button>}
+                                            {e === "מעון" && student ? <button onClick={() => navigate(`/dayCare/${student.id}`)}>ניהול מעון</button> : e === "מעון" && <button onClick={() => navigate('/dayCare')}>ניהול מעון</button>}
+                                            {/* {e === "מעון" && <button onClick={() => navigate('/dayCare')}>ניהול מעון</button>} */}
                                             {/* {e === "מעון" && <Daycare student={student} setData={setData} data={data} />} */}
                                             {e === "מועדונית" && <Club student={student} setData={setData} data={data} />}
                                         </Accordion.Body>

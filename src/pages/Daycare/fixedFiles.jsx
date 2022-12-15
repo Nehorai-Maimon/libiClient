@@ -5,7 +5,18 @@ import remove from '../../images/delete.png'
 
 
 function FixedFiles({ arrfile = [], data, service }) {
-    const [listFile, setListFile] = useState([]);
+
+    const [listFile, setListFile] = useState(data ? service === "general" ? data.general[0].fixed[1].filesOp :
+        service === "speech" ? data.speech[0].fixed[0].filesOp :
+            service === "occupation" ? data.occupation[0].fixed[0].filesOp :
+                service === "physiotherapy" ? data.occupation[0].fixed[0].filesOp :
+                    service === "dietician" ? data.dietician[0].fixed[0].filesOp :
+                        service === "teacher" ? data.teacher[0].fixed[0].filesOp :
+                            service === "medical" ? data.medical[0].fixed[0].filesOp :
+                                service === "social" ? data.social[0].fixed[1].filesOp :
+                                    [] : [])
+
+
     const [fileName, setFileName] = useState("")
 
     const addFile = () => {
@@ -15,6 +26,7 @@ function FixedFiles({ arrfile = [], data, service }) {
         const newList = [...listFile]
         newList.splice(index, 1);
         setListFile(newList);
+        // מחיקה בשרת
         // return (
         //     delete fileOp[`file optionaly ${index + 1}`]
         // )
@@ -69,7 +81,7 @@ function FixedFiles({ arrfile = [], data, service }) {
                 {listFile.map((x, index) => {
                     return (
                         <div className="removeBtn">
-                            <File onChangeFile={handleChangeFileOp} optional setFileName={setFileName} name={`file optionaly ${index + 1}`} />
+                            <File defaultValue={x.fileName} onChangeFile={handleChangeFileOp} optional setFileName={setFileName} name={x.fileName || `file optionaly ${index + 1}`} />
                             <button onClick={() => console.log(fileOp, index)} className="up">V</button>
 
                             {listFile.length - 1 == index &&

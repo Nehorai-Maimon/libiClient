@@ -47,6 +47,7 @@ function Layout() {
                             <Route path="/projects" element={<Projects />} />
                             <Route path="/projectView" element={<ProjectView />} />
                             <Route path="/dayCare" element={<Daycare />} />
+                            <Route path="/dayCare/:id" element={<Daycare />} />
 
                         </>}
                 </Routes>
