@@ -12,6 +12,7 @@ import Projects from './pages/Project';
 import Table from './pages/TableStudent';
 import ProjectView from './pages/ProjectView';
 import Daycare from './pages/Daycare/daycare';
+import Dashboard from './pages/Dashboard';
 
 
 function Layout() {
@@ -39,6 +40,7 @@ function Layout() {
                         <>
 
                             <Route path="/login" element={<Navigate to="/table" />} />
+                            <Route path="/dashboard" element={<Dashboard     />} />
                             <Route path="/michal" element={<Test />} />
                             <Route path="/table" element={<Table />} />
                             <Route path="/edit" element={<EditStudent />} />

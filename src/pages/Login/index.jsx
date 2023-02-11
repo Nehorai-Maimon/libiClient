@@ -17,7 +17,7 @@ function Login() {
         setUser(userLogin)
         console.log(userLogin);
         //קריאה לשרת לבדיקת משתמש
-        navigate('/michal')
+        navigate('/dashboard')
 
     }
 

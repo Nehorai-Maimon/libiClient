@@ -4,11 +4,12 @@ import logo from '../../../images/logo-1.png'
 import userImg from '../../../images/user.jpg'
 import UserContext from "../../../context/UserContext";
 import PopupProject from "../PopupAddProject";
+import { useNavigate } from "react-router-dom";
 
 
 const Header = () => {
     const { user, setUser } = useContext(UserContext);
-
+    const navigate = useNavigate()
     return (
         <div className={styles.headerContainer}>
             <div className={styles.headerInnerWidth}>
@@ -31,6 +32,7 @@ const Header = () => {
 
 
                 <img
+                    onClick={() => navigate("/dashboard")}
                     src={logo}
                     alt="logo"
                     className={styles.logo}

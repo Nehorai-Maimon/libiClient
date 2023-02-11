@@ -16,6 +16,7 @@ function CreateStudent() {
 
     const submit = () => {
         console.log(data)
+        
     }
 
 
