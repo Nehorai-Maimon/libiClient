@@ -13,10 +13,19 @@ function CreateStudent() {
     const [data, setData] = useState({});
     const [status, setStatus] = useState(true)
 
-
+//יש באג בעמוד הזה, כל הזמן מתנתק בשליחה / שמירה
     const submit = () => {
         console.log(data)
-        
+        fetch('http://localhost:4000/student/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then(data => console.log('Success:', data))
+            .catch(error=> console.error('Error:', error));
     }
 
 
@@ -37,7 +46,7 @@ function CreateStudent() {
                 <div className={styles.title}>יצירת חניך חדש
                     <div className={styles.save}>
                         <SwitchBtn label={"סטטוס פעיל"} status={status} setStatus={setStatus} />
-                        <button name="submit" className={styles.btnadd} onClick={() => submit()} >שמירה</button>
+                        <button name="submit" type='button' className={styles.btnadd} onClick={() => submit()} >שמירה</button>
                     </div>
                 </div>
                 <div className={styles.createStudent}>

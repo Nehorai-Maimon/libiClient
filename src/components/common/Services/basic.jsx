@@ -26,6 +26,7 @@ function BasicFiles({ setService, onClick, arrfile = [], student }) {
     const onChangeFile = (e) => {
         const name = e.target.name
         const fileSize = (e.target.files[0].size / 1000) + "KB";
+        console.dir(e.target);
 
         // setFile((current) => ({
         //     ...current,
@@ -61,7 +62,7 @@ function BasicFiles({ setService, onClick, arrfile = [], student }) {
         //     }
         // }))
         fileOp.push({ name: fileName, file: e.target.files[0].name })
-
+        console.log(e.target.files[0]);
         setFileName("")
     }
 

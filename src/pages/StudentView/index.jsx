@@ -122,16 +122,20 @@ function StudentView() {
                         <div className={styles.title}>מטרות ויעדים</div>
 
                         <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.textA}</div>
+                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.aboutStudent}</div>
+                        </div>
+
+                        <div className={styles.subContainer}>
+                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.aboutfamily}</div>
                         </div>
 
                         <div className={styles.subContainer}>
 
-                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.textB}</div>
+                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.generalGoals}</div>
                         </div>
                         <div className={styles.subContainer}>
 
-                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.textC}</div>
+                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.goalsToYear}</div>
                         </div>
 
                     </div>

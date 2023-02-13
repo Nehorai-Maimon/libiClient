@@ -11,7 +11,7 @@ function File({ onChangeFile, onChangeDate, placeholder, defaultValue, name, dat
             {optional ?
                 <label for="fileInput">
                     <span className={styles.addFile}><input className={styles.fileName} placeholder={defaultValue || '...שם הטופס'} onChange={(e) => setFileName(e.target.value)} name={name} />
-                        <input id="fileInput" type="file" onChange={onChangeFile} name={name} />
+                        <input id="fileInput" type="file" onChange={onChangeFile} name={name}  />
                     </span>
                 </label> :
                 <label for="fileInput">

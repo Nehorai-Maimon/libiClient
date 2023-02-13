@@ -45,6 +45,16 @@ function Medications({ setData, data, listMedicationEdit }) {
         else {
             medication.push({ name: med, time: time })
         }
+        // fetch('http://localhost:4000/student/changeMedication', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(medication),
+        // })
+        //     .then((response) => response.json())
+        //     .then(data => console.log('Success:', data))
+        //     .catch(error=> console.error('Error:', error));
     }
     // const handleChangeMedication = (event) => {
     //     const name = event.target.name;
@@ -87,7 +97,7 @@ function Medications({ setData, data, listMedicationEdit }) {
                                                         <img className="removeBtn" onClick={() => removeMedication(index)}
 
                                                             src={remove} alt={"delete"} />}
-                                                    <button onClick={() => save(index)} className={"styles.btnadd"}>שמירה</button>
+                                                    <button type='button' onClick={() => save(index)} className={"styles.btnadd"}>שמירה</button>
                                                 </div>
 
 

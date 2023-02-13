@@ -67,6 +67,17 @@ function ContactDetails({ setData, data, listContactEdit }) {
         }
         setCon([{ contactFirstName: "", contactLastName: "", contactPhone: "", contactEmail: "", relative: "", comment: "" }])
         setIsChecked(false)
+        
+        // fetch('http://localhost:4000/student/changeContact', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(contact),
+        // })
+        //     .then((response) => response.json())
+        //     .then(data => console.log('Success:', data))
+        //     .catch(error=> console.error('Error:', error));
     }
 
     useEffect(() => {
@@ -121,7 +132,7 @@ function ContactDetails({ setData, data, listContactEdit }) {
 
 
                                                     </>}
-                                                <button onClick={() => save(index)} className={"styles.btnadd"}>שמירה</button>
+                                                <button type='button' onClick={() => save(index)} className={"styles.btnadd"}>שמירה</button>
 
 
 

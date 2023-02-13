@@ -19,10 +19,10 @@ function AboutStudent({ setData, data, student }) {
                 <Accordion.Item eventKey={0}>
                     <Accordion.Header>על החניך ומשפחתו, מטרות ויעדים</Accordion.Header>
                     <Accordion.Body>
-                        <textarea defaultValue={student?.textA} placeholder={"...נתונים על החניך בשפה חופשית"} name={"text a"} onChange={handleChange} />
-                        <textarea defaultValue={student?.textB} placeholder={"...נתונים על משפחת החניך בשפה חופשית"} name={"text b"} onChange={handleChange} />
-                        <textarea defaultValue={student?.textC} placeholder={"...יעדי הארגון לחניך"} name={"text c"} onChange={handleChange} />
-                        <textarea defaultValue={student?.textD} placeholder={"...מטרות לשנה הקרובה"} name={"text d"} onChange={handleChange} />
+                        <textarea defaultValue={student?.aboutStudent} placeholder={"...נתונים על החניך בשפה חופשית"} name={"aboutStudent"} onChange={handleChange} />
+                        <textarea defaultValue={student?.aboutfamily} placeholder={"...נתונים על משפחת החניך בשפה חופשית"} name={"aboutfamily"} onChange={handleChange} />
+                        <textarea defaultValue={student?.generalGoals} placeholder={"...יעדי הארגון לחניך"} name={"generalGoals"} onChange={handleChange} />
+                        <textarea defaultValue={student?.goalsToYear} placeholder={"...מטרות לשנה הקרובה"} name={"goalsToYear"} onChange={handleChange} />
                     </Accordion.Body>
                 </Accordion.Item>
 

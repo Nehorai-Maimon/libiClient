@@ -29,16 +29,13 @@ function Layout() {
                     </>}
 
                 <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="*" element={<Navigate to="/login" />} />
 
                     {!user &&
                         <>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="*" element={<Navigate to="/login" />} />
                         </>
                     }
-                    {user &&
-                        <>
-
                             <Route path="/login" element={<Navigate to="/table" />} />
                             <Route path="/dashboard" element={<Dashboard     />} />
                             <Route path="/michal" element={<Test />} />
@@ -50,6 +47,9 @@ function Layout() {
                             <Route path="/projectView" element={<ProjectView />} />
                             <Route path="/dayCare" element={<Daycare />} />
                             <Route path="/dayCare/:id" element={<Daycare />} />
+                    {user &&
+                        <>
+
 
                         </>}
                 </Routes>
