@@ -28,7 +28,7 @@ function StudentDetails({ data, setData, student }) {
         const value = service
         setData(values => ({ ...values, [name]: value }));
         setService([])
-        // // איפה המידע נשמר? את מה להעביר הלאה
+        // איפה המידע נשמר? את מה להעביר הלאה
         // fetch('http://localhost:4000/student/changeDetails', {
         //     method: 'POST',
         //     headers: {
@@ -92,7 +92,7 @@ function StudentDetails({ data, setData, student }) {
                         <Input defaultValue={student?.lastName} placeholder={"שם משפחה"} required={true} name={"lastName"} onChange={handleChange} />
                         <Input defaultValue={student?.id} placeholder={"תעודת זהות"} required={true} name={"id"} type={"number"} onChange={handleChange} />
                         <Select defaultValue={student?.gender} placeholder={"מין"} required={true} options={["זכר", "נקבה"]} name={"gender"} onChange={handleChange} />
-                        <Input defaultValue={student?.date} placeholder={"תאריך לידה"} required={true} name={"DateOfBirth"} onFocus={(e) => (e.target.type = "date")}
+                        <Input defaultValue={student?.DateOfBirth} placeholder={"תאריך לידה"} required={true} name={"DateOfBirth"} onFocus={(e) => (e.target.type = "date")}
                             onBlur={(e) => (e.target.type = "text")} onChange={handleChange} />
                         <Select defaultValue={student?.hmo} placeholder={"קופת חולים"} required={false} name={"hmo"} options={["כללית", "לאומית", "מכבי", "מאוחדת"]} onChange={handleChange} />
                         <Select defaultValue={student?.address.city} placeholder={"ישוב"} required={false} name={"city"} options={cityOp} onChange={handleChangeAddress} />

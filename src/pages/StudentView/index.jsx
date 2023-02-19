@@ -1,24 +1,24 @@
 import React from 'react'
 import styles from "./style.module.css"
-import { students, projects } from '../../fakeData'
+// import { students, projects } from '../../fakeData'
+import { projects } from '../../fakeData'
 import { useLocation } from 'react-router-dom';
 
-
-
-function StudentView() {
-    const student = students[0]
+function StudentView({students}) {
     const location = useLocation()
-    let missingFiles = location.state
+    let missingFiles = location.state.difference
+    // console.log(location.state.key);
+    const student = students[location.state.key]
 
-    console.log("view", missingFiles);
+    // console.log("view", missingFiles);
 
     //פרויקטים בהם השתתף החניך
     const projectsByStudent = projects.filter(e => e.studentsPart.includes(student.id))
-    console.log(projectsByStudent)
+    // console.log(projectsByStudent)
 
     //פרויקטים ששולמו
     const projectsPaidByStudent = projects.filter(e => e.studentsPaid.includes(student.id))
-    console.log(projectsPaidByStudent)
+    // console.log(projectsPaidByStudent)
 
     const countDaysFunction = (year) => {
         let countDays = 0
@@ -26,7 +26,7 @@ function StudentView() {
             if (i.fromDate.slice(0, 4) === year) {
                 countDays += Number(i.days)
             }
-            console.log(i.fromDate.slice(0, 4), i.fromDate.slice(0, 4) === year);
+            // console.log(i.fromDate.slice(0, 4), i.fromDate.slice(0, 4) === year);
         }
         return countDays
     }
@@ -44,7 +44,7 @@ function StudentView() {
                         <div className={styles.subContainer}>
                             <div className={styles.line}>  <span className={styles.question}>ת.ז: </span>{student.id}</div>
                             <div className={styles.line}>  <span className={styles.question}>מין: </span>{student.gender}</div>
-                            <div className={styles.line}>  <span className={styles.question}>תאריך לידה: </span>{student.date}</div>
+                            <div className={styles.line}>  <span className={styles.question}>תאריך לידה: </span>{student.DateOfBirth}</div>
                         </div>
                         <div className={styles.subContainer}>
                             <div className={styles.line}>  <span className={styles.question}>ישוב: </span>{student?.address?.city == "אחר" ? student?.address?.other : student?.address?.city}</div>

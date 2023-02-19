@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react'
 import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
 import styles from "./style.module.css"
-import { daycare, students } from '../../fakeData';
+// import { daycare, students } from '../../fakeData';
 import StudentDetails from '../../components/common/Accordions/StudentDetails'
 import ContactDetails from '../../components/common/Accordions/Contacts'
 import AboutStudent from '../../components/common/Accordions/AboutStudent';
 import Medications from '../../components/common/Accordions/medications';
 import Accordions from '../../components/common/Accordions/files';
+import { useLocation } from 'react-router-dom';
 
 
 
-function EditStudent() {
-    const student = students[0]
+function EditStudent({students, setStudents}) {
+    const location = useLocation()
+    const student = students[location.state]
+
     const [data, setData] = useState(student);
     const [status, setStatus] = useState(true)
-
-
-
 
     const [listContactEdit, setListContactEdit] = useState(student.contact.map(e => ({ contactFirstName: e.contactFirstName, contactLastName: e.contactLastName, contactPhone: e.contactPhone, contactEmail: e.contactEmail, relative: e.relative, comment: e.comment, apotropus: e.apotropus })));
     const [listMedicationEdit, setListMedication] = useState(student.medication.map(e => ({ name: e.name, time: e.time })));
@@ -63,7 +63,7 @@ function EditStudent() {
             body: JSON.stringify(data),
         })
             .then((response) => response.json())
-            .then(data => console.log('Success:', data))
+            .then(data => setStudents('Success:', data))
             .catch(error=> console.error('Error:', error));
     }
 

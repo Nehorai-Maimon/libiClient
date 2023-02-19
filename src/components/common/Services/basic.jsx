@@ -3,8 +3,6 @@ import File from '../File'
 import remove from '../../../images/delete.png'
 import styles from "./style.module.css"
 
-
-
 function BasicFiles({ setService, onClick, arrfile = [], student }) {
     const [listFile, setListFile] = useState([{ file: "" },]);
     const [fileName, setFileName] = useState("")
@@ -23,46 +21,70 @@ function BasicFiles({ setService, onClick, arrfile = [], student }) {
 
     const [file, setFile] = useState([]);
     const [fileOp, setFileOp] = useState([]);
-    const onChangeFile = (e) => {
-        const name = e.target.name
-        const fileSize = (e.target.files[0].size / 1000) + "KB";
-        console.dir(e.target);
 
+    function turnTo64(file) {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader()
+            fileReader.readAsDataURL(file)
+            fileReader.onload = () => {
+                resolve(fileReader.result)
+            }
+            fileReader.onerror = (error) => {
+                reject(error)
+            }
+        })
+    }
+
+    const onChangeFile = async (e) => {
+        const name = e.target.name
+        // const fileSize = (e.target.size / 1000) + "KB";
+        const base64 = await turnTo64(e.target.files[0])
+        // console.log(base64);
         // setFile((current) => ({
-        //     ...current,
-        //     [name]: {
-        //         fileName: e.target.files[0].name,
-        //         size: fileSize,
-        //         type: e.target.files[0].type
-        //     }
-        // })
-        // )
-
-        file.push({ name: name, file: e.target.files[0].name, date: "" })
-
-
-
-    }
-
-    const handleChangeDate = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        file[file.length - 1].date = value
-        // setFile(values => ({ ...values, [name]: value }));
-    }
-    const handleChangeFileOp = (e) => {
-        const name = e.target.name
-        const fileSize = (e.target.files[0].size / 1000) + "KB";
-        // setFileOp(values => ({
-        //     ...values, [name]: {
+            //     ...current,
+            //     [name]: {
+                //         fileName: e.target.files[0].name,
+                //         size: fileSize,
+                //         type: e.target.files[0].type
+                //     }
+                // })
+                // )
+                if(file.length){
+                    file.pop()
+                    file.push({ name: name, file: base64, date: "" })
+                }else{
+                    file.push({ name: name, file: base64, date: "" })
+                }
+                
+                
+                
+            }
+            
+            const handleChangeDate = (event) => {
+                const name = event.target.name;
+                const value = event.target.value;
+                file[file.length - 1].date = value
+                // setFile(values => ({ ...values, [name]: value }));
+            }
+            const handleChangeFileOp = async (e) => {
+                // const name = e.target.name
+                // const fileSize = (e.target.files[0].size / 1000) + "KB";
+                // setFileOp(values => ({
+                    const base64 = await turnTo64(e.target.files[0])
+                    console.log(base64);
+                    //     ...values, [name]: {
         //         fileNameInput: fileName,
         //         fileName: e.target.files[0].name,
         //         size: fileSize,
         //         type: e.target.files[0].type
         //     }
         // }))
-        fileOp.push({ name: fileName, file: e.target.files[0].name })
-        console.log(e.target.files[0]);
+        if(fileOp.length){
+            fileOp.pop()
+            fileOp.push({ name: fileName, file: base64 })
+        }else{
+            fileOp.push({ name: fileName, file: base64 })
+        }
         setFileName("")
     }
 
@@ -112,7 +134,7 @@ function BasicFiles({ setService, onClick, arrfile = [], student }) {
 
             <div className={styles.buttons}>
                 <button onClick={() => addFile()} className={styles.btnadd}>טופס נוסף +</button>
-                <button onClick={onClick} className={styles.btnadd}>שמירה</button>
+                <button onClick={(e) => onClick(e)} className={styles.btnadd}>שמירה</button>
             </div>
 
 

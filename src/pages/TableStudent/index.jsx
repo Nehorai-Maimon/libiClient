@@ -1,5 +1,5 @@
 import styles from "./style.module.css"
-import { students } from '../../fakeData'
+// import { students } from '../../fakeData'
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { useEffect } from "react";
@@ -9,11 +9,7 @@ import emailjs from 'emailjs-com'
 import { CSVLink } from "react-csv";
 import excel_icon from '../../images/Excel.png'
 
-
-
-
-
-function Table() {
+function Table({students}) {
     const navigate = useNavigate();
 
     // מערכים של טפסי החובה, לפי שירות
@@ -32,17 +28,23 @@ function Table() {
         // }
         return age;
     }
-    const [filterStudents, setFilterStudentd] = useState(students)
     const [gender, setGender] = useState("מין")
     const [ageMin, setAgeMin] = useState(1)
     const [ageMax, setAgeMax] = useState(120)
     const [services, setServices] = useState("שירותים")
+    const [filterStudents, setFilterStudentd] = useState(students)
     const [city, setCity] = useState("ישוב")
     // const csvData =
     //     filterStudents;
+    
+    
+    
+    useEffect(() => {
+        setFilterStudentd(students)
+    }, [students])
 
     let studentsToDownload = []
-    filterStudents.map(e => {
+    filterStudents?.map(e => {
         return (
             studentsToDownload.push({ תז: e.id, שם: e.firstName, שם_משפחה: e.lastName, מין: e.gender, איש_קשר: e.contact[0].contactFirstName + " " + e.contact[0].contactLastName + "-" + e.contact[0].relative, איש_קשר_טלפון: e.contact[0].contactPhone, שירותים: e.arrServices })
         )
@@ -52,7 +54,7 @@ function Table() {
         studentsToDownload;
 
     useEffect(() => {
-        let res = students.filter((e, i) =>
+        let res = students?.filter((e, i) =>
             city !== "ישוב" && services === "שירותים" && gender === "מין" ? e?.address?.city === city && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
                 city !== "ישוב" && services === "שירותים" && gender !== "מין" ? e?.address?.city === city && e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
                     services !== "שירותים" && city !== "ישוב" && gender === "מין" ? e?.arrServices?.includes(services) && e?.address?.city === city && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
@@ -68,13 +70,12 @@ function Table() {
 
 
     const filterSearch = (value) => {
-        setFilterStudentd(students.filter(e => e.firstName.includes(value) || e.lastName.includes(value))
+        setFilterStudentd(students?.filter(e => e.firstName.includes(value) || e.lastName.includes(value))
         )
     }
 
     const resate = () => {
         setFilterStudentd(students)
-
     }
 
     let options = []
@@ -143,68 +144,71 @@ function Table() {
                     </div>
                 </div>
                 <table>
-                    <tr>
-                        <th>תעודת זהות</th>
-                        <th>שם פרטי</th>
-                        <th>שם משפחה</th>
-                        <th>גיל</th>
-                        <th>מין</th>
-                        <th>איש קשר</th>
-                        <th>טלפון</th>
-                        {/* <th>שירותים</th> */}
-                        <th>מסמכים ואישורים</th>
-                        <th>עריכה</th>
-                        <th>שליחת תזכורת</th>
-                    </tr>
-                    {filterStudents.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
+                    <tbody>
 
-                        filterStudents.map((val, key) => {
-                            let generalArr = []
-                            let difference = []
-                            val?.general?.files.map(e => { generalArr.push(e.name) })
-                            difference = gerneralFiles.filter(x => !generalArr.includes(x))
+                        <tr>
+                            <th>תעודת זהות</th>
+                            <th>שם פרטי</th>
+                            <th>שם משפחה</th>
+                            <th>גיל</th>
+                            <th>מין</th>
+                            <th>איש קשר</th>
+                            <th>טלפון</th>
+                            {/* <th>שירותים</th> */}
+                            <th>מסמכים ואישורים</th>
+                            <th>עריכה</th>
+                            <th>שליחת תזכורת</th>
+                        </tr>
+                        {filterStudents?.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
 
-                            if (val?.arrServices?.includes('תעסוקה')) {
-                                let employmentArr = []
-                                let difference1 = []
-                                val?.employment?.files.map(e => { employmentArr.push(e.name) })
-                                difference1 = employmentFiles.filter(x => !employmentArr.includes(x))
-                                if (difference1.length > 0) {
-                                    difference.push(difference1)
+                            filterStudents?.map((val, key) => {
+                                let generalArr = []
+                                let difference = []
+                                val?.general?.files.map(e => { generalArr.push(e.name) })
+                                difference = gerneralFiles.filter(x => !generalArr.includes(x))
+                                if (val?.arrServices?.includes('תעסוקה')) {
+                                    let employmentArr = []
+                                    let difference1 = []
+                                    val?.employment?.files.map(e => { employmentArr.push(e.name) })
+                                    difference1 = employmentFiles.filter(x => !employmentArr.includes(x))
+                                    if (difference1.length > 0) {
+                                        difference.push(difference1)
+                                    }
                                 }
-                            }
-                            if (val?.arrServices?.includes('מעון')) {
-                                let daycareArr = []
-                                let difference2 = []
-                                val?.daycare?.files.map(e => { daycareArr.push(e.name) })
-                                difference2 = daycareFiles.filter(x => !daycareArr.includes(x))
-                                if (difference2.length > 0) {
-                                    difference.push(difference2)
+                                if (val?.arrServices?.includes('מעון')) {
+                                    let daycareArr = []
+                                    let difference2 = []
+                                    val?.daycare?.files.map(e => { daycareArr.push(e.name) })
+                                    difference2 = daycareFiles.filter(x => !daycareArr.includes(x))
+                                    if (difference2.length > 0) {
+                                        difference.push(difference2)
+                                    }
                                 }
-                            }
 
 
-                            return (
-                                < tr key={key} >
-                                    <td onClick={() =>
-                                        navigate('/view', { state: difference })}>{val.id}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.firstName}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.lastName}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{getAge(val.date.split("/").reverse().join("/"))}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.gender}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.contact[0].contactPhone}</td>
-                                    {difference.length == 0 ?
-                                        <td onClick={() => navigate('/view', { state: difference })}>{"✅"}</td> :
-                                        <td className={styles.red} onClick={() => navigate('/view', { state: difference })}>{difference.map(e => e + ", ")}</td>}
-                                    <td><button onClick={() => navigate('/edit')}>📝</button></td>
 
-                                    <td className={difference.length === 0 ? styles.disabled : ""}> <button className={difference.length === 0 ? styles.disabled : ""} disabled={difference.length === 0} onClick={() => sendEmail(val.firstName, difference.map(e => "   *   " + e), val.email)}>✉️</button> </td>
-                                </tr>
+                                return (
+                                    < tr key={key} >
+                                        <td onClick={() =>
+                                            navigate('/view', { state: difference })}>{val.id}</td>
+                                        <td onClick={() => navigate('/view', { state: {difference, key} })}>{val.firstName}</td>
+                                        <td onClick={() => navigate('/view', { state: {difference, key} })}>{val.lastName}</td>
+                                        <td onClick={() => navigate('/view', { state: {difference, key} })}>{getAge(val.DateOfBirth?.split("/").reverse().join("/"))}</td>
+                                        <td onClick={() => navigate('/view', { state: {difference, key} })}>{val.gender}</td>
+                                        <td onClick={() => navigate('/view', { state: {difference, key} })}>{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
+                                        <td onClick={() => navigate('/view', { state: {difference, key} })}>{val.contact[0].contactPhone}</td>
+                                        {difference.length == 0 ?
+                                            <td onClick={() => navigate('/view', { state: {difference, key} })}>{"✅"}</td> :
+                                            <td className={styles.red} onClick={() => navigate('/view', { state: {difference, key} })}>{difference.map(e => e + ", ")}</td>}
+                                        <td><button onClick={() => navigate('/edit',{state: key})}>📝</button></td>
 
-                            )
-                        })
-                    }
+                                        <td className={difference.length === 0 ? styles.disabled : ""}> <button className={difference.length === 0 ? styles.disabled : ""} disabled={difference.length === 0} onClick={() => sendEmail(val.firstName, difference.map(e => "   *   " + e), val.email)}>✉️</button> </td>
+                                    </tr>
+
+                                )
+                            })
+                        }
+                    </tbody>
                 </table>
             </div>
         </div >

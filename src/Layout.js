@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect,useState } from 'react'
 import { Navigate, Route, Routes } from "react-router-dom";
 import Header from './components/common/Header';
 import Login from './pages/Login';
@@ -17,6 +17,19 @@ import Dashboard from './pages/Dashboard';
 
 function Layout() {
     const [user, setUser] = useState("");
+    const [students, setStudents] = useState()
+
+    useEffect(() => {
+        fetch('http://localhost:4000/student')
+        .then((response) => response.json())
+        .then(data => setStudents(data))
+        .catch(error => console.error('Error:', error));
+    }, [])
+
+    useEffect(() => {
+        console.log(students);
+    }, [students])
+
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
@@ -39,10 +52,10 @@ function Layout() {
                             <Route path="/login" element={<Navigate to="/table" />} />
                             <Route path="/dashboard" element={<Dashboard     />} />
                             <Route path="/michal" element={<Test />} />
-                            <Route path="/table" element={<Table />} />
-                            <Route path="/edit" element={<EditStudent />} />
+                            <Route path="/table" element={<Table  students={students} />} />
+                            <Route path="/edit" element={<EditStudent students={students} setStudents={setStudents}/>} />
                             <Route path="/new" element={<CreateStudent />} />
-                            <Route path="/view" element={<StudentView />} />
+                            <Route path="/view" element={<StudentView students={students} />} />
                             <Route path="/projects" element={<Projects />} />
                             <Route path="/projectView" element={<ProjectView />} />
                             <Route path="/dayCare" element={<Daycare />} />

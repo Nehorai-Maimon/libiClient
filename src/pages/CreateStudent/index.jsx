@@ -13,9 +13,13 @@ function CreateStudent() {
     const [data, setData] = useState({});
     const [status, setStatus] = useState(true)
 
-//יש באג בעמוד הזה, כל הזמן מתנתק בשליחה / שמירה
+    //יש באג בעמוד הזה, כל הזמן מתנתק בשליחה / שמירה
     const submit = () => {
         console.log(data)
+        const general = data.general
+        // console.log("general", general);
+        delete data.general
+        console.log("data after remove general", data);
         fetch('http://localhost:4000/student/', {
             method: 'POST',
             headers: {
@@ -24,11 +28,43 @@ function CreateStudent() {
             body: JSON.stringify(data),
         })
             .then((response) => response.json())
-            .then(data => console.log('Success:', data))
-            .catch(error=> console.error('Error:', error));
+            .then(data => console.log("data from server",data))
+            // לאסוף את הפרטים כדי לשלוח את הקבצים למקום הנכון
+            .catch(error => console.error('Error:', error));
+
+        // לא לשכוח למחוק, הפונקציה הקודמת צריכה לקרוא לזאת
+        gotResult()
+        function gotResult() {
+
+            // for(let i in general.files){
+            //     fetch('http://localhost:4000/student/', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(general.files[i]),
+            // })
+            //     .then((response) => response.json())
+            //     .then(data => console.log(data))
+            //     .catch(error => console.error('Error:', error));
+                
+            // }
+            // for(let i in general.filesOp){
+            //     fetch('http://localhost:4000/student/', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(general.filesOp[i]),
+            // })
+            //     .then((response) => response.json())
+            //     .then(data => console.log(data))
+            //     .catch(error => console.error('Error:', error));
+                
+            // }
+        }
     }
-
-
+        
 
 
 
