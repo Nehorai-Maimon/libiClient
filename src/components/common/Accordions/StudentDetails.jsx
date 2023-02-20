@@ -28,17 +28,6 @@ function StudentDetails({ data, setData, student }) {
         const value = service
         setData(values => ({ ...values, [name]: value }));
         setService([])
-        // איפה המידע נשמר? את מה להעביר הלאה
-        // fetch('http://localhost:4000/student/changeDetails', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(data),
-        // })
-        //     .then((response) => response.json())
-        //     .then(data => console.log('Success:', data))
-        //     .catch(error=> console.error('Error:', error));
     }
 
 

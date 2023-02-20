@@ -8,7 +8,7 @@ import Select from '../Select';
 
 import './style.css'
 
-function PopupProject({ edit }) {
+function PopupProject({ edit, setProjectsList }) {
 
     let proj = []
     if (edit) {
@@ -29,6 +29,16 @@ function PopupProject({ edit }) {
         // project.status = status
         setShow(false)
         console.log(project);
+
+        fetch('http://localhost:4000/event/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(project),
+        })
+            .then((response) => response.json())
+            .then(data => setProjectsList(data))
+            .catch(error => console.error('Error:', error));
+
         setProject({ name: proj?.name, type: proj?.type, days: proj?.days, fromDate: proj?.fromDate, untilDate: proj?.untilDate, status: proj?.status || status })
     }
     const handleChange = (event) => {

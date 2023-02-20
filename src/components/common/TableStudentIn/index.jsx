@@ -1,29 +1,33 @@
 import styles from "./style.module.css"
-import { students, projects } from '../../../fakeData'
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { useEffect } from "react";
 import Select from "../Select";
 import Input from "../Input";
 import emailjs from 'emailjs-com'
 import { CSVLink } from "react-csv";
 import excel_icon from '../../../images/Excel.png'
-
-
-
-
+import ProjectContext from "../../../context/ProjectContext";
 
 function TableStudentIn({ studentsIn }) {
-    const project = projects[0]
+    const [students, setStudents] = useState()
+    const {project} = useContext(ProjectContext)
 
-    let filter = students.filter(e => studentsIn?.includes(e.id))
+    useEffect(() => {
+        fetch('http://localhost:4000/student')
+            .then((response) => response.json())
+            .then(data => setStudents(data))
+            .catch(error => console.error('Error:', error));
+    }, [])
+
+    let filter = students?.filter(e => studentsIn?.includes(e.id))
 
     const [filterStudents, setfilterStudents] = useState(filter)
     const [studentsPart, setStudentsPart] = useState(project?.studentsPart || [])
     const [studentsPaid, setStudentsPaid] = useState(project?.studentsPaid || [])
 
     useEffect(() => {
-        setfilterStudents(students.filter(e => studentsIn?.includes(e.id)))
+        setfilterStudents(students?.filter(e => studentsIn?.includes(e.id)))
     }, [studentsIn])
 
     //age
@@ -168,9 +172,9 @@ function TableStudentIn({ studentsIn }) {
                         {/* <th>עריכה</th> */}
                         {/* <th>שליחת תזכורת</th> */}
                     </tr>
-                    {filterStudents.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
+                    {filterStudents?.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
 
-                        filterStudents.map((val, key) => {
+                        filterStudents?.map((val, key) => {
                             // let generalArr = []
                             // let difference = []
                             // val?.general?.files.map(e => { generalArr.push(e.name) })
@@ -202,13 +206,12 @@ function TableStudentIn({ studentsIn }) {
                                     <td >{val.id}</td>
                                     <td >{val.firstName}</td>
                                     <td >{val.lastName}</td>
-                                    <td >{getAge(val.date.split("/").reverse().join("/"))}</td>
+                                    <td >{getAge(val.DateOfBirth.split("/").reverse().join("/"))}</td>
                                     <td >{val.gender}</td>
                                     <td >{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
                                     <td >{val.contact[0].contactPhone}</td>
                                     <td ><input type="checkbox" name='participated' checked={studentsPart.includes(val.id)} onChange={() => addToArrPart(val.id)} /></td>
                                     <td ><input type="checkbox" name='paid' checked={studentsPaid.includes(val.id)} onChange={() => addToArrPaid(val.id)} /></td>
-
                                 </tr>
 
                             )

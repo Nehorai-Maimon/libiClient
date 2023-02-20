@@ -1,9 +1,8 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from "react-router-dom";
 import Header from './components/common/Header';
 import Login from './pages/Login';
 import Test from './Test';
-import UserContext from './context/UserContext';
 import EditStudent from './pages/EditStudent';
 import CreateStudent from './pages/CreateStudent';
 import StudentView from './pages/StudentView';
@@ -13,60 +12,57 @@ import Table from './pages/TableStudent';
 import ProjectView from './pages/ProjectView';
 import Daycare from './pages/Daycare/daycare';
 import Dashboard from './pages/Dashboard';
-
+import UserContext from './context/UserContext';
+import StudentContext from './context/StudentContext';
+import ProjectContext from './context/ProjectContext';
 
 function Layout() {
     const [user, setUser] = useState("");
-    const [students, setStudents] = useState()
+    const [student, setStudent] = useState()
+    const [project, setProject] = useState()
 
-    useEffect(() => {
-        fetch('http://localhost:4000/student')
-        .then((response) => response.json())
-        .then(data => setStudents(data))
-        .catch(error => console.error('Error:', error));
-    }, [])
-
-    useEffect(() => {
-        console.log(students);
-    }, [students])
 
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
+            <StudentContext.Provider value={{ student, setStudent }}>
+                <ProjectContext.Provider value={{ project, setProject }}>
 
-            <div>
-                {user &&
-                    <>
-                        <Header />
-                        <Sidebar />
-                    </>}
+                    <div>
+                        {user &&
+                            <>
+                                <Header />
+                                <Sidebar />
+                            </>}
 
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="*" element={<Navigate to="/login" />} />
+                        <Routes>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="*" element={<Navigate to="/login" />} />
 
-                    {!user &&
-                        <>
-                        </>
-                    }
+                            {!user &&
+                                <>
+                                </>
+                            }
                             <Route path="/login" element={<Navigate to="/table" />} />
-                            <Route path="/dashboard" element={<Dashboard     />} />
+                            <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/michal" element={<Test />} />
-                            <Route path="/table" element={<Table  students={students} />} />
-                            <Route path="/edit" element={<EditStudent students={students} setStudents={setStudents}/>} />
+                            <Route path="/table" element={<Table />} />
+                            <Route path="/edit" element={<EditStudent />} />
+                            <Route path="/view" element={<StudentView />} />
                             <Route path="/new" element={<CreateStudent />} />
-                            <Route path="/view" element={<StudentView students={students} />} />
                             <Route path="/projects" element={<Projects />} />
                             <Route path="/projectView" element={<ProjectView />} />
                             <Route path="/dayCare" element={<Daycare />} />
                             <Route path="/dayCare/:id" element={<Daycare />} />
-                    {user &&
-                        <>
+                            {user &&
+                                <>
 
 
-                        </>}
-                </Routes>
-            </div>
+                                </>}
+                        </Routes>
+                    </div>
+                </ProjectContext.Provider>
+            </StudentContext.Provider>
         </UserContext.Provider>
     )
 }

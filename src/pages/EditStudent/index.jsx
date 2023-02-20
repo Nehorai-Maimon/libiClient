@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
 import styles from "./style.module.css"
 // import { daycare, students } from '../../fakeData';
@@ -7,17 +7,15 @@ import ContactDetails from '../../components/common/Accordions/Contacts'
 import AboutStudent from '../../components/common/Accordions/AboutStudent';
 import Medications from '../../components/common/Accordions/medications';
 import Accordions from '../../components/common/Accordions/files';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
+import StudentContext from '../../context/StudentContext';
 
 
 
-function EditStudent({students, setStudents}) {
-    const location = useLocation()
-    const student = students[location.state]
-
+function EditStudent() {
+    const {student} = useContext(StudentContext)
     const [data, setData] = useState(student);
     const [status, setStatus] = useState(true)
-
     const [listContactEdit, setListContactEdit] = useState(student.contact.map(e => ({ contactFirstName: e.contactFirstName, contactLastName: e.contactLastName, contactPhone: e.contactPhone, contactEmail: e.contactEmail, relative: e.relative, comment: e.comment, apotropus: e.apotropus })));
     const [listMedicationEdit, setListMedication] = useState(student.medication.map(e => ({ name: e.name, time: e.time })));
 
@@ -55,7 +53,7 @@ function EditStudent({students, setStudents}) {
 
     const submit = () => {
         console.log(data)
-        fetch('http://localhost:4000/student/editStudent', {
+        fetch('http://localhost:4000/student/updateStudent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +61,7 @@ function EditStudent({students, setStudents}) {
             body: JSON.stringify(data),
         })
             .then((response) => response.json())
-            .then(data => setStudents('Success:', data))
+            .then(data => console.log(data))
             .catch(error=> console.error('Error:', error));
     }
 

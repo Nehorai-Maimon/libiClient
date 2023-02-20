@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styles from "./style.module.css"
-import { projects } from '../../fakeData'
-import Select from '../../components/common/Select'
-import Table from '../TableStudent'
-import TableStudentProj from '../../components/common/TableStudentProj'
+// import { projects } from '../../fakeData'
+// import Select from '../../components/common/Select'
+// import Table from '../TableStudent'
+// import TableStudentProj from '../../components/common/TableStudentProj'
 import PopupAddStudent from '../../components/common/PopupAddStudent'
 import TableStudentIn from '../../components/common/TableStudentIn'
+// import { useLocation } from 'react-router-dom'
+import ProjectContext from '../../context/ProjectContext'
 
 
 
 function ProjectView() {
-    const project = projects[0]
-    const [students, setStudents] = useState();
-
-
+    const {project} = useContext(ProjectContext)
+    const [studentsToProject, setStudentsToProject] = useState();
 
 
     return (
@@ -38,14 +38,14 @@ function ProjectView() {
                     </div>
                     <div>
                         <div className={styles.subContainer}>
-                            <PopupAddStudent students={students} setStudents={setStudents} />
+                            <PopupAddStudent studentsToProject={studentsToProject} setStudentsToProject={setStudentsToProject} />
                         </div>
                         <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>חניכים משויכים לאירוע: </span>{students?.map(e => e + " , ") || project?.studentsInvited?.map(e => e + " , ")}
-                            </div>
+                            {/* <div className={styles.line}>  <span className={styles.question}>חניכים משויכים לאירוע: </span>{studentsToProject?.map(e => e + " , ") || project?.studentsInvited?.map(e => e + " , ")} */}
+                            {/* </div> */}
                         </div>
                         <div className={styles.tableStudentsIn}>
-                            <TableStudentIn studentsIn={students || project.studentsInvited} />
+                            <TableStudentIn studentsIn={studentsToProject || project.studentsInvited} />
                         </div>
                         {/* <TableStudentProj /> */}
                         {/* {students?.map(e => e)} */}
@@ -68,16 +68,7 @@ function ProjectView() {
                             )
                         })}
                     </div> */}
-
-
-
                 </div>
-
-
-
-
-
-
             </div>
         </div>
     )

@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from "./style.module.css"
 // import { students, projects } from '../../fakeData'
 import { projects } from '../../fakeData'
 import { useLocation } from 'react-router-dom';
+import StudentContext from '../../context/StudentContext';
 
-function StudentView({students}) {
+function StudentView() {
     const location = useLocation()
+    const {student} = useContext(StudentContext)
     let missingFiles = location.state.difference
-    // console.log(location.state.key);
-    const student = students[location.state.key]
 
     // console.log("view", missingFiles);
 

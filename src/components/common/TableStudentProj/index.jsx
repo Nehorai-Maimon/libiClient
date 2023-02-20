@@ -1,19 +1,27 @@
 import styles from "./style.module.css"
-import { students } from '../../../fakeData'
+// import { students } from '../../../fakeData'
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useContext } from "react";
 import { useEffect } from "react";
 import Select from "../Select";
 import Input from "../Input";
-import emailjs from 'emailjs-com'
-import { CSVLink } from "react-csv";
-import excel_icon from '../../../images/Excel.png'
-
-
-
-
+// import emailjs from 'emailjs-com'
+// import { CSVLink } from "react-csv";
+// import excel_icon from '../../../images/Excel.png'
 
 function TableStudentProj({ studentArr, setStudentArr }) {
+    const [students, setStudents] =useState()
+    const [filterStudents, setFilterStudents] = useState()
+
+    useEffect(()=>{
+        fetch('http://localhost:4000/student')
+        .then((response) => response.json())
+        .then(data => setStudents(data))
+        .catch(error => console.error('Error:', error));
+    },[])
+    useEffect(()=>{
+        setFilterStudents(students)
+    },[students])
     const navigate = useNavigate();
 
     // מערכים של טפסי החובה, לפי שירות
@@ -32,7 +40,6 @@ function TableStudentProj({ studentArr, setStudentArr }) {
         }
         return age;
     }
-    const [filterStudents, setFilterStudentd] = useState(students)
     const [gender, setGender] = useState("מין")
     const [ageMin, setAgeMin] = useState(1)
     const [ageMax, setAgeMax] = useState(120)
@@ -55,29 +62,28 @@ function TableStudentProj({ studentArr, setStudentArr }) {
     //     studentsToDownload;
 
     useEffect(() => {
-        let res = students.filter((e, i) =>
-            city !== "ישוב" && services === "שירותים" && gender === "מין" ? e?.address?.city === city && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-                city !== "ישוב" && services === "שירותים" && gender !== "מין" ? e?.address?.city === city && e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-                    services !== "שירותים" && city !== "ישוב" && gender === "מין" ? e?.arrServices?.includes(services) && e?.address?.city === city && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-                        services !== "שירותים" && city === "ישוב" && gender !== "מין" ? e?.arrServices?.includes(services) && e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-                            services !== "שירותים" && gender === "מין" ? e?.arrServices?.includes(services) && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-                                city !== "ישוב" ? e?.address?.city === city && e?.arrServices?.includes(services) && e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-                                    services !== "שירותים" ? e?.arrServices?.includes(services) && e.gender === gender && e?.address?.city === city && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-                                        gender !== "מין" ? e.gender === gender && getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin :
-                                            getAge(e.date.split("/").reverse().join("/")) <= ageMax && getAge(e.date.split("/").reverse().join("/")) >= ageMin)
-        setFilterStudentd(res)
+        let res = students?.filter((e, i) =>
+            city !== "ישוב" && services === "שירותים" && gender === "מין" ? e?.address?.city === city && getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin :
+                city !== "ישוב" && services === "שירותים" && gender !== "מין" ? e?.address?.city === city && e.gender === gender && getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin :
+                    services !== "שירותים" && city !== "ישוב" && gender === "מין" ? e?.arrServices?.includes(services) && e?.address?.city === city && getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin :
+                        services !== "שירותים" && city === "ישוב" && gender !== "מין" ? e?.arrServices?.includes(services) && e.gender === gender && getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin :
+                            services !== "שירותים" && gender === "מין" ? e?.arrServices?.includes(services) && getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin :
+                                city !== "ישוב" ? e?.address?.city === city && e?.arrServices?.includes(services) && e.gender === gender && getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin :
+                                    services !== "שירותים" ? e?.arrServices?.includes(services) && e.gender === gender && e?.address?.city === city && getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin :
+                                        gender !== "מין" ? e.gender === gender && getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin :
+                                            getAge(e.DateOfBirth.split("/").reverse().join("/")) <= ageMax && getAge(e.DateOfBirth.split("/").reverse().join("/")) >= ageMin)
+        setFilterStudents(res)
     }, [gender, ageMin, ageMax, services, city])
 
 
 
     const filterSearch = (value) => {
-        setFilterStudentd(students.filter(e => e.firstName.includes(value) || e.lastName.includes(value))
+        setFilterStudents(students?.filter(e => e.firstName.includes(value) || e.lastName.includes(value))
         )
     }
 
     const resate = () => {
-        setFilterStudentd(students)
-
+        setFilterStudents(students)
     }
 
     let options = []
@@ -189,9 +195,9 @@ function TableStudentProj({ studentArr, setStudentArr }) {
                         {/* <th>עריכה</th> */}
                         {/* <th>שליחת תזכורת</th> */}
                     </tr>
-                    {filterStudents.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
+                    {filterStudents?.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
 
-                        filterStudents.map((val, key) => {
+                        filterStudents?.map((val, key) => {
                             let generalArr = []
                             let difference = []
                             val?.general?.files.map(e => { generalArr.push(e.name) })
@@ -221,14 +227,13 @@ function TableStudentProj({ studentArr, setStudentArr }) {
                                 < tr key={key} >
                                     <td><input type="checkbox" name='check' checked={studentArr.includes(val.id)} onChange={() => addToArr(val.id)} /></td>
                                     {/* <td><input type="checkbox" name='check' onChange={() => { if (studentArr.filter(e => e === val.id).length == 0) { studentArr.push(val.id) }; console.log(studentArr) }} /></td> */}
-                                    <td onClick={() =>
-                                        navigate('/view', { state: difference })}>{val.id}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.firstName}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.lastName}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{getAge(val.date.split("/").reverse().join("/"))}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.gender}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
-                                    <td onClick={() => navigate('/view', { state: difference })}>{val.contact[0].contactPhone}</td>
+                                    <td>{val.id}</td>
+                                    <td>{val.firstName}</td>
+                                    <td>{val.lastName}</td>
+                                    <td>{getAge(val.DateOfBirth.split("/").reverse().join("/"))}</td>
+                                    <td>{val.gender}</td>
+                                    <td>{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
+                                    <td>{val.contact[0].contactPhone}</td>
                                     {/* {difference.length == 0 ?
                                         <td onClick={() => navigate('/view', { state: difference })}>{"✅"}</td> :
                                         <td className={styles.red} onClick={() => navigate('/view', { state: difference })}>{difference.map(e => e + ", ")}</td>}
