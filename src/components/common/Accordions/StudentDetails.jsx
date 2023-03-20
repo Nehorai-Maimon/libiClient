@@ -5,7 +5,7 @@ import Select from '../Select';
 
 
 function StudentDetails({ data, setData, student }) {
-
+    
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -17,7 +17,7 @@ function StudentDetails({ data, setData, student }) {
     const [service2, setService2] = useState(student?.service.includes("שיקום"))
     const [service3, setService3] = useState(student?.service.includes('מש"ה'))
     const [service4, setService4] = useState(filterarr?.length > 0 ? filterarr[0] : false)
-
+    
     function save() {
         if (service1) { service.push("אוטיזם") }
         if (service2) { service.push("שיקום") }

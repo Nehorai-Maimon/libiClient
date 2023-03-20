@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import BasicFiles from './basic'
 
-function General({ setData, data, student }) {
+
+function General({ setData, saveFile, data, student }) {
     const [general, setGeneral] = useState({})
+    // const place = "general"
 
     const submit = (e) => {
         e.preventDefault()
@@ -19,9 +21,12 @@ function General({ setData, data, student }) {
     if (data?.sensitivity?.sensitivity === "כן" || student?.sensitivity?.sensitivity === "כן") { arrfile.push({ name: "רגישות רפואית", date: true }) }
 
     return (
+
         <div>כללי
-            <BasicFiles student={student} arrfile={arrfile} setService={setGeneral} onClick={(e) => submit(e)} />
+            <BasicFiles saveFile={saveFile} place="general" student={student} arrfile={arrfile} setService={setGeneral} onClick={(e) => submit(e)} />
         </div>
+       
+    
     )
 }
 

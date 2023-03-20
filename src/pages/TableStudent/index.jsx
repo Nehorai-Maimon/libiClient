@@ -20,13 +20,14 @@ function Table() {
         .then(data => setStudents(data))
         .catch(error => console.error('Error:', error));
     },[])
+    
     useEffect(()=>{
         setFilterStudentd(students)
     },[students])
     
     const navigate = useNavigate();
-
     const {setStudent} = useContext(StudentContext)
+
     // מערכים של טפסי החובה, לפי שירות
     const gerneralFiles = ["צילום ת.ז הורה/ילד", "ויתור סודיות"]
     const employmentFiles = ["תעודת נכה", "ויתור סודיות"]

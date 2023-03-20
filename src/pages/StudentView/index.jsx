@@ -7,17 +7,16 @@ import StudentContext from '../../context/StudentContext';
 
 function StudentView() {
     const location = useLocation()
-    const {student} = useContext(StudentContext)
+    const { student } = useContext(StudentContext)
+    // console.log(student);
     let missingFiles = location.state.difference
 
-    // console.log("view", missingFiles);
-
     //פרויקטים בהם השתתף החניך
-    const projectsByStudent = projects.filter(e => e.studentsPart.includes(student.id))
+    const projectsByStudent = projects.filter(e => e.studentsPart.includes(student?.id))
     // console.log(projectsByStudent)
 
     //פרויקטים ששולמו
-    const projectsPaidByStudent = projects.filter(e => e.studentsPaid.includes(student.id))
+    const projectsPaidByStudent = projects.filter(e => e.studentsPaid.includes(student?.id))
     // console.log(projectsPaidByStudent)
 
     const countDaysFunction = (year) => {
@@ -33,18 +32,49 @@ function StudentView() {
 
     //כדי להציג את ימי הנופשון של השנה הנוכחית
     const currentYear = new Date().getFullYear();
-    console.log(currentYear);
+    // console.log(currentYear);
+
+    function dounloadFile(i, place) {
+        let filePath
+
+        if (place === "general.files") { filePath = student.general.files[i].filePath; }
+        if (place === "general.filesOp") { filePath = student.general.filesOp[i].filePath; }
+
+        if (place === "employment.files") { filePath = student.employment.files[i].filePath; }
+        if (place === "employment.filesOp") { filePath = student.employment.filesOp[i].filePath; }
+
+        if (place === "daycare.files") { filePath = student.daycare.files[i].filePath; }
+        if (place === "daycare.filesOp") { filePath = student.daycare.filesOp[i].filePath; }
+
+        if (place === "club.files") { filePath = student.club.files[i].filePath; }
+        if (place === "club.filesOp") { filePath = student.club.filesOp[i].filePath; }
+
+        if (place === "housing.files") { filePath = student.housing.files[i].filePath; }
+        if (place === "housing.filesOp") { filePath = student.housing.filesOp[i].filePath; }
+
+        // console.log(filePath);
+
+        fetch(`http://localhost:4000/student/files`,{
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({filePath})
+        })
+            .then((response) => response.json())
+            .then(data => window.open(data.server, "_blank"))
+            .catch(error => console.error('Error:', error));
+
+    }
 
     return (
         <div className={styles.con}>
-            <div className={styles.titleStudent}> {student.firstName + " " + student.lastName}</div>
+            <div className={styles.titleStudent}> {student?.firstName + " " + student?.lastName}</div>
             <div className={styles.main}>
                 <div className={styles.container}>
                     <div className={styles.box}>
                         <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>ת.ז: </span>{student.id}</div>
-                            <div className={styles.line}>  <span className={styles.question}>מין: </span>{student.gender}</div>
-                            <div className={styles.line}>  <span className={styles.question}>תאריך לידה: </span>{student.DateOfBirth}</div>
+                            <div className={styles.line}>  <span className={styles.question}>ת.ז: </span>{student?.id}</div>
+                            <div className={styles.line}>  <span className={styles.question}>מין: </span>{student?.gender}</div>
+                            <div className={styles.line}>  <span className={styles.question}>תאריך לידה: </span>{student?.DateOfBirth}</div>
                         </div>
                         <div className={styles.subContainer}>
                             <div className={styles.line}>  <span className={styles.question}>ישוב: </span>{student?.address?.city == "אחר" ? student?.address?.other : student?.address?.city}</div>
@@ -73,7 +103,7 @@ function StudentView() {
                     </div>
                     <div className={styles.box}>
                         <div className={styles.title}>אנשי קשר</div>
-                        {student.contact.map((e, index) => {
+                        {student?.contact.map((e, index) => {
                             return (<>
                                 <div className={styles.subContainer}>
                                     <span className={styles.question}>{index + 1 + " |"}</span>
@@ -91,7 +121,7 @@ function StudentView() {
                     </div>
                     <div className={styles.box}>
                         <div className={styles.title}>טיפול תרופתי</div>
-                        {student.medication.map((e, index) => {
+                        {student?.medication.map((e, index) => {
                             return (<>
                                 <div className={styles.subContainer}>
                                     <span className={styles.question}>{index + 1 + " |"}</span>
@@ -122,108 +152,116 @@ function StudentView() {
                         <div className={styles.title}>מטרות ויעדים</div>
 
                         <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.aboutStudent}</div>
+                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student?.aboutStudent}</div>
                         </div>
 
                         <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.aboutfamily}</div>
+                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student?.aboutfamily}</div>
                         </div>
 
                         <div className={styles.subContainer}>
 
-                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.generalGoals}</div>
+                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student?.generalGoals}</div>
                         </div>
                         <div className={styles.subContainer}>
 
-                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student.goalsToYear}</div>
+                            <div className={styles.line}>  <span className={styles.question}>▪️ </span>{student?.goalsToYear}</div>
                         </div>
 
                     </div>
 
                     <div className={styles.boxFile}>
                         <div className={styles.title}>אישורים וטפסים</div>
-                        {student.general.files.map(e => {
+                        <div className={styles.title}>כללי- חובה</div>
+                        {student?.general.files.map((e, i) => {
                             return (<>
                                 <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span> {e.date + " " + e.file}</div>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "general.files")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
                                 </div>
                             </>
                             )
                         })}
-                        {student.general.filesOp?.map(e => {
+                        <div className={styles.title}>כללי- רשות</div>
+                        {student?.general.filesOp?.map((e, i) => {
                             return (<>
 
                                 <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span>{e.file}</div>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "general.filesOp")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
                                 </div>
                             </>
                             )
                         })}
-
-                        {student.employment?.files.map(e => {
+                        <div className={styles.title}>תעסוקה- חובה</div>
+                        {student?.employment?.files.map((e, i) => {
                             return (<>
                                 <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span> {e.date + " " + e.file}</div>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "employment.files")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
                                 </div>
                             </>
                             )
                         })}
-                        {student.employment?.filesOp?.map(e => {
-                            return (<>
-
-                                <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span>{e.file}</div>
-                                </div>
-                            </>
-                            )
-                        })}
-                        {student.daycare?.files.map(e => {
+                        <div className={styles.title}>תעסוקה- רשות</div>
+                        {student?.employment?.filesOp?.map((e, i) => {
                             return (<>
                                 <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span> {e.date + " " + e.file}</div>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "employment.filesOp")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
                                 </div>
                             </>
                             )
                         })}
-                        {student.daycare?.filesOp?.map(e => {
-                            return (<>
-
-                                <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span>{e.file}</div>
-                                </div>
-                            </>
-                            )
-                        })}
-                        {student.club?.files.map(e => {
+                        <div className={styles.title}>מעון- חובה</div>
+                        {student?.daycare?.files?.map((e, i) => {
                             return (<>
                                 <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span> {e.date + " " + e.file}</div>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "daycare.files")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
                                 </div>
                             </>
                             )
                         })}
-                        {student.club?.filesOp?.map(e => {
+                        <div className={styles.title}>מעון- רשות</div>
+                        {student?.daycare?.filesOp?.map((e, i) => {
                             return (<>
 
                                 <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span>{e.file}</div>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "daycare.filesOp")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
                                 </div>
                             </>
                             )
                         })}
-                        {student.housing?.files.map(e => {
+                        <div className={styles.title}>מעדונית- חובה</div>
+                        {student?.club?.files.map((e, i) => {
                             return (<>
                                 <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span> {e.date + " " + e.file}</div>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "club.files")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
                                 </div>
                             </>
                             )
                         })}
-                        {student.housing?.filesOp?.map(e => {
+                        <div className={styles.title}>מועדונית- רשות</div>
+                        {student?.club?.filesOp?.map((e, i) => {
                             return (<>
 
                                 <div className={styles.subContainer}>
-                                    <div className={styles.line}>  <span className={styles.question}>{e.name}: </span>{e.file}</div>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "club.filesOp")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
+                                </div>
+                            </>
+                            )
+                        })}
+                        <div className={styles.title}>דיור- חובה</div>
+                        {student?.housing?.files.map((e, i) => {
+                            return (<>
+                                <div className={styles.subContainer}>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "housing.files")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
+                                </div>
+                            </>
+                            )
+                        })}
+                        <div className={styles.title}>דיור- רשות</div>
+                        {student?.housing?.filesOp?.map((e, i) => {
+                            return (<>
+
+                                <div className={styles.subContainer}>
+                                    <div className={styles.line}>  <span className={styles.question}>{e.inputName}: </span> <div className={styles.file} onClick={() => dounloadFile(i, "housing.filesOp")} > {e.fileName + " "}<br />{e.date.split("G")[0]}</div></div>
                                 </div>
                             </>
                             )

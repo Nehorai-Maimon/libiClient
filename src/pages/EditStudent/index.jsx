@@ -10,14 +10,30 @@ import Accordions from '../../components/common/Accordions/files';
 // import { useLocation } from 'react-router-dom';
 import StudentContext from '../../context/StudentContext';
 
-
-
 function EditStudent() {
-    const {student} = useContext(StudentContext)
+    const { student } = useContext(StudentContext)
     const [data, setData] = useState(student);
     const [status, setStatus] = useState(true)
-    const [listContactEdit, setListContactEdit] = useState(student.contact.map(e => ({ contactFirstName: e.contactFirstName, contactLastName: e.contactLastName, contactPhone: e.contactPhone, contactEmail: e.contactEmail, relative: e.relative, comment: e.comment, apotropus: e.apotropus })));
-    const [listMedicationEdit, setListMedication] = useState(student.medication.map(e => ({ name: e.name, time: e.time })));
+    const [listContactEdit, setListContactEdit] = useState(student?.contact.map(e => ({ contactFirstName: e.contactFirstName, contactLastName: e.contactLastName, contactPhone: e.contactPhone, contactEmail: e.contactEmail, relative: e.relative, comment: e.comment, apotropus: e.apotropus })));
+    const [listMedicationEdit, setListMedication] = useState(student?.medication.map(e => ({ name: e.name, time: e.time })));
+
+    // useEffect(() => {console.log(data);}, [data])
+    useEffect(() => {
+        const prev = { ...data }
+        if (prev.housing) {
+            prev.housing.files = []
+            prev.housing.filesOp = []
+        }
+        if (prev.employment) {
+            prev.employment.files = []
+            prev.employment.filesOp = []
+        }
+        if (prev.club) {
+            prev.club.files = []
+            prev.club.filesOp = []
+        }
+        setData(prev)
+    }, [])
 
     const removeContactEdit = (index) => {
         const newList = [...listContactEdit]
@@ -52,7 +68,6 @@ function EditStudent() {
     // }
 
     const submit = () => {
-        console.log(data)
         fetch('http://localhost:4000/student/updateStudent', {
             method: 'POST',
             headers: {
@@ -62,8 +77,9 @@ function EditStudent() {
         })
             .then((response) => response.json())
             .then(data => console.log(data))
-            .catch(error=> console.error('Error:', error));
+            .catch(error => console.error('Error:', error));
     }
+
 
     // const handleChange = (event) => {
     //     const name = event.target.name;
@@ -124,6 +140,14 @@ function EditStudent() {
     //     )
     // }
 
+    const [fileFromServer, setFileFromServer] = useState()
+    // useEffect(() => {
+    //     fetch('http://localhost:4000/student/generalfiles/1677768474774.png')
+    //     .then((response) => response.json())
+    //     .then(data => setFileFromServer(data))
+    //     .catch(error => console.error('Error:', error));
+    // },[])
+
     return (
         <div className={styles.main}>
             {/* <form > */}
@@ -178,6 +202,9 @@ function EditStudent() {
                     <div className={styles.container}>
 
                         <Accordions student={student} setData={setData} data={data} />
+
+                        {/* <div><img src={fileFromServer}/>{fileFromServer}</div> */}
+
                     </div>
                 </div>
 

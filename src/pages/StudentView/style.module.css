@@ -3,6 +3,12 @@
     zoom: 80%;
 }
 
+.file{
+    border: 1px solid darkgray;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
 .titleStudent {
     font-family: 'heebo';
     font-size: 20px;

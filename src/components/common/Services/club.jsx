@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import BasicFiles from './basic'
 
-function Club({ setData, data, student }) {
+function Club({ saveFile, setData, data, student }) {
     const [club, setClub] = useState({})
 
     const submit = () => {
@@ -15,7 +15,7 @@ function Club({ setData, data, student }) {
 
     return (
         <div>
-            <BasicFiles student={student} arrfile={arrfile} setService={setClub} onClick={submit} />
+            <BasicFiles saveFile={saveFile} place="club" student={student} arrfile={arrfile} setService={setClub} onClick={submit} />
         </div>
     )
 }
