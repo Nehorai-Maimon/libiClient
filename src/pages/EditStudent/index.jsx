@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
 import styles from "./style.module.css"
 // import { daycare, students } from '../../fakeData';
@@ -18,22 +18,6 @@ function EditStudent() {
     const [listMedicationEdit, setListMedication] = useState(student?.medication.map(e => ({ name: e.name, time: e.time })));
 
     // useEffect(() => {console.log(data);}, [data])
-    useEffect(() => {
-        const prev = { ...data }
-        if (prev.housing) {
-            prev.housing.files = []
-            prev.housing.filesOp = []
-        }
-        if (prev.employment) {
-            prev.employment.files = []
-            prev.employment.filesOp = []
-        }
-        if (prev.club) {
-            prev.club.files = []
-            prev.club.filesOp = []
-        }
-        setData(prev)
-    }, [])
 
     const removeContactEdit = (index) => {
         const newList = [...listContactEdit]
@@ -141,12 +125,6 @@ function EditStudent() {
     // }
 
     const [fileFromServer, setFileFromServer] = useState()
-    // useEffect(() => {
-    //     fetch('http://localhost:4000/student/generalfiles/1677768474774.png')
-    //     .then((response) => response.json())
-    //     .then(data => setFileFromServer(data))
-    //     .catch(error => console.error('Error:', error));
-    // },[])
 
     return (
         <div className={styles.main}>
@@ -182,20 +160,13 @@ function EditStudent() {
                             <File defaultValueDate={student.file[3]?.date} placeholder={"אישור רווחה"} name={"welfare certificate"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} /> */}
                         <AboutStudent student={student} setData={setData} />
 
-
-
-
-
                     </div>
 
                     <div className={styles.container}>
 
                         <Medications listMedicationEdit={listMedicationEdit} setData={setData} data={data} />
 
-
                     </div>
-
-
 
                 </div>
                 <div className={styles.containers}>

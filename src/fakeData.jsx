@@ -69,7 +69,12 @@ const projects = [{
 
 const daycare = [{
     student: 1,
-    general: [{ fixed: [{ files: [{ fileName: "שאלון תזונתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }, { filesOp: [{ fileName: "שאלון תזונתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }] },
+    // לשאול את מיכל
+    general: [{
+        fixed: [
+            { files: [{ fileName: "שאלון תזונתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] },
+            { filesOp: [{ fileName: "שאלון תזונתי", file: "bla bla" }, { fileName: "ועדת השמה", file: "bla bla" }] }]
+    },
     {
         years: [[{ year: 2022, class: "תינוקות", tsa: { date: "12/12/2022", author: "מיכל", content: "bla bla bla" } }],
         [{ year: 2023, class: "בוגרים", tsa: { date: "19/10/2023", author: "מיכל", content: "bla bla bla" } }]]

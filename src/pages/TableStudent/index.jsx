@@ -191,7 +191,7 @@ function Table() {
                                 if (val?.arrServices?.includes('מעון')) {
                                     let daycareArr = []
                                     let difference2 = []
-                                    val?.daycare?.files.map(e => { daycareArr.push(e.name) })
+                                    val?.daycare?.files?.map(e => { daycareArr.push(e.name) })
                                     difference2 = daycareFiles.filter(x => !daycareArr.includes(x))
                                     if (difference2.length > 0) {
                                         difference.push(difference2)

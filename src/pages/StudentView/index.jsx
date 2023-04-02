@@ -53,7 +53,7 @@ function StudentView() {
         if (place === "housing.filesOp") { filePath = student.housing.filesOp[i].filePath; }
 
         // console.log(filePath);
-
+        
         fetch(`http://localhost:4000/student/files`,{
             method: "POST",
             headers: {'Content-Type': 'application/json'},
@@ -77,10 +77,10 @@ function StudentView() {
                             <div className={styles.line}>  <span className={styles.question}>תאריך לידה: </span>{student?.DateOfBirth}</div>
                         </div>
                         <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>ישוב: </span>{student?.address?.city == "אחר" ? student?.address?.other : student?.address?.city}</div>
+                            <div className={styles.line}>  <span className={styles.question}>ישוב: </span>{student?.address?.city === "אחר" ? student?.address?.other : student?.address?.city}</div>
                             <div className={styles.line}>  <span className={styles.question}>כתובת: </span>{student?.address?.address}</div>
                             <div className={styles.line}>  <span className={styles.question}>קופת חולים: </span>{student?.hmo}</div>
-                            <div className={styles.line}>  <span className={styles.question}>רגישות רפואית: </span>{student?.sensitivity?.sensitivity == "כן" ? student?.sensitivity?.sensitivity + ". " + student?.sensitivity?.more : student?.sensitivity?.sensitivity}</div>
+                            <div className={styles.line}>  <span className={styles.question}>רגישות רפואית: </span>{student?.sensitivity === "כן" ? student?.sensitivity + ". " + student?.more : student?.sensitivity}</div>
                         </div>
                         <div className={styles.subContainer}>
                             <div className={styles.line}>  <span className={styles.question}>טלפון: </span>{student?.phone}</div>
@@ -93,7 +93,7 @@ function StudentView() {
                             <div className={styles.line}>  <span className={styles.question}>מוכר בשירות: </span>{student?.service.map(e => "▪️" + e + " ")}</div>
                             <div className={styles.line}>  <span className={styles.question}>אבחנה : </span>{student?.diagnosis}</div>
                         </div>
-                        {student?.days?.map(e => e.year == currentYear ? (
+                        {student?.days?.map(e => e.year === currentYear ? (
                             <div className={styles.subContainer}>
                                 <div className={styles.line}>  <span className={styles.question}>זכאי לימי נופשון לשנת {e.year}: </span>{e.days} </div>
                                 <div className={styles.line}>  <span className={styles.question}>מתוכם מומשו : </span>{countDaysFunction(e.year)}</div>

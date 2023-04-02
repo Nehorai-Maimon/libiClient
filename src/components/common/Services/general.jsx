@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BasicFiles from './basic'
 
 
 function General({ setData, saveFile, data, student }) {
     const [general, setGeneral] = useState({})
-    // const place = "general"
+    const [arrFile, setArrFile] = useState([{ name: "צילום ת.ז ילד/הורה", date: false }, { name: "ויתור סודיות", date: false }])
+    
+    // console.log(arrFile);
 
     const submit = (e) => {
         e.preventDefault()
@@ -14,19 +16,19 @@ function General({ setData, saveFile, data, student }) {
         console.log("done", data);
 
         // console.log("data.general.files", data.general.files);
-
-       
     }
-    let arrfile = [{ name: "צילום ת.ז ילד/הורה", date: false }, { name: "ויתור סודיות", date: false }]
-    if (data?.sensitivity?.sensitivity === "כן" || student?.sensitivity?.sensitivity === "כן") { arrfile.push({ name: "רגישות רפואית", date: true }) }
+
+    //  לבדוק שעובד
+    if (data?.sensitivity?.sensitivity === "כן" || student?.sensitivity?.sensitivity === "כן") {
+        const prev = [...arrFile]
+        prev.push({ name: "רגישות רפואית", date: true })
+        setArrFile(prev)
+    }
 
     return (
-
         <div>כללי
-            <BasicFiles saveFile={saveFile} place="general" student={student} arrfile={arrfile} setService={setGeneral} onClick={(e) => submit(e)} />
+            <BasicFiles saveFile={saveFile} place="general" student={student} arrFile={arrFile} setArrFile={setArrFile} setService={setGeneral} onClick={(e) => submit(e)} />
         </div>
-       
-    
     )
 }
 

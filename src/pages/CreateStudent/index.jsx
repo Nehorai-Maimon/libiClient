@@ -169,10 +169,11 @@ function CreateStudent() {
 
                         </div>
                     </div>
+                    {/*  להוריד, רק בעריכה ניתן להוסיף קבצים */}
                     <div className={styles.containers}>
                         <div className={styles.container}>
 
-                            <Accordions setData={setData} data={data} />
+                            <Accordions setData={setData} data={data}  />
                         </div>
                     </div>
 
