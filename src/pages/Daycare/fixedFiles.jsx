@@ -4,15 +4,16 @@ import remove from '../../images/delete.png'
 
 function FixedFiles({ saveFile, arrfile = [], student, service }) {
 
-    const [listFile, setListFile] = useState(student ? service === "general" ? student.general[0]?.filesOp :
-        service === "speech" ? student.speech[0].fixed[0].filesOp :
-            service === "occupation" ? student.occupation[0].fixed[0].filesOp :
-                service === "physiotherapy" ? student.occupation[0].fixed[0].filesOp :
-                    service === "dietician" ? student.dietician[0].fixed[0].filesOp :
-                        service === "teacher" ? student.teacher[0].fixed[0].filesOp :
-                            service === "medical" ? student.medical[0].fixed[0].filesOp :
-                                service === "social" ? student.social[0].fixed[1].filesOp :
-                                    [] : [])
+    const [listFile, setListFile] = useState()
+    // const [listFile, setListFile] = useState(student ? service === "general" ? student.general[0]?.filesOp :
+    //     service === "speech" ? student.speech[0].fixed[0].filesOp :
+    //         service === "occupation" ? student.occupation[0].fixed[0].filesOp :
+    //             service === "physiotherapy" ? student.occupation[0].fixed[0].filesOp :
+    //                 service === "dietician" ? student.dietician[0].fixed[0].filesOp :
+    //                     service === "teacher" ? student.teacher[0].fixed[0].filesOp :
+    //                         service === "medical" ? student.medical[0].fixed[0].filesOp :
+    //                             service === "social" ? student.social[0].fixed[1].filesOp :
+    //                                 [] : [])
 
     const [fileName, setFileName] = useState("")
 

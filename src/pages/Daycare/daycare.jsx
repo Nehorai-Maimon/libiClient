@@ -23,11 +23,11 @@ function Daycare() {
     //בקשה לשרת להביא את האוביקט לפי id
     // const dayCare = daycare.find(e => e.student == id)
     // console.log(dayCare)
-    
+
     // לשאול את מיכל מה זה
     const [years, setYears] = useState([{ year: 2022 }])
     const [year, setYear] = useState()
-    
+
     const currentYear = new Date().getFullYear();
 
     const [general, setGeneral] = useState("general")
@@ -38,9 +38,9 @@ function Daycare() {
     const [medical, setMedical] = useState("medical")
     const [dietician, setDietician] = useState("dietician")
     const [social, setSocial] = useState("social")
-    
 
-    function saveForm(form, place ) {
+
+    function saveForm(form, place) {
 
         console.log(form);
         console.log(place);
@@ -54,7 +54,7 @@ function Daycare() {
             body: JSON.stringify(form)
         })
             .then((response) => response.json())
-            .then((result) => { console.log(result) })
+            .then((result) => { setStudent(result.server) })
             .catch((error) => { console.error('Error:', error); });
     }
 
@@ -65,7 +65,7 @@ function Daycare() {
         console.log(place);
         console.log(dir);
         console.log(currentYear);
-        
+
         // console.log(e.target[0].files[0]);
         // console.log(e.target[0].files[0].name);
 
@@ -75,16 +75,17 @@ function Daycare() {
         fd.append("fileName", e.target[0].files[0].name)
 
         fetch('http://localhost:4000/student/generalFiles', {
-            headers: { studentId: student?._id, place, dir,currentYear, daycare: true },
+            headers: { studentId: student?._id, place, dir, currentYear, daycare: true },
             method: 'POST',
             body: fd
         })
             .then((response) => response.json())
-            .then((result) => { console.log('Success:'); })
+            .then((result) => { setStudent(result.server) })
             .catch((error) => { console.error('Error:', error); });
     }
 
     const addYears = () => {
+
 
         const fakeYear = {
             year: year,
@@ -228,14 +229,28 @@ function Daycare() {
                 }
             }
         }
-        
-        const exsistYear = student.daycare.general.year.filter(line => line.year === year)
 
-        if (!exsistYear.length) {
-            const prev = { ...student }
-            prev.daycare.general.year.push(fakeYear)
-            setStudent(prev)
-        }
+        // const exsistYear = student.daycare.general.year.filter(line => line.year === year)
+
+        // if (!exsistYear.length) {
+        //     const prev = { ...student }
+        //     prev.daycare.general.year.push(fakeYear)
+        //     setStudent(prev)
+        // }
+        // console.log({year});
+
+        fetch('http://localhost:4000/student/addYearDaycare', {
+            headers: {
+                studentId: student?._id,
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ year })
+        })
+            .then((response) => response.json())
+            .then((result) => { setStudent(result.server) })
+            .catch((error) => { console.error('Error:', error); });
+
     }
 
     useEffect(() => { console.log("student", student); }, [student])

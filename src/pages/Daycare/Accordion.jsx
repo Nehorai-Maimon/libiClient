@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Accordion from 'react-bootstrap/Accordion';
 import InnerAcc_general from './services/innerAc_general';
 import InnerAcc_para from './services/innerAc_para';
@@ -7,12 +7,15 @@ import InnerAcc_Social from './services/innerAc_social';
 
 function AccordionYears({ student, saveFile, service, data, arrfile, saveForm }) {
 
+    useEffect(()=>{console.log(student);},[student])
+    
     if (!student) {
         return <div>loading...</div>
     }
 
     return <div className='accordionYears'>
-        <Accordion defaultActiveKey={student.daycare.general.year[student.daycare.general.year.length - 1]}>
+        {/* <Accordion defaultActiveKey={student.daycare.general.year[student.daycare.general.year.length - 1]}> */}
+        <Accordion >
             {student.daycare.general.year.map((v, index) => {
                 return <Accordion.Item eventKey={index}>
                     <Accordion.Header>{<div className='remove'>{v.year}</div>}</Accordion.Header>

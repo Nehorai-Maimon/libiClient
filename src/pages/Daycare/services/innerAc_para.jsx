@@ -66,11 +66,12 @@ function InnerAcc_para({ saveForm, v, saveFile, service, arrfile = [], data, ind
 
     }
 
-    if (v) {
-        console.log("v.speech", v.speech);
-    } else {
+    if (!v) {
+        // console.log("v.speech", v.speech);
         return <div>loading...</div>
     }
+    //  else {
+    // }
 
     return <div className="container">
         <Tabs
@@ -112,10 +113,10 @@ function InnerAcc_para({ saveForm, v, saveFile, service, arrfile = [], data, ind
             <Tab eventKey="2" title="דו''ח תחילת טיפול">
                 <div className="subTitle">דו"ח תחילת טיפול</div>
                 <div className="inputs">
-                    <Input defaultValue={v?.speech.start.date} placeholder={"תאריך "} required={true} name={"date"} onFocus={(e) => (e.target.type = "date")}
+                    <Input defaultValue={v?.speech.start?.date} placeholder={"תאריך "} required={true} name={"date"} onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "text")} onChange={(e) => setStart({ ...start, [e.target.name]: e.target.value })} />
-                    <textarea defaultValue={v?.speech.start.summary} className='textarea_daycare_1' placeholder={"דוח תחילת טיפול..."} name="summary" onChange={(e) => setStart({ ...start, [e.target.name]: e.target.value })} />
-                    <Input defaultValue={v?.speech.start.author} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setStart({ ...start, [e.target.name]: e.target.value })} />
+                    <textarea defaultValue={v?.speech.start?.summary} className='textarea_daycare_1' placeholder={"דוח תחילת טיפול..."} name="summary" onChange={(e) => setStart({ ...start, [e.target.name]: e.target.value })} />
+                    <Input defaultValue={v?.speech.start?.author} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setStart({ ...start, [e.target.name]: e.target.value })} />
 
                     <button onClick={() => saveForm(start, service)} className="btnadd">שמירה</button>
                 </div>
@@ -123,10 +124,10 @@ function InnerAcc_para({ saveForm, v, saveFile, service, arrfile = [], data, ind
             <Tab eventKey="3" title="דו''ח אמצע טיפול">
                 <div className="subTitle">דו"ח אמצע טיפול</div>
                 <div className="inputs">
-                    <Input defaultValue={v?.speech.middle.date} placeholder={"תאריך "} required={true} name={"date"} onFocus={(e) => (e.target.type = "date")}
+                    <Input defaultValue={v?.speech.middle?.date} placeholder={"תאריך "} required={true} name={"date"} onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "text")} onChange={(e) => setMiddle({ ...middle, [e.target.name]: e.target.value })} />
-                    <textarea defaultValue={v?.speech.middle.summary} className='textarea_daycare_1' placeholder={"דוח אמצע טיפול..."} name="summary" onChange={(e) => setMiddle({ ...middle, [e.target.name]: e.target.value })} />
-                    <Input defaultValue={v?.speech.middle.author} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setMiddle({ ...middle, [e.target.name]: e.target.value })} />
+                    <textarea defaultValue={v?.speech.middle?.summary} className='textarea_daycare_1' placeholder={"דוח אמצע טיפול..."} name="summary" onChange={(e) => setMiddle({ ...middle, [e.target.name]: e.target.value })} />
+                    <Input defaultValue={v?.speech.middle?.author} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setMiddle({ ...middle, [e.target.name]: e.target.value })} />
 
                     <button onClick={() => saveForm(middle, service)} className="btnadd">שמירה</button>
                 </div>
