@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styles from "./style.module.css"
 
 
-function File({ placeholder, saveFile, place, defaultValue, name, date, optional, fileName, setFileName }) {
+function File({ placeholder, saveFile, service, defaultValue, name, date, optional, fileName, setFileName }) {
     const [cName, setCName] = useState()
 
     useEffect(() => {
@@ -16,7 +16,7 @@ function File({ placeholder, saveFile, place, defaultValue, name, date, optional
         {optional ?
             <label for="fileInput">
                 <span className={styles.addFile}><input className={styles.fileName} placeholder={fileName || '...שם הטופס'} onChange={(e) => setCName(e.target.value)} name={fileName} />
-                    <form onSubmit={(e) => saveFile(e, place, name, "filesOp")}>
+                    <form onSubmit={(e) => saveFile(e, service, name, "filesOp")}>
                         <input id="fileInput" type="file" name={name} />
                         <button type='submit'>שמירה</button>
                     </form>
@@ -24,7 +24,7 @@ function File({ placeholder, saveFile, place, defaultValue, name, date, optional
             </label> :
             <label for="fileInput">
                 <span className={styles.addFile}>{placeholder}
-                    <form onSubmit={(e) => saveFile(e, place, name, "files")}>
+                    <form onSubmit={(e) => saveFile(e, service, name, "files")}>
                         <input id="fileInput" type="file" name={name} />
                         <button type='submit'>שמירה</button>
                     </form>

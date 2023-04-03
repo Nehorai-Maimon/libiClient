@@ -5,7 +5,7 @@ import InnerAcc_para from './services/innerAc_para';
 import InnerAcc_services from './services/innerAc_services';
 import InnerAcc_Social from './services/innerAc_social';
 
-function AccordionYears({ student, place, saveFile, service, data, arrfile, saveForm }) {
+function AccordionYears({ student, saveFile, service, data, arrfile, saveForm }) {
 
     if (!student) {
         return <div>loading...</div>
@@ -18,8 +18,8 @@ function AccordionYears({ student, place, saveFile, service, data, arrfile, save
                     <Accordion.Header>{<div className='remove'>{v.year}</div>}</Accordion.Header>
                     <Accordion.Body>
                         {/* {children} */}
-                        {service === "general" && <InnerAcc_general v={v} place="general" saveForm={saveForm} />}
-                        {service === "speech" && <InnerAcc_para v={v} saveForm={saveForm} data={data} place={place} saveFile={saveFile} service={service} arrfile={arrfile} index_={index} />}
+                        {service === "general" && <InnerAcc_general v={v} service={service} saveForm={saveForm} />}
+                        {service === "speech" && <InnerAcc_para v={v} saveForm={saveForm} data={data} service={service} saveFile={saveFile} arrfile={arrfile} index_={index} />}
                         {service === "occupation" && <InnerAcc_para data={data} service={service} arrfile={arrfile} index_={index} />}
                         {service === "physiotherapy" && <InnerAcc_para data={data} service={service} arrfile={arrfile} index_={index} />}
                         {service === "dietician" && <InnerAcc_services data={data} arrfile={arrfile} service={service} index_={index} />}

@@ -16,7 +16,7 @@ function DayCare_General({saveFile, student, service }) {
 
     return (
         <div>
-            <FixedFiles place="general" saveFile={saveFile} student={student} arrfile={arrfile} service={service} />
+            <FixedFiles saveFile={saveFile} student={student} arrfile={arrfile} service={service} />
         </div>
     )
 }

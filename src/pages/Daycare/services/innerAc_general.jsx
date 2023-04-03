@@ -13,6 +13,14 @@ function InnerAcc_general({ v, saveForm, place }) {
     });
     const [class_, setClass_] = useState("");
 
+    function handleSubmit(){
+        const year = v.year
+        const team = class_
+        const form = {year, tsa, team}
+        saveForm(form, place)
+    }
+
+    console.log(v);
     return <div className="container">
         <Tabs
             defaultActiveKey="0"
@@ -36,7 +44,7 @@ function InnerAcc_general({ v, saveForm, place }) {
                         onBlur={(e) => (e.target.type = "text")} onChange={(e) => setTsa({...tsa, [e.target.name]: e.target.value })} />
                     <textarea defaultValue={v ? v.tsa.content : ""} className='textarea_daycare_1' name="content" placeholder={"  תש''א..."} onChange={(e) => setTsa({ ...tsa, [e.target.name]: e.target.value })} />
                     <Input defaultValue={v ? v.tsa.author : ""} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setTsa({ ...tsa, [e.target.name]: e.target.value })} />
-                    <button onClick={() => saveForm(tsa, class_, v.year, place)} type="button" className="btnadd">שמירה</button>
+                    <button onClick={handleSubmit} type="button" className="btnadd">שמירה</button>
                     <button onClick={() => console.log({ tsa })} className="btnadd">הפק דו"ח תש"א שנתי</button>
                 </div>
             </Tab>

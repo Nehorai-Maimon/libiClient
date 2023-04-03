@@ -5,9 +5,9 @@ import remove from '../../../images/delete.png'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
-function InnerAcc_para({ saveForm, v, place, saveFile, service, arrfile = [], data, index_ }) {
+function InnerAcc_para({ saveForm, v, saveFile, service, arrfile = [], data, index_ }) {
     let _data;
-
+    const mapYear = v?.year
     if (data) {
         if (service === "speech") {
             _data = data?.speech[1]?.years[0]
@@ -24,8 +24,7 @@ function InnerAcc_para({ saveForm, v, place, saveFile, service, arrfile = [], da
     }
     // console.log(_data[index_]?.start.date)
     // console.log(_data)
-
-    const [listInput, setListInput] = useState(data ? _data[index_].weekly_summary : [{ input: "" }]);
+    const [listInput, setListInput] = useState(v?.speech.weeklySummary ? v.speech.weeklySummary : [{ input: "" }]);
 
     const addInput = () => {
         setListInput([...listInput, { input: "" }])
@@ -40,11 +39,11 @@ function InnerAcc_para({ saveForm, v, place, saveFile, service, arrfile = [], da
         // )
     }
     const [file, setFile] = useState([]);
-    const [weekly_summary, setweekly_summary] = useState({ service });
-    const [start, setStart] = useState({ service });
-    const [middle, setMiddle] = useState({ service });
-    const [end, setEnd] = useState({ service });
-    const [tsa, setTsa] = useState({ service });
+    const [weekly_summary, setweekly_summary] = useState({ tab: "weeklySummary", year: mapYear });
+    const [start, setStart] = useState({ tab: "start", year: mapYear });
+    const [middle, setMiddle] = useState({ tab: "middle", year: mapYear });
+    const [end, setEnd] = useState({ tab: "end", year: mapYear });
+    const [tsa, setTsa] = useState({ tab: "tsa", year: mapYear });
     const [send, setSend] = useState(true);
 
     let able = []
@@ -58,13 +57,19 @@ function InnerAcc_para({ saveForm, v, place, saveFile, service, arrfile = [], da
         }
     }, [])
 
-    const [disable, setDisable] = useState(data ? able : [])
+    const [disable, setDisable] = useState(v?.speech.weeklySummary ? able : [])
 
     const onChangeFile = (e) => {
         const name = e.target.name
         const fileSize = (e.target.files[0].size / 1000) + "KB";
         file.push({ service, name: name, file: e.target.files[0].name })
 
+    }
+
+    if (v) {
+        console.log("v.speech", v.speech);
+    } else {
+        return <div>loading...</div>
     }
 
     return <div className="container">
@@ -80,7 +85,7 @@ function InnerAcc_para({ saveForm, v, place, saveFile, service, arrfile = [], da
                 <div className='files'>
                     {arrfile.map((e, index) => {
                         return <>
-                            <File year={v?.year} place={place} saveFile={saveFile} placeholder={data ? e.fileName : e.name} name={data ? e.fileName : e.name} onChangeFile={onChangeFile} />
+                            <File year={v?.year} service={service} saveFile={saveFile} placeholder={data ? e.fileName : e.name} name={data ? e.fileName : e.name} onChangeFile={onChangeFile} />
                         </>
                     })}
                 </div>
@@ -92,40 +97,38 @@ function InnerAcc_para({ saveForm, v, place, saveFile, service, arrfile = [], da
                 </div>
 
                 <div className='filesOp'>
-                    {listInput.map((x, index) => {
-                        return <>
-                            <div className="inputs">
-                                <Input defaultValue={x?.date} disabled={disable.includes(index)} placeholder={"תאריך "} required={true} name={"תאריך"} onFocus={(e) => (e.target.type = "date")}
-                                    onBlur={(e) => (e.target.type = "text")} onChange={(e) => setweekly_summary({ ...weekly_summary, date: e.target.value })} />
-                                <textarea defaultValue={x?.content} className='textarea_daycare' disabled={disable.includes(index)} placeholder={"מטרות, מהלך טיפול, הערות..."} onChange={(e) => setweekly_summary({ ...weekly_summary, content: e.target.value })} />
-                                <Input defaultValue={x?.author} disabled={disable.includes(index)} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setweekly_summary({ ...weekly_summary, author: e.target.value })} />
-
-                                {!disable.includes(index) && <button onClick={() => { console.log({ weekly_summary, index }); setDisable([...disable, index]); setSend(!send) }} className="btnadd">שמירה</button>}
-                            </div>
-                        </>
+                    {listInput.map((v, index) => {
+                        return <div className="inputs" >
+                            <Input defaultValue={v?.date} disabled={disable.includes(index)} placeholder={"תאריך "} required={true} name={"date"} onFocus={(e) => (e.target.type = "date")}
+                                onBlur={(e) => (e.target.type = "text")} onChange={(e) => setweekly_summary({ ...weekly_summary, date: e.target.value })} />
+                            <textarea defaultValue={v?.summary} className='textarea_daycare' disabled={disable.includes(index)} placeholder={"מטרות, מהלך טיפול, הערות..."} onChange={(e) => setweekly_summary({ ...weekly_summary, summary: e.target.value })} />
+                            <Input defaultValue={v?.author} disabled={disable.includes(index)} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setweekly_summary({ ...weekly_summary, author: e.target.value })} />
+                            {/* לשאול את מיכל איך להפוך את הכפתור למושבת */}
+                            {!disable.includes(index) && <button onClick={() => { saveForm(weekly_summary, service); setDisable([...disable, index]); setSend(!send) }} className="btnadd">שמירה</button>}
+                        </div>
                     })}
                 </div>
             </Tab>
             <Tab eventKey="2" title="דו''ח תחילת טיפול">
                 <div className="subTitle">דו"ח תחילת טיפול</div>
                 <div className="inputs">
-                    <Input defaultValue={data ? _data[index_]?.start?.date : ""} placeholder={"תאריך "} required={true} name={"תאריך"} onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => (e.target.type = "text")} onChange={(e) => setStart({ ...start, date: e.target.value })} />
-                    <textarea defaultValue={data ? _data[index_]?.start.content : ""} className='textarea_daycare_1' placeholder={"דוח תחילת טיפול..."} onChange={(e) => setStart({ ...start, content: e.target.value })} />
-                    <Input defaultValue={data ? _data[index_]?.start.author : ""} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setStart({ ...start, author: e.target.value })} />
+                    <Input defaultValue={v?.speech.start.date} placeholder={"תאריך "} required={true} name={"date"} onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = "text")} onChange={(e) => setStart({ ...start, [e.target.name]: e.target.value })} />
+                    <textarea defaultValue={v?.speech.start.summary} className='textarea_daycare_1' placeholder={"דוח תחילת טיפול..."} name="summary" onChange={(e) => setStart({ ...start, [e.target.name]: e.target.value })} />
+                    <Input defaultValue={v?.speech.start.author} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setStart({ ...start, [e.target.name]: e.target.value })} />
 
-                    <button onClick={() => console.log({ start })} className="btnadd">שמירה</button>
+                    <button onClick={() => saveForm(start, service)} className="btnadd">שמירה</button>
                 </div>
             </Tab>
             <Tab eventKey="3" title="דו''ח אמצע טיפול">
                 <div className="subTitle">דו"ח אמצע טיפול</div>
                 <div className="inputs">
-                    <Input defaultValue={data ? _data[index_]?.middle.date : ""} placeholder={"תאריך "} required={true} name={"תאריך"} onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => (e.target.type = "text")} onChange={(e) => setMiddle({ ...middle, date: e.target.value })} />
-                    <textarea defaultValue={data ? _data[index_]?.middle.content : ""} className='textarea_daycare_1' placeholder={"דוח אמצע טיפול..."} onChange={(e) => setMiddle({ ...middle, content: e.target.value })} />
-                    <Input defaultValue={data ? _data[index_]?.middle.author : ""} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setMiddle({ ...middle, author: e.target.value })} />
+                    <Input defaultValue={v?.speech.middle.date} placeholder={"תאריך "} required={true} name={"date"} onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = "text")} onChange={(e) => setMiddle({ ...middle, [e.target.name]: e.target.value })} />
+                    <textarea defaultValue={v?.speech.middle.summary} className='textarea_daycare_1' placeholder={"דוח אמצע טיפול..."} name="summary" onChange={(e) => setMiddle({ ...middle, [e.target.name]: e.target.value })} />
+                    <Input defaultValue={v?.speech.middle.author} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setMiddle({ ...middle, [e.target.name]: e.target.value })} />
 
-                    <button onClick={() => console.log({ middle })} className="btnadd">שמירה</button>
+                    <button onClick={() => saveForm(middle, service)} className="btnadd">שמירה</button>
                 </div>
             </Tab>
             <Tab eventKey="4" title="ד''וח סיכום טיפול" >

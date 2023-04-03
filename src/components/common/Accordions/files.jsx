@@ -44,11 +44,11 @@ function Accordions({ setData, data, student }) {
     //     )
     // }
 
-    function saveFile(e, place, name, dir) {
+    function saveFile(e, service, name, dir) {
         e.preventDefault()
 
         // console.log(name);
-        // console.log(place);
+        // console.log(service);
         // console.log(e.target[0].files[0]);
         // console.log(e.target[0].files[0].name);
 
@@ -58,7 +58,7 @@ function Accordions({ setData, data, student }) {
         fd.append("fileName", e.target[0].files[0].name)
 
         fetch('http://localhost:4000/student/generalFiles', {
-            headers: { studentId: student?._id, place, dir },
+            headers: { studentId: student?._id, service, dir },
             method: 'POST',
             body: fd
         })

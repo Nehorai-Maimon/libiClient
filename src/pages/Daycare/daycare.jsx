@@ -28,8 +28,6 @@ function Daycare() {
     const [years, setYears] = useState([{ year: 2022 }])
     const [year, setYear] = useState()
     
-    useEffect(() => { console.log("year", year); }, [year])
-    
     const currentYear = new Date().getFullYear();
 
     const [general, setGeneral] = useState("general")
@@ -42,14 +40,10 @@ function Daycare() {
     const [social, setSocial] = useState("social")
     
 
-    function saveForm(tsa, team, year, place) {
+    function saveForm(form, place ) {
 
-        // console.log("tsa", tsa);
-        // console.log("team", team);
-        // console.log("year", year);
-        
-        const form = { year, team, tsa }
-        // console.log(form);
+        console.log(form);
+        console.log(place);
 
         fetch('http://localhost:4000/student/updateDaycare', {
             headers: {
@@ -271,15 +265,15 @@ function Daycare() {
                 </Tab>
                 <Tab eventKey="1" title="קלינאות תקשורת">
                     {/* <DayCare_Para years={years} data={dayCare} service={speech} /> */}
-                    <DayCare_Para saveForm={saveForm} place="speech" saveFile={saveFile} years={years} student={student} service={speech} />
+                    <DayCare_Para saveForm={saveForm} saveFile={saveFile} years={years} student={student} service={speech} />
                 </Tab>
                 <Tab eventKey="2" title="ריפוי בעיסוק">
                     {/* <DayCare_Para years={years} data={dayCare} service={occupation} /> */}
-                    <DayCare_Para place="occupation" years={years} student={student} service={occupation} />
+                    <DayCare_Para years={years} student={student} service={occupation} />
                 </Tab>
                 <Tab eventKey="3" title="פיזיותרפיה">
                     {/* <DayCare_Para years={years} data={dayCare} service={physiotherapy} /> */}
-                    <DayCare_Para place="physiotherapy" years={years} student={student} service={physiotherapy} />
+                    <DayCare_Para years={years} student={student} service={physiotherapy} />
                 </Tab>
                 <Tab eventKey="4" title="עובדת סוציאלית" disabled={user.userName !== "שלומית"}>
                     {/* <DayCare_Social years={years} data={dayCare} service={social} /> */}

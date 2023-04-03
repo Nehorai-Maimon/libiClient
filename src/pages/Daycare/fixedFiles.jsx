@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import File from '../../components/common/File'
 import remove from '../../images/delete.png'
 
-function FixedFiles({ saveFile, place, arrfile = [], student, service }) {
+function FixedFiles({ saveFile, arrfile = [], student, service }) {
 
     const [listFile, setListFile] = useState(student ? service === "general" ? student.general[0]?.filesOp :
         service === "speech" ? student.speech[0].fixed[0].filesOp :
@@ -62,7 +62,7 @@ function FixedFiles({ saveFile, place, arrfile = [], student, service }) {
         <div className='files'>
             {arrfile?.map((e, index) => {
                 return <>
-                    <File place={place} daycare saveFile={saveFile} defaultValue="" placeholder={e.name} name={e.name}
+                    <File service={service} daycare saveFile={saveFile} defaultValue="" placeholder={e.name} name={e.name}
                     // onChangeFile={onChangeFile} 
                     />
                     {/* <button onClick={() => console.log(file, index)} className="up">V</button> */}
@@ -74,7 +74,7 @@ function FixedFiles({ saveFile, place, arrfile = [], student, service }) {
         <div className='filesOp'>
             {listFile?.map((x, index) => {
                 return <div className="removeBtn">
-                    <File saveFile={saveFile} place={place} defaultValue={x.fileName}
+                    <File saveFile={saveFile} service={service} defaultValue={x.fileName}
                         // onChangeFile={handleChangeFileOp} 
                         optional setFileName={setFileName} name={x.fileName || `file optionaly ${index + 1}`} />
                     {/* <button onClick={() => console.log(fileOp, index)} className="up">V</button> */}
