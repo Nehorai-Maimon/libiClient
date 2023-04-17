@@ -27,7 +27,7 @@ function General({ setData, saveFile, data, student }) {
 
     return (
         <div>כללי
-            <BasicFiles saveFile={saveFile} place="general" student={student} arrFile={arrFile} setArrFile={setArrFile} setService={setGeneral} onClick={(e) => submit(e)} />
+            <BasicFiles saveFile={saveFile} service="general" student={student} arrFile={arrFile} setArrFile={setArrFile} setService={setGeneral} onClick={(e) => submit(e)} />
         </div>
     )
 }

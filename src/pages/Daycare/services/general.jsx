@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import FixedFiles from '../fixedFiles'
 
-// function DayCare_General({ data, service }) {
-function DayCare_General({saveFile, student, service }) {
+function DayCare_General({ saveFile, student, service }) {
 
     let arrfile = [
         { name: "ועדת השמה למעון" },
@@ -14,11 +13,9 @@ function DayCare_General({saveFile, student, service }) {
         { name: 'אינטייק כללי' }
     ]
 
-    return (
-        <div>
-            <FixedFiles saveFile={saveFile} student={student} arrfile={arrfile} service={service} />
-        </div>
-    )
+    return <div>
+        <FixedFiles saveFile={saveFile} student={student} arrfile={arrfile} service={service} />
+    </div>
 }
 
 export default DayCare_General

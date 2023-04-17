@@ -143,3 +143,8 @@
     align-items: flex-end;
     gap: 30px;
 }
+
+.tsaTitle {
+    text-decoration: underline;
+    font-weight: bold;
+}
