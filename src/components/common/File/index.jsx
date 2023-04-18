@@ -1,30 +1,32 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react';
 import styles from "./style.module.css"
 
-
 function File({ placeholder, saveFile, service, defaultValue, name, date, optional, fileName, setFileName }) {
-    const [cName, setCName] = useState()
 
     useEffect(() => {
         if (optional) {
             setFileName('...שם הטופס')
         }
     }, [])
-
+    function handleSubmit(e) {
+        saveFile(e, service, name, "files")
+        e.target[0].value = ""
+    }
     return <div className={styles.file}>
         {optional ?
             <label for="fileInput">
-                <span className={styles.addFile}><input className={styles.fileName} placeholder={fileName || '...שם הטופס'} onChange={(e) => setCName(e.target.value)} name={fileName} />
-                    <form onSubmit={(e) => saveFile(e, service, name, "filesOp")}>
+                <span className={styles.addFile}><input className={styles.fileName} placeholder={fileName || '...שם הטופס'}
+                    onChange={(e) => setFileName(e.target.value)} name={fileName} />
+                    <form onSubmit={(e) => saveFile(e, service, fileName, "filesOp")}>
                         <input id="fileInput" type="file" name={name} />
                         <button type='submit'>שמירה</button>
                     </form>
                 </span>
-            </label> :
+            </label>
+            :
             <label for="fileInput">
                 <span className={styles.addFile}>{placeholder}
-                    <form onSubmit={(e) => saveFile(e, service, name, "files")}>
+                    <form onSubmit={(e) => handleSubmit(e)}>
                         <input id="fileInput" type="file" name={name} />
                         <button type='submit'>שמירה</button>
                     </form>
@@ -32,7 +34,8 @@ function File({ placeholder, saveFile, service, defaultValue, name, date, option
             </label>}
         {date &&
             <div className={styles.container}>
-                <input className={styles.inputs} placeholder={"תאריך תפוגה"} defaultValue={defaultValue} name={`${name}-date`} onFocus={(e) => (e.target.type = "date")}
+                <input className={styles.inputs} placeholder={"תאריך תפוגה"} defaultValue={defaultValue} name={`${name}-date`}
+                    onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")} />
             </div>}
     </div>

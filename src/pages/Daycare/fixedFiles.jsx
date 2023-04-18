@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Download } from "react-bootstrap-icons";
 import File from '../../components/common/File'
+import { Trash } from "react-bootstrap-icons";
 import remove from '../../images/delete.png'
 
-function FixedFiles({ saveFile, arrfile = [], student, service }) {
+function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, service }) {
 
     const [listFile, setListFile] = useState()
     const [fileName, setFileName] = useState("")
+    const [reactArr, setReactArr] = useState([])
+
 
     const addFile = () => {
         if (!listFile) {
@@ -18,6 +22,7 @@ function FixedFiles({ saveFile, arrfile = [], student, service }) {
             }
         }
     }
+
     const removeFile = (index) => {
         const newList = [...listFile]
         newList.splice(index, 1);
@@ -28,47 +33,60 @@ function FixedFiles({ saveFile, arrfile = [], student, service }) {
         // )
     }
 
-    const [file, setFile] = useState([]);
-    const [fileOp, setFileOp] = useState([]);
-    const onChangeFile = (e) => {
-        const name = e.target.name
-        // const fileSize = (e.target.files[0].size / 1000) + "KB";
-        file.push({ service, name: name, file: e.target.files[0].name, date: "" })
-    }
-
-    const handleChangeFileOp = (e) => {
-        // const name = e.target.name
-        // const fileSize = (e.target.files[0].size / 1000) + "KB";
-        fileOp.push({ service, name: fileName, file: e.target.files[0].name })
-        setFileName("")
-    }
+    useEffect(() => {
+        setReactArr([...arrfile])
+        const prev = [...reactArr]
+        if (student?.daycare?.general.files.length) {
+            for (let i in student?.daycare?.general.files) {
+                for (let r in prev) {
+                    if (student?.daycare?.general.files[i].inputName === prev[r].name) {
+                        prev.splice(r, 1)
+                        setReactArr(prev)
+                    }
+                }
+            }
+        }
+    }, [studentFiles])
 
     return <div className="container">
         <div className='title'>
             <div className="subTitle">טפסים כלליים</div>
-            <div className="addBtn">
-
-            </div>
         </div>
         <div className='files'>
-            {arrfile?.map((e, index) => {
-                return <>
-                    <File service={service} daycare saveFile={saveFile} defaultValue="" placeholder={e.name} name={e.name}
-                    // onChangeFile={onChangeFile} 
-                    />
-                    {/* <button onClick={() => console.log(file, index)} className="up">V</button> */}
-                </>
+            {reactArr?.map((v, index) => {
+                return <File service={service} daycare saveFile={saveFile} defaultValue="" placeholder={v.name} name={v.name} />
             })}
         </div>
-            <button onClick={() => addFile()} className="btnadd">הוספת טופס  +</button>
+        <div className='files'>
+            <div className="subTitle">:טפסים שהועלו לשרת</div>
+            {student?.daycare?.general.files?.map((v, index) => {
+                return <div className='show-files-daycare'>
+                    <div>{v.inputName}</div>
+                    <div>:שם הקובץ<br />{v.fileName}</div>
+                    <div className='file-function' >
+                        <div className='file-function-spc' onClick={() => deleteFile(v.filePath)}><Trash /></div>
+                        <div className='file-function-spc'><Download /></div>
+                    </div>
+                </div>
+            })}
+            {student?.daycare?.general.filesOp?.map((v, index) => {
+                return <div className='show-files-daycare'>
+                    <div>{v.inputName}</div>
+                    <div>:שם הקובץ<br />{v.fileName}</div>
+                    <div className='file-function' >
+                        <div className='file-function-spc' onClick={() => deleteFile(v.filePath)}><Trash /></div>
+                        <div className='file-function-spc'><Download /></div>
+                    </div>
+                </div>
+            })}
+        </div>
+        <button onClick={() => addFile()} className="btnadd">הוספת טופס  +</button>
 
         <div className='filesOp'>
             {listFile?.map((x, index) => {
                 return <div className="removeBtn">
                     <File saveFile={saveFile} service={service} defaultValue={x.fileName}
-                        // onChangeFile={handleChangeFileOp} 
-                        optional setFileName={setFileName} name={x.fileName || `file optionaly ${index + 1}`} />
-                    {/* <button onClick={() => console.log(fileOp, index)} className="up">V</button> */}
+                        optional fileName={fileName} setFileName={setFileName} name={x.fileName || `file optionaly ${index + 1}`} />
 
                     {listFile.length - 1 == index &&
                         <img className="removeImg" onClick={() => removeFile(index)}
@@ -77,7 +95,7 @@ function FixedFiles({ saveFile, arrfile = [], student, service }) {
                 </div>
             })}
         </div>
-    </div>
+    </div >
 }
 
 export default FixedFiles

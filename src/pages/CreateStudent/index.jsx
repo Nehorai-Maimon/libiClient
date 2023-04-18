@@ -51,7 +51,6 @@ function CreateStudent() {
             }
         }
     }
-    //יש באג בעמוד הזה, כל הזמן מתנתק בשליחה / שמירה
     const submit = () => {
         console.log(data)
         const fileArray = []
@@ -88,42 +87,6 @@ function CreateStudent() {
             sendfiles(fileArray, place)
         }
         checkFilesExist()
-        // const general = data.general
-        // console.log("general", general);
-        // delete data.general
-        // console.log("data after remove general", data);
-
-        // לא לשכוח למחוק, הפונקציה הקודמת צריכה לקרוא לזאת
-        gotResult()
-        function gotResult() {
-
-            // for(let i in general.files){
-            //     fetch('http://localhost:4000/student/', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(general.files[i]),
-            // })
-            //     .then((response) => response.json())
-            //     .then(data => console.log(data))
-            //     .catch(error => console.error('Error:', error));
-
-            // }
-            // for(let i in general.filesOp){
-            //     fetch('http://localhost:4000/student/', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(general.filesOp[i]),
-            // })
-            //     .then((response) => response.json())
-            //     .then(data => console.log(data))
-            //     .catch(error => console.error('Error:', error));
-
-            // }
-        }
     }
 
     useEffect(() => {

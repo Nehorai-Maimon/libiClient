@@ -17,6 +17,7 @@ function Daycare() {
     const [year, setYear] = useState()
     const currentYear = new Date().getFullYear();
     const [service, setService] = useState("general")
+    const [studentFiles, setStudentFiles] = useState(student?.daycare?.general.files)
 
     function saveForm(form, place) {
 
@@ -62,6 +63,17 @@ function Daycare() {
             .catch((error) => { console.error('Error:', error); });
     }
 
+    function deleteFile(fileKey) {
+        fetch('http://localhost:4000/student/dayCare/deleteFile', {
+            headers: { "content-type": "application/json" },
+            method: "POST",
+            body: JSON.stringify({ key: fileKey, studentId: student?._id })
+        })
+            .then((response) => response.json())
+            .then((result) => { setStudent(result.server) })
+            .catch((error) => { console.error('Error:', error); });
+    }
+
     const addYears = () => {
 
         fetch('http://localhost:4000/student/addYearDaycare', {
@@ -77,7 +89,10 @@ function Daycare() {
             .catch((error) => { console.error('Error:', error); });
     }
 
-    useEffect(() => { console.log("student", student); }, [student])
+    useEffect(() => {
+        setStudentFiles(student?.daycare?.general.files);
+        console.log(student);
+    }, [student])
 
     if (!student) {
         return <div>loading...</div>
@@ -92,7 +107,7 @@ function Daycare() {
             onSelect={(e) => setService(e)}
         >
             <Tab eventKey="general" title="כללי" >
-                <DayCare_General saveFile={saveFile} service={service} student={student} />
+                <DayCare_General studentFiles={studentFiles} saveFile={saveFile} deleteFile={deleteFile} service={service} student={student} />
                 <div className='years'>
                     <div className='title'>
                         <div className='subTitle'>:הוספת שנה</div>
@@ -103,25 +118,25 @@ function Daycare() {
                 <AccordionYears saveForm={saveForm} setStudent={setStudent} student={student} service={service} />
             </Tab>
             <Tab eventKey="speech" title="קלינאות תקשורת" >
-                <DayCare_Para saveForm={saveForm} saveFile={saveFile} student={student} service={service} />
+                <DayCare_Para saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
             <Tab eventKey="occupation" title="ריפוי בעיסוק" >
-                <DayCare_Para saveForm={saveForm} saveFile={saveFile} student={student} service={service} />
+                <DayCare_Para saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
             <Tab eventKey="physiotherapy" title="פיזיותרפיה" >
-                <DayCare_Para saveForm={saveForm} saveFile={saveFile} student={student} service={service} />
+                <DayCare_Para saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
             <Tab eventKey="social" title="עובדת סוציאלית" disabled={user.userName !== "שלומית"} >
-                <DayCare_Social saveForm={saveForm} saveFile={saveFile} student={student} service={service} />
+                <DayCare_Social saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
             <Tab eventKey="dietician" title="תזונה" >
-                <DayCare_Services saveForm={saveForm} saveFile={saveFile} student={student} service={service} />
+                <DayCare_Services saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
             <Tab eventKey="teacher" title="גננת" >
-                <DayCare_Services saveForm={saveForm} saveFile={saveFile} student={student} service={service} />
+                <DayCare_Services saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
             <Tab eventKey="medical" title="רפואי" >
-                <DayCare_Services saveForm={saveForm} saveFile={saveFile} student={student} service={service} />
+                <DayCare_Services saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
         </Tabs>
     </div>
