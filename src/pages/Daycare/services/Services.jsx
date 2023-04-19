@@ -8,7 +8,7 @@ function DayCare_Services({ saveForm, saveFile, student, data, service }) {
     let arrfile = []
 
     return <div>
-        <FixedFiles data={data} saveFile={saveFile} arrfile={arrfileFixed} service={service} />
+        <FixedFiles data={data} saveFile={saveFile} arrfile={arrfileFixed} student={student} service={service} />
         <AccordionYears saveForm={saveForm} saveFile={saveFile} data={data} student={student} service={service} arrfile={arrfile} />
     </div>
 }

@@ -17,7 +17,7 @@ function Daycare() {
     const [year, setYear] = useState()
     const currentYear = new Date().getFullYear();
     const [service, setService] = useState("general")
-    const [studentFiles, setStudentFiles] = useState(student?.daycare?.general.files)
+    const [studentFiles, setStudentFiles] = useState(false)
 
     function saveForm(form, place) {
 
@@ -61,6 +61,7 @@ function Daycare() {
             .then((response) => response.json())
             .then((result) => { setStudent(result.server) })
             .catch((error) => { console.error('Error:', error); });
+        e.target[0].value = ""
     }
 
     function deleteFile(fileKey) {
@@ -89,10 +90,7 @@ function Daycare() {
             .catch((error) => { console.error('Error:', error); });
     }
 
-    useEffect(() => {
-        setStudentFiles(student?.daycare?.general.files);
-        console.log(student);
-    }, [student])
+    useEffect(() => { setStudentFiles(!studentFiles) }, [student])
 
     if (!student) {
         return <div>loading...</div>
@@ -118,7 +116,7 @@ function Daycare() {
                 <AccordionYears saveForm={saveForm} setStudent={setStudent} student={student} service={service} />
             </Tab>
             <Tab eventKey="speech" title="קלינאות תקשורת" >
-                <DayCare_Para saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
+                <DayCare_Para studentFiles={studentFiles} saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
             <Tab eventKey="occupation" title="ריפוי בעיסוק" >
                 <DayCare_Para saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />

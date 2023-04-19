@@ -9,7 +9,7 @@ function DayCare_Social({ student, saveForm, saveFile, data, service }) {
     let arrfile = []
 
     return <div>
-        <FixedFiles saveFile={saveFile} data={data} arrfile={arrfileFixed} service={service} />
+        <FixedFiles saveFile={saveFile} data={data} student={student} arrfile={arrfileFixed} service={service} />
         <AccordionYears student={student} saveForm={saveForm} data={data} arrfile={arrfile} service={service} />
     </div>
 }

@@ -8,10 +8,7 @@ function File({ placeholder, saveFile, service, defaultValue, name, date, option
             setFileName('...שם הטופס')
         }
     }, [])
-    function handleSubmit(e) {
-        saveFile(e, service, name, "files")
-        e.target[0].value = ""
-    }
+
     return <div className={styles.file}>
         {optional ?
             <label for="fileInput">
@@ -26,7 +23,7 @@ function File({ placeholder, saveFile, service, defaultValue, name, date, option
             :
             <label for="fileInput">
                 <span className={styles.addFile}>{placeholder}
-                    <form onSubmit={(e) => handleSubmit(e)}>
+                    <form onSubmit={(e) => saveFile(e, service, name, "files")}>
                         <input id="fileInput" type="file" name={name} />
                         <button type='submit'>שמירה</button>
                     </form>

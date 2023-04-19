@@ -111,8 +111,6 @@
     align-items: flex-end;
     /* gap: 10px; */
     margin-top: 10px;
-
-
 }
 
 .up {
@@ -148,16 +146,19 @@
     text-decoration: underline;
     font-weight: bold;
 }
-.show-files-daycare{
+
+.show-files-daycare {
     border: solid 1px black;
-   
     padding: 5px;
+    margin: 5px;
 }
-.file-function{
-    display: flex; 
-    justify-content:space-around; 
+
+.file-function {
+    display: flex;
+    justify-content: space-around;
     margin-top: 5px;
 }
-.file-function-spc{
+
+.file-function-spc {
     cursor: pointer;
 }
