@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react'
-import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
-import styles from "./style.module.css"
-// import { daycare, students } from '../../fakeData';
 import StudentDetails from '../../components/common/Accordions/StudentDetails'
-import ContactDetails from '../../components/common/Accordions/Contacts'
 import AboutStudent from '../../components/common/Accordions/AboutStudent';
+import ContactDetails from '../../components/common/Accordions/Contacts'
 import Medications from '../../components/common/Accordions/medications';
+import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
 import Accordions from '../../components/common/Accordions/files';
-// import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react'
 import StudentContext from '../../context/StudentContext';
+import styles from "./style.module.css"
 
 function EditStudent() {
     const { student } = useContext(StudentContext)
@@ -124,8 +122,6 @@ function EditStudent() {
     //     )
     // }
 
-    const [fileFromServer, setFileFromServer] = useState()
-
     return (
         <div className={styles.main}>
             {/* <form > */}
@@ -173,8 +169,6 @@ function EditStudent() {
                     <div className={styles.container}>
 
                         <Accordions student={student} setData={setData} data={data} />
-
-                        {/* <div><img src={fileFromServer}/>{fileFromServer}</div> */}
 
                     </div>
                 </div>

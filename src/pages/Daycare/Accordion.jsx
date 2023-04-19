@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
-import Accordion from 'react-bootstrap/Accordion';
-import InnerAcc_general from './services/innerAc_general';
-import InnerAcc_para from './services/innerAc_para';
 import InnerAcc_services from './services/innerAc_services';
+import InnerAcc_general from './services/innerAc_general';
 import InnerAcc_Social from './services/innerAc_social';
+import InnerAcc_para from './services/innerAc_para';
+import Accordion from 'react-bootstrap/Accordion';
+import React from 'react'
 
-function AccordionYears({ student,setStudent, saveFile, service, data, arrfile, saveForm }) {
+function AccordionYears({ student, setStudent, saveFile, service, data, arrfile, saveForm }) {
 
     if (!student) {
         return <div>loading...</div>

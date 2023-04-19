@@ -1,23 +1,17 @@
-import { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import Button from 'react-bootstrap/esm/Button';
-import { useNavigate } from 'react-router-dom';
-import Popup from '../Popup';
-import PopupRemove from '../Popup remove';
-import BasicFiles from '../Services/basic';
-import Club from '../Services/club';
-import Daycare from '../../../pages/Daycare/daycare';
 import Employment from '../Services/employment';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import PopupRemove from '../Popup remove';
 import General from '../Services/general';
 import Housing from '../Services/housing';
+import Club from '../Services/club';
+import Popup from '../Popup';
 import './style.css'
-
 
 function Accordions({ setData, data, student }) {
     const navigate = useNavigate()
     const [arrServices, setArr] = useState(["כללי"])
-
-
 
     useEffect(() => {
         if (student) {
@@ -30,19 +24,6 @@ function Accordions({ setData, data, student }) {
         const value = arrServices
         setData(values => ({ ...values, [name]: value }));
     }, [arrServices])
-
-
-    // const removeService = (index, e) => {
-    //     const newList = [...arrServices]
-    //     newList.splice(index, 1);
-    //     setArr(newList);
-    //     return (
-    //         e === "תעסוקה" ? delete data.employment :
-    //             e === "דיור" ? delete data.housing :
-    //                 e === "מעון" ? delete data.daycare :
-    //                     e === "מועדונית" ? delete data.club : ""
-    //     )
-    // }
 
     function saveFile(e, service, name, dir) {
         e.preventDefault()
@@ -80,12 +61,7 @@ function Accordions({ setData, data, student }) {
                                     {e === "כללי" && <General saveFile={saveFile} student={student} setData={setData} data={data} />}
                                     {e === "דיור" && <Housing saveFile={saveFile} setData={setData} data={data} />}
                                     {e === "תעסוקה" && <Employment saveFile={saveFile} setData={setData} data={data} />}
-                                    {/* לשאול את מיכל */}
-                                    {/* סוכם להוציא את הקבצים מיצירת החניך */}
-                                    {/* {e === "מעון" && student ? <button onClick={() => navigate(`/dayCare/${student.id}`)}>ניהול מעון</button> : e === "מעון" && <button onClick={() => navigate('/dayCare')}>ניהול מעון</button>} */}
                                     {e === "מעון" && <button onClick={() => navigate(`/dayCare`)}>ניהול מעון</button>}
-                                    {/* {e === "מעון" && <button onClick={() => navigate('/dayCare')}>ניהול מעון</button>} */}
-                                    {/* {e === "מעון" && <Daycare student={student} setData={setData} data={data} />} */}
                                     {e === "מועדונית" && <Club saveFile={saveFile} student={student} setData={setData} data={data} />}
                                 </Accordion.Body>
                             </Accordion.Item>

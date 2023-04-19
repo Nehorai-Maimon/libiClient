@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
-import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
-import styles from "./style.module.css"
-import Accordions from '../../components/common/Accordions/files';
 import StudentDetails from '../../components/common/Accordions/StudentDetails'
+import AboutStudent from '../../components/common/Accordions/AboutStudent';
 import ContactDetails from '../../components/common/Accordions/Contacts';
 import Medications from '../../components/common/Accordions/medications';
-import AboutStudent from '../../components/common/Accordions/AboutStudent';
-
+import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
+import Accordions from '../../components/common/Accordions/files';
+import React, { useState, useEffect } from 'react'
+import styles from "./style.module.css"
 
 function CreateStudent() {
 
@@ -136,7 +135,7 @@ function CreateStudent() {
                     <div className={styles.containers}>
                         <div className={styles.container}>
 
-                            <Accordions setData={setData} data={data}  />
+                            <Accordions setData={setData} data={data} />
                         </div>
                     </div>
 

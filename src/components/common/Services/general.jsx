@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import BasicFiles from './basic'
-
 
 function General({ setData, saveFile, data, student }) {
     const [general, setGeneral] = useState({})
     const [arrFile, setArrFile] = useState([{ name: "צילום ת.ז ילד/הורה", date: false }, { name: "ויתור סודיות", date: false }])
-    
-    // console.log(arrFile);
 
     const submit = (e) => {
         e.preventDefault()
@@ -15,7 +12,6 @@ function General({ setData, saveFile, data, student }) {
         setData(values => ({ ...values, [name]: value }));
         console.log("done", data);
 
-        // console.log("data.general.files", data.general.files);
     }
 
     //  לבדוק שעובד
@@ -25,11 +21,9 @@ function General({ setData, saveFile, data, student }) {
         setArrFile(prev)
     }
 
-    return (
-        <div>כללי
-            <BasicFiles saveFile={saveFile} service="general" student={student} arrFile={arrFile} setArrFile={setArrFile} setService={setGeneral} onClick={(e) => submit(e)} />
-        </div>
-    )
+    return <div>כללי
+        <BasicFiles saveFile={saveFile} service="general" student={student} arrFile={arrFile} setArrFile={setArrFile} setService={setGeneral} onClick={(e) => submit(e)} />
+    </div>
 }
 
 export default General

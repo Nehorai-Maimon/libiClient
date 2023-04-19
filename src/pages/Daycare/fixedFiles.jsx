@@ -1,7 +1,6 @@
+import { Download, Trash } from "react-bootstrap-icons";
 import React, { useState, useEffect } from 'react'
-import { Download } from "react-bootstrap-icons";
 import File from '../../components/common/File'
-import { Trash } from "react-bootstrap-icons";
 import remove from '../../images/delete.png'
 
 function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, service }) {
@@ -26,10 +25,6 @@ function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, serv
         const newList = [...listFile]
         newList.splice(index, 1);
         setListFile(newList);
-        // מחיקה בשרת
-        // return (
-        //     delete fileOp[`file optionaly ${index + 1}`]
-        // )
     }
 
     useEffect(() => {
@@ -58,11 +53,10 @@ function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, serv
         <div className='files'>
             <div className="subTitle">:טפסים שהועלו לשרת</div>
 
-            {service === 'general' ? <div style={{ display: "flex" }}>
+            {service === 'general' ? <div style={{ display: "flex", direction:"rtl" }}>
                 {student?.daycare?.general.files?.map((v, index) => {
                     return <div key={index} className='show-files-daycare'>
-                        <div>{v.inputName}</div>
-                        <div>:שם הקובץ<br />{v.fileName}</div>
+                        <div>{v.fileName} :{v.inputName}</div>
                         <div className='file-function' >
                             <div className='file-function-spc' onClick={() => deleteFile(v.filePath)}><Trash /></div>
                             <div className='file-function-spc'><Download /></div>
@@ -71,8 +65,7 @@ function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, serv
                 })}
                 {student?.daycare?.general.filesOp?.map((v, index) => {
                     return <div key={index} className='show-files-daycare'>
-                        <div>{v.inputName}</div>
-                        <div>:שם הקובץ<br />{v.fileName}</div>
+                        <div>{v.fileName} :{v.inputName}</div>
                         <div className='file-function' >
                             <div className='file-function-spc' onClick={() => deleteFile(v.filePath)}><Trash /></div>
                             <div className='file-function-spc'><Download /></div>
@@ -86,10 +79,9 @@ function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, serv
                     {student?.daycare?.general.year?.map((v, index) => {
                         return v[service].files.map(x => {
                             return <div key={index} className='show-files-daycare'>
-                                <div>{x.inputName}</div>
-                                <div>:שם הקובץ<br />{x.fileName}</div>
+                                <div>{x.fileName} :{x.inputName}</div>
                                 <div className='file-function' >
-                                    <div className='file-function-spc' onClick={() => deleteFile(x.filePath)}><Trash /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(x.filePath, v.year)}><Trash /></div>
                                     <div className='file-function-spc'><Download /></div>
                                 </div>
                             </div>
@@ -98,10 +90,9 @@ function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, serv
                     {student?.daycare?.general.year?.map((v, index) => {
                         return v[service].filesOp.map(x => {
                             return <div key={index} className='show-files-daycare'>
-                                <div>{x.inputName}</div>
-                                <div>:שם הקובץ<br />{x.fileName}</div>
+                                <div>{x.fileName} :{x.inputName}</div>
                                 <div className='file-function' >
-                                    <div className='file-function-spc' onClick={() => deleteFile(x.filePath)}><Trash /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(x.filePath, v.year)}><Trash /></div>
                                     <div className='file-function-spc'><Download /></div>
                                 </div>
                             </div>
@@ -120,8 +111,8 @@ function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, serv
 
                     {listFile.length - 1 == index &&
                         <img className="removeImg" onClick={() => removeFile(index)}
-
-                            src={remove} alt={"delete"} />}
+                        
+                        src={remove} alt={"delete"} />}
                 </div>
             })}
         </div>

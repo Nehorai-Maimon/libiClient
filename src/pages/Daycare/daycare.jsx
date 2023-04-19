@@ -64,11 +64,11 @@ function Daycare() {
         e.target[0].value = ""
     }
 
-    function deleteFile(fileKey) {
+    function deleteFile(fileKey, year = "") {
         fetch('http://localhost:4000/student/dayCare/deleteFile', {
             headers: { "content-type": "application/json" },
             method: "POST",
-            body: JSON.stringify({ key: fileKey, studentId: student?._id })
+            body: JSON.stringify({ key: fileKey, studentId: student?._id, year })
         })
             .then((response) => response.json())
             .then((result) => { setStudent(result.server) })
@@ -76,7 +76,6 @@ function Daycare() {
     }
 
     const addYears = () => {
-
         fetch('http://localhost:4000/student/addYearDaycare', {
             headers: {
                 studentId: student?._id,

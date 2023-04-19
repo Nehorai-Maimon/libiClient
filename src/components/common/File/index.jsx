@@ -14,7 +14,7 @@ function File({ placeholder, saveFile, service, defaultValue, name, date, option
             <label for="fileInput">
                 <span className={styles.addFile}><input className={styles.fileName} placeholder={fileName || '...שם הטופס'}
                     onChange={(e) => setFileName(e.target.value)} name={fileName} />
-                    <form onSubmit={(e) => saveFile(e, service, fileName, "filesOp")}>
+                    <form onSubmit={(e) => saveFile(e, service, fileName === '...שם הטופס' ? "file optionaly" : fileName, "filesOp")}>
                         <input id="fileInput" type="file" name={name} />
                         <button type='submit'>שמירה</button>
                     </form>

@@ -10,14 +10,10 @@ function Club({ saveFile, setData, data, student }) {
         setData(values => ({ ...values, [name]: value }));
         console.log("done", data);
     }
+    
     let arrfile = [{ name: "אבחון", date: true }, { name: "רישום שנתי", date: false }]
 
-
-    return (
-        <div>
-            <BasicFiles saveFile={saveFile} place="club" student={student} arrfile={arrfile} setService={setClub} onClick={submit} />
-        </div>
-    )
+    return <BasicFiles saveFile={saveFile} place="club" student={student} arrfile={arrfile} setService={setClub} onClick={submit} />
 }
 
 export default Club
