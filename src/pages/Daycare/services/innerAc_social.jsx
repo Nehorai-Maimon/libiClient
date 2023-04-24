@@ -5,7 +5,9 @@ import Tabs from 'react-bootstrap/Tabs';
 
 function InnerAcc_Social({ saveForm, v, data, index_, service }) {
 
-    const mapYear = v?.year
+    const weeklySummary = v.social.weeklySummary
+    const goals_ = v.social.goals
+    const tsa_ = v.social.tsa
     let _data;
     // if (data) {
     //     _data = data?.social[1]?.years[0]
@@ -14,9 +16,9 @@ function InnerAcc_Social({ saveForm, v, data, index_, service }) {
 
     const [listInput, setListInput] = useState(v?.social.weeklySummary ? v.social.weeklySummary : [{ input: "" }]);
 
-    const [tsa, setTsa] = useState({ tab: "tsa", year: mapYear });
-    const [goals, setGoals] = useState({ tab: "goals", year: mapYear });
-    const [weekly_summary, setweekly_summary] = useState({ tab: "weeklySummary", year: mapYear });
+    const [tsa, setTsa] = useState({ tab: "tsa", year: v.year, summary: tsa_?.summary, author: tsa_?.author, date: tsa_?.date });
+    const [goals, setGoals] = useState({ tab: "goals", year: v.year, summary: goals_?.summary, author: goals_?.author, date: goals_?.date });
+    const [weekly_summary, setweekly_summary] = useState({ tab: "weeklySummary", year: v.year, summary: weeklySummary.summary, author: weeklySummary.author, date: weeklySummary.date });
     const [send, setSend] = useState(true);
 
     let able = []

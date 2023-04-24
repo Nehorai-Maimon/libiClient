@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import StudentContext from '../../context/StudentContext';
 import Select from '../../components/common/Select';
-import UserContext from '../../context/UserContext';
 import DayCare_Services from './services/Services';
 import DayCare_General from './services/general';
 import DayCare_Social from './services/social';
@@ -10,14 +9,28 @@ import AccordionYears from './Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import './style.css'
+import { Button, Modal } from 'react-bootstrap';
 
 function Daycare() {
     const { student, setStudent } = useContext(StudentContext)
-    const { user, setUser } = useContext(UserContext);
     const [year, setYear] = useState()
     const currentYear = new Date().getFullYear();
     const [service, setService] = useState("general")
     const [studentFiles, setStudentFiles] = useState(false)
+    const worker = JSON.parse(localStorage.getItem("worker"))
+    const [confirmShow, setConfirmShow] = useState(false)
+    const [deleteShow, setDeleteShow] = useState(false)
+    const [wantToDelete, setWantToDelete] = useState(false)
+    const [deleteOp, setDeleteOp] = useState()
+
+    useEffect(() => {
+        if (confirmShow === true) {
+            const timer = setTimeout(() => {
+                setConfirmShow(false)
+            }, 1000)
+            return () => clearTimeout(timer)
+        }
+    }, [confirmShow])
 
     function saveForm(form, place) {
 
@@ -33,7 +46,7 @@ function Daycare() {
             body: JSON.stringify(form)
         })
             .then((response) => response.json())
-            .then((result) => { setStudent(result.server) })
+            .then((result) => { setStudent(result.server); setConfirmShow(true) })
             .catch((error) => { console.error('Error:', error); });
     }
 
@@ -59,20 +72,27 @@ function Daycare() {
             body: fd
         })
             .then((response) => response.json())
-            .then((result) => { setStudent(result.server) })
+            .then((result) => { setStudent(result.server); setConfirmShow(true) })
             .catch((error) => { console.error('Error:', error); });
         e.target[0].value = ""
     }
 
+    useEffect(() => {
+        if (wantToDelete) {
+            fetch('http://localhost:4000/student/dayCare/deleteFile', {
+                headers: { "content-type": "application/json" },
+                method: "POST",
+                body: JSON.stringify({ key: deleteOp.fileKey, studentId: student?._id, year: deleteOp.year })
+            })
+                .then((response) => response.json())
+                .then((result) => { setStudent(result.server) })
+                .catch((error) => { console.error('Error:', error); });
+        }
+    }, [wantToDelete])
+
     function deleteFile(fileKey, year = "") {
-        fetch('http://localhost:4000/student/dayCare/deleteFile', {
-            headers: { "content-type": "application/json" },
-            method: "POST",
-            body: JSON.stringify({ key: fileKey, studentId: student?._id, year })
-        })
-            .then((response) => response.json())
-            .then((result) => { setStudent(result.server) })
-            .catch((error) => { console.error('Error:', error); });
+        setDeleteShow(true)
+        setDeleteOp({ fileKey, year })
     }
 
     const addYears = () => {
@@ -123,7 +143,7 @@ function Daycare() {
             <Tab eventKey="physiotherapy" title="פיזיותרפיה" >
                 <DayCare_Para saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
-            <Tab eventKey="social" title="עובדת סוציאלית" disabled={user.userName !== "שלומית"} >
+            <Tab eventKey="social" title="עובדת סוציאלית" disabled={worker.role !== "admin"} >
                 <DayCare_Social saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
             <Tab eventKey="dietician" title="תזונה" >
@@ -136,7 +156,33 @@ function Daycare() {
                 <DayCare_Services saveForm={saveForm} deleteFile={deleteFile} saveFile={saveFile} student={student} service={service} />
             </Tab>
         </Tabs>
-    </div>
+        <Modal
+            size='sm'
+            show={confirmShow}
+            onHide={() => setConfirmShow(false)}
+        >
+            <Modal.Body style={{ color: "green" }}>
+                נשמר בהצלחה!
+            </Modal.Body>
+        </Modal>
+        <Modal
+            show={deleteShow}
+            onHide={() => setDeleteShow(false)}
+            backdrop="static"
+        >
+            <Modal.Body>
+                האם את/ה בטוח/ה שברצונך למחוק את הקובץ?
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant='primary' onClick={() => { setWantToDelete(true); setDeleteShow(false) }}>
+                    מחק
+                </Button>
+                <Button variant='secondary' onClick={() => { setWantToDelete(false); setDeleteShow(false) }}>
+                    שמור
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    </div >
 }
 
 export default Daycare

@@ -12,45 +12,43 @@ import ProjectContext from '../../context/ProjectContext'
 
 
 function ProjectView() {
-    const {project} = useContext(ProjectContext)
+    const { project } = useContext(ProjectContext)
     const [studentsToProject, setStudentsToProject] = useState();
 
-
-    return (
-        <div className={styles.con}>
-            <div className={styles.titleStudent}> {project.name}</div>
-            <div className={styles.main}>
-                <div className={styles.container}>
-                    <div className={styles.box}>
-                        <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>שם האירוע: </span>{project.name}</div>
-                            <div className={styles.line}>  <span className={styles.question}>סוג: </span>{project.type}</div>
-
-                        </div>
-                        <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>תאריכים: </span>{project.fromDate + " עד " + project.untilDate}</div>
-                            <div className={styles.line}>  <span className={styles.question}>ימי נופשון: </span>{project.days}</div>
-                        </div>
-                        <div className={styles.subContainer}>
-                            <div className={styles.line}>  <span className={styles.question}>סטטוס: </span>{project.status}</div>
-                        </div>
+    return <div className={styles.con}>
+        <div className={styles.titleStudent}> {project.name}</div>
+        <div className={styles.main}>
+            <div className={styles.container}>
+                <div className={styles.box}>
+                    <div className={styles.subContainer}>
+                        <div className={styles.line}>  <span className={styles.question}>שם האירוע: </span>{project.name}</div>
+                        <div className={styles.line}>  <span className={styles.question}>סוג: </span>{project.type}</div>
 
                     </div>
-                    <div>
-                        <div className={styles.subContainer}>
-                            <PopupAddStudent studentsToProject={studentsToProject} setStudentsToProject={setStudentsToProject} />
-                        </div>
-                        <div className={styles.subContainer}>
-                            {/* <div className={styles.line}>  <span className={styles.question}>חניכים משויכים לאירוע: </span>{studentsToProject?.map(e => e + " , ") || project?.studentsInvited?.map(e => e + " , ")} */}
-                            {/* </div> */}
-                        </div>
-                        <div className={styles.tableStudentsIn}>
-                            <TableStudentIn studentsIn={studentsToProject || project.studentsInvited} />
-                        </div>
-                        {/* <TableStudentProj /> */}
-                        {/* {students?.map(e => e)} */}
+                    <div className={styles.subContainer}>
+                        <div className={styles.line}>  <span className={styles.question}>תאריכים: </span>{project.fromDate + " עד " + project.untilDate}</div>
+                        <div className={styles.line}>  <span className={styles.question}>ימי נופשון: </span>{project.days}</div>
                     </div>
-                    {/* <div className={styles.box}>
+                    <div className={styles.subContainer}>
+                        <div className={styles.line}>  <span className={styles.question}>סטטוס: </span>{project.status}</div>
+                    </div>
+
+                </div>
+                <div>
+                    <div className={styles.subContainer}>
+                        <PopupAddStudent studentsToProject={studentsToProject} setStudentsToProject={setStudentsToProject} />
+                    </div>
+                    <div className={styles.subContainer}>
+                        {/* <div className={styles.line}>  <span className={styles.question}>חניכים משויכים לאירוע: </span>{studentsToProject?.map(e => e + " , ") || project?.studentsInvited?.map(e => e + " , ")} */}
+                        {/* </div> */}
+                    </div>
+                    <div className={styles.tableStudentsIn}>
+                        <TableStudentIn studentsIn={studentsToProject || project.studentsInvited} />
+                    </div>
+                    {/* <TableStudentProj /> */}
+                    {/* {students?.map(e => e)} */}
+                </div>
+                {/* <div className={styles.box}>
                         <div className={styles.title}>אנשי קשר</div>
                         {project.contact.map((e, index) => {
                             return (<>
@@ -68,10 +66,9 @@ function ProjectView() {
                             )
                         })}
                     </div> */}
-                </div>
             </div>
         </div>
-    )
+    </div>
 }
 
 export default ProjectView

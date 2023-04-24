@@ -7,8 +7,8 @@ import File from '../../../components/common/File';
 import remove from '../../../images/delete.png'
 
 function InnerAcc_services({ v, saveForm, saveFile, service, data, index_ }) {
-    const mapYear = v?.year
-
+    const tsa_ = v[service].tsa
+// לשאול את מיכל על טפסים רבים מערך
     let _data;
     if (data) {
         if (service === "dietician") {
@@ -24,9 +24,8 @@ function InnerAcc_services({ v, saveForm, saveFile, service, data, index_ }) {
         }
     }
 
-    const [tsa, setTsa] = useState({ tab: "tsa", year: mapYear });
+    const [tsa, setTsa] = useState({ tab: "tsa", year: v.year, summary: tsa_?.summary, author: tsa_?.author, date: tsa_?.date });
     const [file, setFile] = useState([]);
-
     const [listFile, setListFile] = useState(data ? _data[index_].filesOp : []);
     const [fileName, setFileName] = useState("")
 
@@ -46,7 +45,7 @@ function InnerAcc_services({ v, saveForm, saveFile, service, data, index_ }) {
         file.push({ service, name: fileName, file: e.target.files[0].name })
         setFileName("")
     }
-
+    
     return <div className="container">
         <Tabs
             defaultActiveKey="0"
@@ -63,7 +62,6 @@ function InnerAcc_services({ v, saveForm, saveFile, service, data, index_ }) {
                         {listFile.map((x, index) => {
                             return <div className="removeBtn">
                                 <File year={v?.year} service={service} saveFile={saveFile} defaultValue={data ? x.fileName : ""} name={data ? x.fileName : ""} onChangeFile={handleChangeFileOp} optional setFileName={setFileName} />
-                                {/* <button onClick={() => console.log(file, index)} className="up">V</button> */}
 
                                 {listFile.length - 1 == index &&
                                     <img className="removeImg" onClick={() => removeFile(index)}
@@ -82,7 +80,7 @@ function InnerAcc_services({ v, saveForm, saveFile, service, data, index_ }) {
                     <textarea defaultValue={v[service].tsa?.summary} className='textarea_daycare_1' placeholder={"  תש''א..."} name="summary" onChange={(e) => setTsa({ ...tsa, [e.target.name]: e.target.value })} />
                     <Input defaultValue={v[service].tsa?.author} placeholder={"שם הכותב/ת"} required={true} name={"author"} onChange={(e) => setTsa({ ...tsa, [e.target.name]: e.target.value })} />
 
-                    <button onClick={() => saveForm(tsa,service)} className="btnadd">שמירה</button>
+                    <button onClick={() => saveForm(tsa, service)} className="btnadd">שמירה</button>
                 </div>
             </Tab>
         </Tabs>

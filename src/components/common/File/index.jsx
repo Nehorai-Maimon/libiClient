@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "./style.module.css"
 
 function File({ placeholder, saveFile, service, defaultValue, name, date, optional, fileName, setFileName }) {
+    const [fileDate, setFileDate] = useState()
 
     useEffect(() => {
         if (optional) {
@@ -23,7 +24,7 @@ function File({ placeholder, saveFile, service, defaultValue, name, date, option
             :
             <label for="fileInput">
                 <span className={styles.addFile}>{placeholder}
-                    <form onSubmit={(e) => saveFile(e, service, name, "files")}>
+                    <form onSubmit={(e) => saveFile(e, service, name, "files", fileDate)}>
                         <input id="fileInput" type="file" name={name} />
                         <button type='submit'>שמירה</button>
                     </form>
@@ -31,9 +32,9 @@ function File({ placeholder, saveFile, service, defaultValue, name, date, option
             </label>}
         {date &&
             <div className={styles.container}>
-                <input className={styles.inputs} placeholder={"תאריך תפוגה"} defaultValue={defaultValue} name={`${name}-date`}
-                    onFocus={(e) => (e.target.type = "date")}
-                    onBlur={(e) => (e.target.type = "text")} />
+                <input onChange={(e) => setFileDate(e.target.value)} className={styles.inputs}
+                    placeholder={"תאריך תפוגה"} defaultValue={defaultValue} name={`${name}-date`}
+                    onFocus={(e) => (e.target.type = "date")} onBlur={(e) => (e.target.type = "text")} />
             </div>}
     </div>
 }

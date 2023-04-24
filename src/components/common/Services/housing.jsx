@@ -1,26 +1,12 @@
-import React, { useContext, useState } from 'react'
-import StudentContext from '../../../context/StudentContext'
+import React, { useState } from 'react'
 import BasicFiles from './basic'
 
-function Housing({ setData,saveFile, data, remove }) {
+function Housing({ service, setData, student, saveFile, data, remove }) {
 
-    const { student } = useContext(StudentContext)
-    const [housing, setHousing] = useState({})
+    const [arrFile, setArrFile] = useState([{ name: "תעודת נכה", date: false }, { name: "אישור רווחה", date: true }])
 
-    const submit = () => {
-        const name = "housing"
-        const value = housing
-        setData(values => ({ ...values, [name]: value }));
-        console.log("done", data);
-    }
 
-    
-
-    return (
-        <div>
-            <BasicFiles saveFile={saveFile} place="housing" arrfile={[{ name: "תעודת נכה", date: false }, { name: "אישור רווחה", date: true }]} setService={setHousing} onClick={submit} remove={remove} />
-        </div>
-    )
+    return <BasicFiles student={student} saveFile={saveFile} service={service} arrfile={arrFile} remove={remove} />
 }
 
 export default Housing

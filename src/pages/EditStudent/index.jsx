@@ -9,7 +9,7 @@ import StudentContext from '../../context/StudentContext';
 import styles from "./style.module.css"
 
 function EditStudent() {
-    const { student } = useContext(StudentContext)
+    const { student, setStudent } = useContext(StudentContext)
     const [data, setData] = useState(student);
     const [status, setStatus] = useState(true)
     const [listContactEdit, setListContactEdit] = useState(student?.contact.map(e => ({ contactFirstName: e.contactFirstName, contactLastName: e.contactLastName, contactPhone: e.contactPhone, contactEmail: e.contactEmail, relative: e.relative, comment: e.comment, apotropus: e.apotropus })));
@@ -58,7 +58,7 @@ function EditStudent() {
             body: JSON.stringify(data),
         })
             .then((response) => response.json())
-            .then(data => console.log(data))
+            .then(data => setStudent(data.server))
             .catch(error => console.error('Error:', error));
     }
 
@@ -122,61 +122,59 @@ function EditStudent() {
     //     )
     // }
 
-    return (
-        <div className={styles.main}>
-            {/* <form > */}
-            <div className={styles.title}>עריכת חניך קיים
-                <div className={styles.save}>
-                    <SwitchBtn label={"סטטוס פעיל"} status={status} setStatus={setStatus} />
-                    <button name="submit" className={styles.btnadd} onClick={() => submit()} >שמירה</button>
+    return <div className={styles.main}>
+        {/* <form > */}
+        <div className={styles.title}>עריכת חניך קיים
+            <div className={styles.save}>
+                <SwitchBtn label={"סטטוס פעיל"} status={status} setStatus={setStatus} />
+                <button name="submit" className={styles.btnadd} onClick={() => submit()} >שמירה</button>
+            </div>
+        </div>
+        <div className={styles.createStudent}>
+            <div className={styles.containers}>
+                <div className={styles.container}>
+
+                    <StudentDetails setData={setData} student={student} />
+
+                </div>
+
+                <div className={styles.container}>
+
+
+                    <ContactDetails listContactEdit={listContactEdit} setListContactEdit={setListContactEdit} setData={setData} data={data} removeContactEdit={removeContactEdit} />
+
                 </div>
             </div>
-            <div className={styles.createStudent}>
-                <div className={styles.containers}>
-                    <div className={styles.container}>
 
-                        <StudentDetails setData={setData} student={student} />
-
-                    </div>
-
-                    <div className={styles.container}>
-
-
-                        <ContactDetails listContactEdit={listContactEdit} setListContactEdit={setListContactEdit} setData={setData} data={data} removeContactEdit={removeContactEdit} />
-
-                    </div>
-                </div>
-
-                <div className={styles.containers}>
-                    <div className={styles.container}>
-                        {/* <div className={styles.subTitle}>טפסים ואישורים</div>
+            <div className={styles.containers}>
+                <div className={styles.container}>
+                    {/* <div className={styles.subTitle}>טפסים ואישורים</div>
                             <File defaultValueDate={student.file[0]?.date} placeholder={"אישור לצילום החניך"} name={"pictures"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
                             <File defaultValueDate={student.file[1]?.date} placeholder={"אבחון פסיכולוגי"} name={"psychological"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
                             <File defaultValueDate={student.file[2]?.date} placeholder={"אבחון פסיכיאטרי"} name={"psychiatric"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} />
                             <File defaultValueDate={student.file[3]?.date} placeholder={"אישור רווחה"} name={"welfare certificate"} onChangeDate={handleChangeDate} onChangeFile={onChangeFile} /> */}
-                        <AboutStudent student={student} setData={setData} />
-
-                    </div>
-
-                    <div className={styles.container}>
-
-                        <Medications listMedicationEdit={listMedicationEdit} setData={setData} data={data} />
-
-                    </div>
+                    <AboutStudent student={student} setData={setData} />
 
                 </div>
-                <div className={styles.containers}>
-                    <div className={styles.container}>
 
-                        <Accordions student={student} setData={setData} data={data} />
+                <div className={styles.container}>
 
-                    </div>
+                    <Medications listMedicationEdit={listMedicationEdit} setData={setData} data={data} />
+
                 </div>
 
             </div>
-            {/* </form> */}
+            <div className={styles.containers}>
+                <div className={styles.container}>
+
+                    <Accordions student={student} setStudent={setStudent} setData={setData} data={data} />
+
+                </div>
+            </div>
+
         </div>
-    )
+        {/* </form> */}
+    </div>
 }
 
 export default EditStudent

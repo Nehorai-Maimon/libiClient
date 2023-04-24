@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from "react-router-dom";
+import ProjectContext from './context/ProjectContext';
+import StudentContext from './context/StudentContext';
+import CreateStudent from './pages/CreateStudent';
+import Sidebar from './components/common/Sidebar';
+import UserContext from './context/UserContext';
 import Header from './components/common/Header';
+import Daycare from './pages/Daycare/daycare';
+import StudentView from './pages/StudentView';
+import EditStudent from './pages/EditStudent';
+import ProjectView from './pages/ProjectView';
+import Table from './pages/TableStudent';
+import Projects from './pages/Project';
+import React, { useState } from 'react'
 import Login from './pages/Login';
 import Test from './Test';
-import EditStudent from './pages/EditStudent';
-import CreateStudent from './pages/CreateStudent';
-import StudentView from './pages/StudentView';
-import Sidebar from './components/common/Sidebar';
-import Projects from './pages/Project';
-import Table from './pages/TableStudent';
-import ProjectView from './pages/ProjectView';
-import Daycare from './pages/Daycare/daycare';
-import Dashboard from './pages/Dashboard';
-import UserContext from './context/UserContext';
-import StudentContext from './context/StudentContext';
-import ProjectContext from './context/ProjectContext';
 
 function Layout() {
     const [user, setUser] = useState("");
     const [student, setStudent] = useState()
     const [project, setProject] = useState()
-
-
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
@@ -44,7 +41,6 @@ function Layout() {
                                 </>
                             }
                             <Route path="/login" element={<Navigate to="/table" />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/michal" element={<Test />} />
                             <Route path="/table" element={<Table />} />
                             <Route path="/edit" element={<EditStudent />} />

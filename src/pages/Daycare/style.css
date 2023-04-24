@@ -153,6 +153,12 @@
     margin: 5px;
 }
 
+.expiration {
+    border: solid 1px red;
+    padding: 5px;
+    margin: 5px;
+}
+
 .file-function {
     display: flex;
     justify-content: space-around;

@@ -1,36 +1,41 @@
-import React, { useContext, useState, useEffect } from 'react'
 import Input from '../../components/common/Input'
-import styles from "./style.module.css"
-import logo from '../../images/logo-1.png'
 import { useNavigate } from 'react-router-dom'
-import UserContext from '../../context/UserContext'
+import logo from '../../images/logo-1.png'
+import React, { useState } from 'react'
+import styles from "./style.module.css"
 
 function Login() {
     const [userLogin, setUserLogin] = useState("")
-    const { setUser } = useContext(UserContext);
     const navigate = useNavigate()
-
-    // useEffect(() => { console.log(userLogin); }, [userLogin])
 
     const login = async (e) => {
         e.preventDefault();
-        setUser(userLogin)
-        console.log(userLogin);
-        //קריאה לשרת לבדיקת משתמש
-        navigate('/dashboard')
+        fetch('http://localhost:4000/worker/login', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(userLogin)
+        })
+            .then((response) => response.json())
+            .then((result) => { gotResult(result) })
+            .catch((error) => { console.error('Error:', error); });
     }
 
-    const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setUserLogin(values => ({ ...values, [name]: value }));
+    function gotResult(result) {
+        if (result[0] !== null && result[1] !== null) {
+            localStorage.setItem('worker', JSON.stringify(result[0]))
+            localStorage.setItem('token', JSON.stringify(result[1]))
+            navigate('/table')
+        }
     }
 
     return <form onSubmit={login}>
         <div className={styles.login}>
             <img src={logo} alt={"logo"} className={styles.logo} />
-            <Input placeholder={"שם משתמש"} required={true} name={"userName"} onChange={handleChange} />
-            <Input placeholder={"תעודת זהות"} required={true} name={"password"} type={"password"} onChange={handleChange} />
+            <Input placeholder={"שם משתמש"} required={true} name={"userName"} onChange={(e) => setUserLogin({ ...userLogin, [e.target.name]: e.target.value })} />
+            <Input placeholder={"מזהה"} required={true} name={"identifaier"} onChange={(e) => setUserLogin({ ...userLogin, [e.target.name]: e.target.value })} />
+            <Input placeholder={"סיסמה"} required={true} name={"password"} type={"password"} onChange={(e) => setUserLogin({ ...userLogin, [e.target.name]: e.target.value })} />
             <button className={styles.btnEnter}>כניסה</button>
         </div>
     </form>

@@ -1,8 +1,7 @@
 .main {
-    zoom: 80%;
+    /* שיניתי כאן */
+    /* zoom: 80%; */
     width: 95%;
-
-
 }
 
 .createStudent {
@@ -10,8 +9,11 @@
     flex-direction: row-reverse;
     gap: 10px;
     justify-content: center;
-    margin-left: 70px;
-    margin-right: 70px;
+    /* שיניתי כאן */
+    /* margin-left: 70px;
+    margin-right: 70px; */
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
 
 .title {

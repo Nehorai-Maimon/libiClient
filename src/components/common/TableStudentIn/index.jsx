@@ -11,10 +11,16 @@ import ProjectContext from "../../../context/ProjectContext";
 
 function TableStudentIn({ studentsIn }) {
     const [students, setStudents] = useState()
-    const {project} = useContext(ProjectContext)
+    const { project } = useContext(ProjectContext)
+    const token = JSON.parse(localStorage.getItem('token'))
 
     useEffect(() => {
-        fetch('http://localhost:4000/student')
+        fetch('http://localhost:4000/student', {
+            headers: {
+                "Content-Type": "application/json",
+                "token": `bearer ${token}`
+            }
+        })
             .then((response) => response.json())
             .then(data => setStudents(data))
             .catch(error => console.error('Error:', error));
@@ -134,93 +140,85 @@ function TableStudentIn({ studentsIn }) {
         console.log(studentsPaid)
     }, [studentsPaid])
 
-
-
-
-    return (
-        <div>
-            <div className={styles.container}>
-                <div className={styles.filters}>
-                    <div className={styles.subfilter}>
-                        <Select className={styles.select} placeholder={"השתתפו"} options={["כולם", "השתתף", "לא השתתף"]} name={"part"} onChange={(e) => setPart(e.target.value)} />
-                        <Select className={styles.select} placeholder={"שילמו"} options={["כולם", "שילם", "לא שילם"]} name={"paid"} onChange={(e) => setPaid(e.target.value)} />
-                    </div>
-                    <button onClick={() => { setfilterStudents(filter) }}>הצג את כולם</button>
+    return <div>
+        <div className={styles.container}>
+            <div className={styles.filters}>
+                <div className={styles.subfilter}>
+                    <Select className={styles.select} placeholder={"השתתפו"} options={["כולם", "השתתף", "לא השתתף"]} name={"part"} onChange={(e) => setPart(e.target.value)} />
+                    <Select className={styles.select} placeholder={"שילמו"} options={["כולם", "שילם", "לא שילם"]} name={"paid"} onChange={(e) => setPaid(e.target.value)} />
                 </div>
-                {/* <div className={styles.search}> */}
-                {/* <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} /> */}
-
-
-                {/* <CSVLink data={csvData}><img
-                            src={excel_icon} alt="Excel" className={styles.icon} /></CSVLink> */}
-                {/* </div> */}
-                {/* </div> */}
-                <table>
-                    <tr>
-                        {/* <th><input type="checkbox" name='checkAll' onChange={() => TocheckAll()} /></th> */}
-                        <th>תעודת זהות</th>
-                        <th>שם פרטי</th>
-                        <th>שם משפחה</th>
-                        <th>גיל</th>
-                        <th>מין</th>
-                        <th>איש קשר</th>
-                        <th>טלפון</th>
-                        <th>השתתף</th>
-                        <th>שולם</th>
-                        {/* <th>שירותים</th> */}
-                        {/* <th>מסמכים ואישורים</th> */}
-                        {/* <th>עריכה</th> */}
-                        {/* <th>שליחת תזכורת</th> */}
-                    </tr>
-                    {filterStudents?.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
-
-                        filterStudents?.map((val, key) => {
-                            // let generalArr = []
-                            // let difference = []
-                            // val?.general?.files.map(e => { generalArr.push(e.name) })
-                            // difference = gerneralFiles.filter(x => !generalArr.includes(x))
-
-                            // if (val?.arrServices?.includes('תעסוקה')) {
-                            //     let employmentArr = []
-                            //     let difference1 = []
-                            //     val?.employment?.files.map(e => { employmentArr.push(e.name) })
-                            //     difference1 = employmentFiles.filter(x => !employmentArr.includes(x))
-                            //     if (difference1.length > 0) {
-                            //         difference.push(difference1)
-                            //     }
-                            // }
-                            // if (val?.arrServices?.includes('מעון')) {
-                            //     let daycareArr = []
-                            //     let difference2 = []
-                            //     val?.daycare?.files.map(e => { daycareArr.push(e.name) })
-                            //     difference2 = daycareFiles.filter(x => !daycareArr.includes(x))
-                            //     if (difference2.length > 0) {
-                            //         difference.push(difference2)
-                            //     }
-                            // }
-
-
-                            return (
-                                < tr key={key} >
-                                    {/* <td><input type="checkbox" name='check' checked={studentArr.includes(val.id)} onChange={() => addToArr(val.id)} /></td> */}
-                                    <td >{val.id}</td>
-                                    <td >{val.firstName}</td>
-                                    <td >{val.lastName}</td>
-                                    <td >{getAge(val.DateOfBirth.split("/").reverse().join("/"))}</td>
-                                    <td >{val.gender}</td>
-                                    <td >{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
-                                    <td >{val.contact[0].contactPhone}</td>
-                                    <td ><input type="checkbox" name='participated' checked={studentsPart.includes(val.id)} onChange={() => addToArrPart(val.id)} /></td>
-                                    <td ><input type="checkbox" name='paid' checked={studentsPaid.includes(val.id)} onChange={() => addToArrPaid(val.id)} /></td>
-                                </tr>
-
-                            )
-                        })
-                    }
-                </table>
+                <button onClick={() => { setfilterStudents(filter) }}>הצג את כולם</button>
             </div>
-        </div >
-    );
+            {/* <div className={styles.search}> */}
+            {/* <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} /> */}
+
+
+            {/* <CSVLink data={csvData}><img
+                            src={excel_icon} alt="Excel" className={styles.icon} /></CSVLink> */}
+            {/* </div> */}
+            {/* </div> */}
+            <table>
+                <tr>
+                    {/* <th><input type="checkbox" name='checkAll' onChange={() => TocheckAll()} /></th> */}
+                    <th>תעודת זהות</th>
+                    <th>שם פרטי</th>
+                    <th>שם משפחה</th>
+                    <th>גיל</th>
+                    <th>מין</th>
+                    <th>איש קשר</th>
+                    <th>טלפון</th>
+                    <th>השתתף</th>
+                    <th>שולם</th>
+                    {/* <th>שירותים</th> */}
+                    {/* <th>מסמכים ואישורים</th> */}
+                    {/* <th>עריכה</th> */}
+                    {/* <th>שליחת תזכורת</th> */}
+                </tr>
+                {filterStudents?.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
+
+                    filterStudents?.map((val, key) => {
+                        // let generalArr = []
+                        // let difference = []
+                        // val?.general?.files.map(e => { generalArr.push(e.name) })
+                        // difference = gerneralFiles.filter(x => !generalArr.includes(x))
+
+                        // if (val?.arrServices?.includes('תעסוקה')) {
+                        //     let employmentArr = []
+                        //     let difference1 = []
+                        //     val?.employment?.files.map(e => { employmentArr.push(e.name) })
+                        //     difference1 = employmentFiles.filter(x => !employmentArr.includes(x))
+                        //     if (difference1.length > 0) {
+                        //         difference.push(difference1)
+                        //     }
+                        // }
+                        // if (val?.arrServices?.includes('מעון')) {
+                        //     let daycareArr = []
+                        //     let difference2 = []
+                        //     val?.daycare?.files.map(e => { daycareArr.push(e.name) })
+                        //     difference2 = daycareFiles.filter(x => !daycareArr.includes(x))
+                        //     if (difference2.length > 0) {
+                        //         difference.push(difference2)
+                        //     }
+                        // }
+
+
+                        return < tr key={key} >
+                            {/* <td><input type="checkbox" name='check' checked={studentArr.includes(val.id)} onChange={() => addToArr(val.id)} /></td> */}
+                            <td >{val.id}</td>
+                            <td >{val.firstName}</td>
+                            <td >{val.lastName}</td>
+                            <td >{getAge(val.DateOfBirth.split("/").reverse().join("/"))}</td>
+                            <td >{val.gender}</td>
+                            <td >{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
+                            <td >{val.contact[0].contactPhone}</td>
+                            <td ><input type="checkbox" name='participated' checked={studentsPart.includes(val.id)} onChange={() => addToArrPart(val.id)} /></td>
+                            <td ><input type="checkbox" name='paid' checked={studentsPaid.includes(val.id)} onChange={() => addToArrPaid(val.id)} /></td>
+                        </tr>
+                    })
+                }
+            </table>
+        </div>
+    </div >
 }
 
 export default TableStudentIn;

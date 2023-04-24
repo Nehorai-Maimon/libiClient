@@ -1,14 +1,31 @@
+import React, { useContext, useState, useEffect } from 'react'
 import StudentContext from '../../context/StudentContext';
 import { Download, Trash } from 'react-bootstrap-icons';
+import { Button, Modal } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import React, { useContext } from 'react'
 import { projects } from '../../fakeData'
 import styles from "./style.module.css"
 
 function StudentView() {
     const location = useLocation()
     const { student, setStudent } = useContext(StudentContext)
-    // console.log(student);
+    const [deleteShow, setDeleteShow] = useState(false)
+    const [wantToDelete, setWantToDelete] = useState(false)
+    const [deleteOp, setDeleteOp] = useState()
+
+    useEffect(() => {
+        if (wantToDelete) {
+            fetch('http://localhost:4000/student/dayCare/deleteFile', {
+                headers: { "content-type": "application/json" },
+                method: "POST",
+                body: JSON.stringify({ key: deleteOp, studentId: student?._id })
+            })
+                .then((response) => response.json())
+                .then((result) => { setStudent(result.server) })
+                .catch((error) => { console.error('Error:', error); });
+        }
+    }, [wantToDelete])
+
     let missingFiles = location.state.difference
 
     //פרויקטים בהם השתתף החניך
@@ -31,40 +48,19 @@ function StudentView() {
     }
 
     function deleteFile(fileKey) {
-        fetch('http://localhost:4000/student/dayCare/deleteFile', {
-            headers: { "content-type": "application/json" },
-            method: "POST",
-            body: JSON.stringify({ key: fileKey, studentId: student?._id })
-        })
-            .then((response) => response.json())
-            .then((result) => { setStudent(result.server) })
-            .catch((error) => { console.error('Error:', error); });
+        setWantToDelete()
+        setDeleteShow(true)
+        setDeleteOp(fileKey)
     }
+
+    const currDate = new Date()
+    currDate.setDate(currDate.getDate() + 30);
 
     //כדי להציג את ימי הנופשון של השנה הנוכחית
     const currentYear = new Date().getFullYear();
     // console.log(currentYear);
 
-    function dounloadFile(i, place) {
-        let filePath
-
-        if (place === "general.files") { filePath = student.general.files[i].filePath; }
-        if (place === "general.filesOp") { filePath = student.general.filesOp[i].filePath; }
-
-        if (place === "employment.files") { filePath = student.employment.files[i].filePath; }
-        if (place === "employment.filesOp") { filePath = student.employment.filesOp[i].filePath; }
-
-        if (place === "daycare.files") { filePath = student.daycare.files[i].filePath; }
-        if (place === "daycare.filesOp") { filePath = student.daycare.filesOp[i].filePath; }
-
-        if (place === "club.files") { filePath = student.club.files[i].filePath; }
-        if (place === "club.filesOp") { filePath = student.club.filesOp[i].filePath; }
-
-        if (place === "housing.files") { filePath = student.housing.files[i].filePath; }
-        if (place === "housing.filesOp") { filePath = student.housing.filesOp[i].filePath; }
-
-        // console.log(filePath);
-
+    function downloadFile(filePath) {
         fetch(`http://localhost:4000/student/files`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -73,7 +69,12 @@ function StudentView() {
             .then((response) => response.json())
             .then(data => window.open(data.server, "_blank"))
             .catch(error => console.error('Error:', error));
+    }
 
+    function calcExpiration(fileDate, date) {
+        let FDate = new Date(fileDate)
+        FDate.setHours(FDate.getHours() + 3).toString()
+        return FDate - date
     }
 
     return <div className={styles.con}>
@@ -114,32 +115,26 @@ function StudentView() {
                 <div className={styles.box}>
                     <div className={styles.title}>אנשי קשר</div>
                     {student?.contact.map((e, index) => {
-                        return (<>
-                            <div className={styles.subContainer}>
-                                <span className={styles.question}>{index + 1 + " |"}</span>
-                                <div className={styles.line}>  <span className={styles.question}>שם: </span>{e.contactFirstName + " " + e.contactLastName}</div>
-                                <div className={styles.line}>  <span className={styles.question}>טלפון: </span>{e.contactPhone}</div>
-                                <div className={styles.line}>  <span className={styles.question}>אימייל: </span>{e.contactEmail}</div>
-                                <div className={styles.line}>  <span className={styles.question}>קרבה: </span>{e.relative}</div>
-                                <div className={styles.line}>  <span className={styles.question}>הערות: </span>{e?.comment}</div>
-                                {e.apotropus &&
-                                    <div className={styles.line}>  <span className={styles.question}>אפוטרופוס: </span>כן</div>}
-                            </div>
-                        </>
-                        )
+                        return <div className={styles.subContainer}>
+                            <span className={styles.question}>{index + 1 + " |"}</span>
+                            <div className={styles.line}>  <span className={styles.question}>שם: </span>{e.contactFirstName + " " + e.contactLastName}</div>
+                            <div className={styles.line}>  <span className={styles.question}>טלפון: </span>{e.contactPhone}</div>
+                            <div className={styles.line}>  <span className={styles.question}>אימייל: </span>{e.contactEmail}</div>
+                            <div className={styles.line}>  <span className={styles.question}>קרבה: </span>{e.relative}</div>
+                            <div className={styles.line}>  <span className={styles.question}>הערות: </span>{e?.comment}</div>
+                            {e.apotropus &&
+                                <div className={styles.line}>  <span className={styles.question}>אפוטרופוס: </span>כן</div>}
+                        </div>
                     })}
                 </div>
                 <div className={styles.box}>
                     <div className={styles.title}>טיפול תרופתי</div>
                     {student?.medication.map((e, index) => {
-                        return (<>
-                            <div className={styles.subContainer}>
-                                <span className={styles.question}>{index + 1 + " |"}</span>
-                                <div className={styles.line}>  <span className={styles.question}>התרופה: </span>{e.name}</div>
-                                <div className={styles.line}>  <span className={styles.question}>שעת נטילה: </span>{e.time}</div>
-                            </div>
-                        </>
-                        )
+                        return <div className={styles.subContainer}>
+                            <span className={styles.question}>{index + 1 + " |"}</span>
+                            <div className={styles.line}>  <span className={styles.question}>התרופה: </span>{e.name}</div>
+                            <div className={styles.line}>  <span className={styles.question}>שעת נטילה: </span>{e.time}</div>
+                        </div>
                     })}
                 </div>
 
@@ -154,10 +149,8 @@ function StudentView() {
                         <div className={styles.subContainer}>
                             <div className={styles.line}>  <span className={styles.question}>▪️ </span>{e.name + "  |  " + e.fromDate + "  -  " + e.untilDate + "  |  " + e.days + "  ימי נופשון  "}</div>
                         </div>)}
-
-
-
                 </div>
+
                 <div className={styles.box}>
                     <div className={styles.title}>מטרות ויעדים</div>
 
@@ -179,19 +172,23 @@ function StudentView() {
                     </div>
 
                 </div>
+            </div>
 
+            <div className={styles.container}>
                 <div className={styles.boxFile}>
                     <div className={styles.title}>אישורים וטפסים</div>
+
                     <div className={styles.title}>כללי- חובה</div>
 
                     {student?.general.files.map((e, i) => {
                         return <div className={styles.subContainer}>
-                            <div className='show-files-daycare'>
+                            <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
                                 <span >{e.inputName}: {e.fileName + " "} </span>
                                 <br />
-                                {e.date.split("G")[0]}
+                                <div>הועלה ב: {e.date.split("T")[0]}</div>
+                                {e.expirationDate && <div>תאריך תפוגה: {e.expirationDate.split("T")[0]}</div>}
                                 <div className='file-function'>
-                                    <div className='file-function-spc' onClick={() => dounloadFile(i, "general.files")}><Download /></div>
+                                    <div className='file-function-spc' onClick={() => downloadFile(e.filePath)}><Download /></div>
                                     <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
                                 </div>
                             </div>
@@ -203,13 +200,13 @@ function StudentView() {
                     {student?.general.filesOp.map((e, i) => {
                         return <div className={styles.subContainer}>
                             <div className='show-files-daycare'>
-                                <span >{e.inputName}: </span>
-                                <div > {e.fileName + " "}<br />
-                                    {e.date.split("G")[0]}
-                                    <div className='file-function'>
-                                        <div className='file-function-spc' onClick={() => dounloadFile(i, "general.files")}><Download /></div>
-                                        <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
-                                    </div>
+                                <span >{e.inputName}: {e.fileName + " "} </span>
+                                <br />
+                                <div>הועלה ב: {e.date.split("T")[0]}</div>
+                                {e.expirationDate && <div>תאריך תפוגה: {e.expirationDate.split("T")[0]}</div>}
+                                <div className='file-function'>
+                                    <div className='file-function-spc' onClick={() => downloadFile(e.filePath)}><Download /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
                                 </div>
                             </div>
                         </div>
@@ -219,14 +216,14 @@ function StudentView() {
 
                     {student?.employment?.files.map((e, i) => {
                         return <div className={styles.subContainer}>
-                            <div className='show-files-daycare'>
-                                <span >{e.inputName}: </span>
-                                <div > {e.fileName + " "}<br />
-                                    {e.date.split("G")[0]}
-                                    <br /><div className='file-function'>
-                                        <div className='file-function-spc' onClick={() => dounloadFile(i, "general.files")}><Download /></div>
-                                        <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
-                                    </div>
+                             <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
+                                <span >{e.inputName}: {e.fileName + " "} </span>
+                                <br />
+                                <div>הועלה ב: {e.date.split("T")[0]}</div>
+                                {e.expirationDate && <div>תאריך תפוגה: {e.expirationDate.split("T")[0]}</div>}
+                                <div className='file-function'>
+                                    <div className='file-function-spc' onClick={() => downloadFile(e.filePath)}><Download /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
                                 </div>
                             </div>
                         </div>
@@ -237,13 +234,13 @@ function StudentView() {
                     {student?.employment?.filesOp?.map((e, i) => {
                         return <div className={styles.subContainer}>
                             <div className='show-files-daycare'>
-                                <span >{e.inputName}: </span>
-                                <div  > {e.fileName + " "}<br />
-                                    {e.date.split("G")[0]}
-                                    <br /><div className='file-function'>
-                                        <div className='file-function-spc' onClick={() => dounloadFile(i, "general.files")}><Download /></div>
-                                        <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
-                                    </div>
+                                <span >{e.inputName}: {e.fileName + " "} </span>
+                                <br />
+                                <div>הועלה ב: {e.date.split("T")[0]}</div>
+                                {e.expirationDate && <div>תאריך תפוגה: {e.expirationDate.split("T")[0]}</div>}
+                                <div className='file-function'>
+                                    <div className='file-function-spc' onClick={() => downloadFile(e.filePath)}><Download /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
                                 </div>
                             </div>
                         </div>
@@ -253,14 +250,14 @@ function StudentView() {
 
                     {student?.club?.files.map((e, i) => {
                         return <div className={styles.subContainer}>
-                            <div className='show-files-daycare'>
-                                <span >{e.inputName}: </span>
-                                <div > {e.fileName + " "}<br />
-                                    {e.date.split("G")[0]}
-                                    <br /><div className='file-function'>
-                                        <div className='file-function-spc' onClick={() => dounloadFile(i, "general.files")}><Download /></div>
-                                        <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
-                                    </div>
+                             <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
+                                <span >{e.inputName}: {e.fileName + " "} </span>
+                                <br />
+                                <div>הועלה ב: {e.date.split("T")[0]}</div>
+                                {e.expirationDate && <div>תאריך תפוגה: {e.expirationDate.split("T")[0]}</div>}
+                                <div className='file-function'>
+                                    <div className='file-function-spc' onClick={() => downloadFile(e.filePath)}><Download /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
                                 </div>
                             </div>
                         </div>
@@ -271,13 +268,13 @@ function StudentView() {
                     {student?.club?.filesOp?.map((e, i) => {
                         return <div className={styles.subContainer}>
                             <div className='show-files-daycare'>
-                                <span >{e.inputName}: </span>
-                                <div > {e.fileName + " "}<br />
-                                    {e.date.split("G")[0]}
-                                    <br /><div className='file-function'>
-                                        <div className='file-function-spc' onClick={() => dounloadFile(i, "general.files")}><Download /></div>
-                                        <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
-                                    </div>
+                                <span >{e.inputName}: {e.fileName + " "} </span>
+                                <br />
+                                <div>הועלה ב: {e.date.split("T")[0]}</div>
+                                {e.expirationDate && <div>תאריך תפוגה: {e.expirationDate.split("T")[0]}</div>}
+                                <div className='file-function'>
+                                    <div className='file-function-spc' onClick={() => downloadFile(e.filePath)}><Download /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
                                 </div>
                             </div>
                         </div>
@@ -287,14 +284,14 @@ function StudentView() {
 
                     {student?.housing?.files.map((e, i) => {
                         return <div className={styles.subContainer}>
-                            <div className='show-files-daycare'>
-                                <span >{e.inputName}: </span>
-                                <div > {e.fileName + " "}<br />
-                                    {e.date.split("G")[0]}
-                                    <br /><div className='file-function'>
-                                        <div className='file-function-spc' onClick={() => dounloadFile(i, "general.files")}><Download /></div>
-                                        <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
-                                    </div>
+                             <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
+                                <span >{e.inputName}: {e.fileName + " "} </span>
+                                <br />
+                                <div>הועלה ב: {e.date.split("T")[0]}</div>
+                                {e.expirationDate && <div>תאריך תפוגה: {e.expirationDate.split("T")[0]}</div>}
+                                <div className='file-function'>
+                                    <div className='file-function-spc' onClick={() => downloadFile(e.filePath)}><Download /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
                                 </div>
                             </div>
                         </div>
@@ -305,13 +302,13 @@ function StudentView() {
                     {student?.housing?.filesOp?.map((e, i) => {
                         return <div className={styles.subContainer}>
                             <div className='show-files-daycare'>
-                                <span >{e.inputName}: </span>
-                                <div > {e.fileName + " "}<br />
-                                    {e.date.split("G")[0]}
-                                    <br /><div className='file-function'>
-                                        <div className='file-function-spc' onClick={() => dounloadFile(i, "general.files")}><Download /></div>
-                                        <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
-                                    </div>
+                                <span >{e.inputName}: {e.fileName + " "} </span>
+                                <br />
+                                <div>הועלה ב: {e.date.split("T")[0]}</div>
+                                {e.expirationDate && <div>תאריך תפוגה: {e.expirationDate.split("T")[0]}</div>}
+                                <div className='file-function'>
+                                    <div className='file-function-spc' onClick={() => downloadFile(e.filePath)}><Download /></div>
+                                    <div className='file-function-spc' onClick={() => deleteFile(e.filePath)}><Trash /></div>
                                 </div>
                             </div>
                         </div>
@@ -330,6 +327,23 @@ function StudentView() {
                 </div>
             </div>
         </div>
+        <Modal
+            show={deleteShow}
+            onHide={() => setDeleteShow(false)}
+            backdrop="static"
+        >
+            <Modal.Body>
+                האם את/ה בטוח/ה שברצונך למחוק את הקובץ?
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant='primary' onClick={() => { setWantToDelete(true); setDeleteShow(false) }}>
+                    מחק
+                </Button>
+                <Button variant='secondary' onClick={() => { setWantToDelete(false); setDeleteShow(false) }}>
+                    שמור
+                </Button>
+            </Modal.Footer>
+        </Modal>
     </div>
 }
 

@@ -94,55 +94,48 @@ function CreateStudent() {
         setData(values => ({ ...values, [name]: value }));
     }, [status])
 
-    return (
-        <div className={styles.main}>
-            <form >
-                <div className={styles.title}>יצירת חניך חדש
-                    <div className={styles.save}>
-                        <SwitchBtn label={"סטטוס פעיל"} status={status} setStatus={setStatus} />
-                        <button name="submit" type='button' className={styles.btnadd} onClick={() => submit()} >שמירה</button>
+    return <div className={styles.main}>
+        <form >
+            <div className={styles.title}>יצירת חניך חדש
+                <div className={styles.save}>
+                    <SwitchBtn label={"סטטוס פעיל"} status={status} setStatus={setStatus} />
+                    <button name="submit" type='button' className={styles.btnadd} onClick={() => submit()} >שמירה</button>
+                </div>
+            </div>
+            <div className={styles.createStudent}>
+
+                <div className={styles.containers}>
+                    <div className={styles.container}>
+                        <StudentDetails data={data} setData={setData} />
                     </div>
                 </div>
-                <div className={styles.createStudent}>
-                    <div className={styles.containers}>
-                        <div className={styles.container}>
-                            <StudentDetails data={data} setData={setData} />
 
-                        </div>
-
-                        <div className={styles.container}>
-
-                            <ContactDetails setData={setData} />
-
-                        </div>
+                <div className={styles.containers}>
+                    <div className={styles.container}>
+                        <ContactDetails setData={setData} />
                     </div>
-
-                    <div className={styles.containers}>
-
-                        <div className={styles.container}>
-                            <AboutStudent setData={setData} />
-                        </div>
-
-
-                        <div className={styles.container}>
-
-                            <Medications setData={setData} data={data} />
-
-
-                        </div>
-                    </div>
-                    {/*  להוריד, רק בעריכה ניתן להוסיף קבצים */}
-                    <div className={styles.containers}>
-                        <div className={styles.container}>
-
-                            <Accordions setData={setData} data={data} />
-                        </div>
-                    </div>
-
                 </div>
-            </form>
-        </div>
-    )
+
+                <div className={styles.containers}>
+                    <div className={styles.container}>
+                        <AboutStudent setData={setData} />
+                    </div>
+
+
+                    <div className={styles.container}>
+                        <Medications setData={setData} data={data} />
+                    </div>
+                </div>
+
+                <div className={styles.containers}>
+                    <div className={styles.container}>
+                        <Accordions setData={setData} data={data} />
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
 }
 
 export default CreateStudent

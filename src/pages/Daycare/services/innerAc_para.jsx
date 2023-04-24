@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react'
 import Input from '../../../components/common/Input';
 import File from '../../../components/common/File'
-import remove from '../../../images/delete.png'
-import Tab from 'react-bootstrap/Tab';
+import React, { useEffect, useState } from 'react'
 import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 
 function InnerAcc_para({ saveForm, v, saveFile, service, arrfile = [], data, index_ }) {
     let _data;
-    const mapYear = v?.year
-// לשאול את מיכל מה הייתה הכוונה ב
-//    console.log("data",data);
-// -------------------------------
+    const weeklySummary = v[service].weeklySummary
+    const start_ = v[service].start
+    const middle_ = v[service].middle
+    const end_ = v[service].end
+    const tsa_ = v[service].tsa
+    // לשאול את מיכל מה הייתה הכוונה ב
+    //    console.log("data",data);
+    // -------------------------------
     // if (data) {
     //     if (service === "speech") {
     //         _data = data?.speech[1]?.years[0]
@@ -42,11 +45,11 @@ function InnerAcc_para({ saveForm, v, saveFile, service, arrfile = [], data, ind
         // )
     }
     const [file, setFile] = useState([]);
-    const [weekly_summary, setweekly_summary] = useState({ tab: "weeklySummary", year: mapYear });
-    const [start, setStart] = useState({ tab: "start", year: mapYear });
-    const [middle, setMiddle] = useState({ tab: "middle", year: mapYear });
-    const [end, setEnd] = useState({ tab: "end", year: mapYear });
-    const [tsa, setTsa] = useState({ tab: "tsa", year: mapYear });
+    const [weekly_summary, setweekly_summary] = useState({ tab: "weeklySummary", year: v.year, weeklySummary });
+    const [start, setStart] = useState({ tab: "start", year: v.year, summary: start_?.summary, author: start_?.author, date: start_?.date });
+    const [middle, setMiddle] = useState({ tab: "middle", year: v.year, summary: middle_?.summary, author: middle_?.author, date: middle_?.date });
+    const [end, setEnd] = useState({ tab: "end", year: v.year, summary: end_?.summary, author: end_?.author, date: end_?.date });
+    const [tsa, setTsa] = useState({ tab: "tsa", year: v.year, summary: tsa_?.summary, author: tsa_?.author, date: tsa_?.date });
     const [send, setSend] = useState(true);
 
     let able = []
@@ -70,11 +73,8 @@ function InnerAcc_para({ saveForm, v, saveFile, service, arrfile = [], data, ind
     }
 
     if (!v) {
-        // console.log("v.speech", v.speech);
         return <div>loading...</div>
     }
-    //  else {
-    // }
 
     return <div className="container">
         <Tabs
