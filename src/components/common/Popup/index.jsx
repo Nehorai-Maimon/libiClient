@@ -5,7 +5,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Select from '../Select';
 import './style.css'
 
+
 function Popup({ student, setArr, arrServices }) {
+    const REACT_APP_IP = process.env.REACT_APP_IP
     const [show, setShow] = useState(false);
     const [newSer, setNewSer] = useState();
 
@@ -17,7 +19,7 @@ function Popup({ student, setArr, arrServices }) {
         const prev = [...arrServices]
         prev.push(newSer)
         setArr([...arrServices, newSer])
-        fetch('http://localhost:4000/student/updateArrService', {
+        fetch('http://' + REACT_APP_IP+ '/student/updateArrService', {
             headers: {
                 studentId: student?._id,
                 'Content-Type': 'application/json'

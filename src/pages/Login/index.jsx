@@ -5,14 +5,15 @@ import React, { useState } from 'react'
 import styles from "./style.module.css"
 
 function Login() {
+    const REACT_APP_IP = process.env.REACT_APP_IP
     const [userLogin, setUserLogin] = useState("")
     const navigate = useNavigate()
 
     const login = async (e) => {
         e.preventDefault();
         // על מנת להוסיף עובד חדש צריך לעבור לניתוב הזאת
-        // fetch('http://localhost:4000/worker/register', {
-        fetch('http://localhost:4000/worker/login', {
+        // fetch('http://' + REACT_APP_IP + '/worker/register', {
+        fetch('http://' + REACT_APP_IP + '/worker/login', {
             headers: {
                 'Content-Type': 'application/json'
             },

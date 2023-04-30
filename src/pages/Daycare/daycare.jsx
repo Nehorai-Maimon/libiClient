@@ -10,6 +10,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import './style.css'
 import { Button, Modal } from 'react-bootstrap';
+const REACT_APP_IP = process.env.REACT_APP_IP
 
 function Daycare() {
     const { student, setStudent } = useContext(StudentContext)
@@ -37,7 +38,7 @@ function Daycare() {
         // console.log(form);
         // console.log(place);
 
-        fetch('http://localhost:4000/student/updateDaycare', {
+        fetch('http://' + REACT_APP_IP + '/student/updateDaycare', {
             headers: {
                 studentId: student?._id, place,
                 'Content-Type': 'application/json'
@@ -66,7 +67,7 @@ function Daycare() {
         fd.append("inputName", name)
         fd.append("fileName", e.target[0].files[0].name)
 
-        fetch('http://localhost:4000/student/generalFiles', {
+        fetch('http://' + REACT_APP_IP + '/student/generalFiles', {
             headers: { studentId: student?._id, place, dir, currentYear, daycare: true },
             method: 'POST',
             body: fd
@@ -79,7 +80,7 @@ function Daycare() {
 
     useEffect(() => {
         if (wantToDelete) {
-            fetch('http://localhost:4000/student/dayCare/deleteFile', {
+            fetch('http://' + REACT_APP_IP + '/student/dayCare/deleteFile', {
                 headers: { "content-type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ key: deleteOp.fileKey, studentId: student?._id, year: deleteOp.year })
@@ -96,7 +97,7 @@ function Daycare() {
     }
 
     const addYears = () => {
-        fetch('http://localhost:4000/student/addYearDaycare', {
+        fetch('http://' + REACT_APP_IP + '/student/addYearDaycare', {
             headers: {
                 studentId: student?._id,
                 'Content-Type': 'application/json'
@@ -162,7 +163,7 @@ function Daycare() {
             onHide={() => setConfirmShow(false)}
         >
             <Modal.Body style={{ color: "green" }}>
-            שמירה בוצעה
+                שמירה בוצעה
             </Modal.Body>
         </Modal>
         <Modal

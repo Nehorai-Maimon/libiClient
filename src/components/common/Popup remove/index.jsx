@@ -5,6 +5,7 @@ import remove from '../../../images/delete.png'
 import './style.css'
 
 function PopupRemove({ student, service, data, index, setArr, arrServices }) {
+    const REACT_APP_IP = process.env.REACT_APP_IP
     const [show, setShow] = useState(false);
 
     const removeService = (index, e) => {
@@ -12,7 +13,7 @@ function PopupRemove({ student, service, data, index, setArr, arrServices }) {
         newList.splice(index, 1);
         setArr(newList);
 
-        fetch('http://localhost:4000/student/updateArrService', {
+        fetch('http://' + REACT_APP_IP + '/student/updateArrService', {
             headers: {
                 studentId: student?._id,
                 'Content-Type': 'application/json'

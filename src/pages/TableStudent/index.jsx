@@ -9,6 +9,7 @@ import emailjs from 'emailjs-com'
 import { CSVLink } from "react-csv";
 import excel_icon from '../../images/Excel.png'
 import StudentContext from "../../context/StudentContext";
+const REACT_APP_IP = process.env.REACT_APP_IP
 
 function Table() {
     const [students, setStudents] = useState()
@@ -17,14 +18,14 @@ function Table() {
     const token = JSON.parse(localStorage.getItem('token'))
     // לשאול את מיכל איך להציג רק חניכים עם פג תוקף
     useEffect(() => {
-        fetch('http://localhost:4000/student', {
+        fetch('http://' + REACT_APP_IP + '/student', {
             headers: { "token": `bearer ${token}` }
         })
             .then((response) => response.json())
             .then(data => setStudents(data))
             .catch(error => console.error('Error:', error));
 
-        fetch('http://localhost:4000/student/studentWithExpiration', {
+        fetch('http://' + REACT_APP_IP + '/student/studentWithExpiration', {
             headers: { "token": `bearer ${token}` }
         })
             .then((response) => response.json())
@@ -135,7 +136,7 @@ function Table() {
     //         console.log("hiii:" + difference.map(e => e));
     //     }
     // }
-    
+
     return <div className={styles.container}>
         <div className={styles.filters}>
             <div className={styles.subfilter}>

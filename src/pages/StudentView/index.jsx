@@ -5,6 +5,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { projects } from '../../fakeData'
 import styles from "./style.module.css"
+const REACT_APP_IP = process.env.REACT_APP_IP
 
 function StudentView() {
     const location = useLocation()
@@ -15,7 +16,7 @@ function StudentView() {
 
     useEffect(() => {
         if (wantToDelete) {
-            fetch('http://localhost:4000/student/dayCare/deleteFile', {
+            fetch('http://' + REACT_APP_IP+ '/student/dayCare/deleteFile', {
                 headers: { "content-type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ key: deleteOp, studentId: student?._id })
@@ -61,7 +62,7 @@ function StudentView() {
     // console.log(currentYear);
 
     function downloadFile(filePath) {
-        fetch(`http://localhost:4000/student/files`, {
+        fetch('http://' + REACT_APP_IP+ '/student/files', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ filePath })
@@ -216,7 +217,7 @@ function StudentView() {
 
                     {student?.employment?.files.map((e, i) => {
                         return <div className={styles.subContainer}>
-                             <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
+                            <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
                                 <span >{e.inputName}: {e.fileName + " "} </span>
                                 <br />
                                 <div>הועלה ב: {e.date.split("T")[0]}</div>
@@ -250,7 +251,7 @@ function StudentView() {
 
                     {student?.club?.files.map((e, i) => {
                         return <div className={styles.subContainer}>
-                             <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
+                            <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
                                 <span >{e.inputName}: {e.fileName + " "} </span>
                                 <br />
                                 <div>הועלה ב: {e.date.split("T")[0]}</div>
@@ -284,7 +285,7 @@ function StudentView() {
 
                     {student?.housing?.files.map((e, i) => {
                         return <div className={styles.subContainer}>
-                             <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
+                            <div className={calcExpiration(e.expirationDate, currDate) <= 0 ? 'expiration' : 'show-files-daycare'}>
                                 <span >{e.inputName}: {e.fileName + " "} </span>
                                 <br />
                                 <div>הועלה ב: {e.date.split("T")[0]}</div>

@@ -4,11 +4,10 @@ import Modal from 'react-bootstrap/Modal';
 import { projects } from '../../../fakeData';
 import Input from '../Input';
 import Select from '../Select';
-
-
 import './style.css'
 
 function PopupProject({ edit, setProjectsList }) {
+    const REACT_APP_IP = process.env.REACT_APP_IP
 
     let proj = []
     if (edit) {
@@ -30,9 +29,9 @@ function PopupProject({ edit, setProjectsList }) {
         setShow(false)
         console.log(project);
 
-        fetch('http://localhost:4000/event/', {
+        fetch('http://' + REACT_APP_IP + '/event/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(project),
         })
             .then((response) => response.json())

@@ -8,6 +8,7 @@ import Input from "../Input";
 // import emailjs from 'emailjs-com'
 // import { CSVLink } from "react-csv";
 // import excel_icon from '../../../images/Excel.png'
+const REACT_APP_IP = process.env.REACT_APP_IP
 
 function TableStudentProj({ studentArr, setStudentArr }) {
     const [students, setStudents] = useState()
@@ -15,7 +16,7 @@ function TableStudentProj({ studentArr, setStudentArr }) {
     const token = JSON.parse(localStorage.getItem('token'))
 
     useEffect(() => {
-        fetch('http://localhost:4000/student', {
+        fetch('http://' + REACT_APP_IP + '/student', {
             headers: {
                 "Content-Type": "application/json",
                 "token": `bearer ${token}`

@@ -9,14 +9,14 @@ import Input from '../../components/common/Input';
 import { CSVLink } from "react-csv";
 import excel_icon from '../../images/Excel.png'
 import ProjectContext from '../../context/ProjectContext';
-
+const REACT_APP_IP = process.env.REACT_APP_IP
 
 function Projects() {
     const [projectsList, setProjectsList] = useState()
     const [filterProject, setFilterProject] = useState()
 
     useEffect(() => {
-        fetch('http://localhost:4000/event')
+        fetch('http://' + REACT_APP_IP + '/event')
             .then((response) => response.json())
             .then(data => setProjectsList(data))
             .catch(error => console.error('Error:', error));

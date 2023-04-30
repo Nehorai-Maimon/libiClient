@@ -7,6 +7,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+const REACT_APP_IP = process.env.REACT_APP_IP
 
 function InnerAcc_general({ v, student, setStudent, saveForm, service }) {
     const [tsa, setTsa] = useState(v.tsa);
@@ -42,7 +43,7 @@ function InnerAcc_general({ v, student, setStudent, saveForm, service }) {
     }
 
     function addTeam(team) {
-        fetch('http://localhost:4000/student/addTeamDaycare', {
+        fetch('http://' + REACT_APP_IP + '/student/addTeamDaycare', {
             headers: {
                 studentId: student?._id,
                 'Content-Type': 'application/json'
