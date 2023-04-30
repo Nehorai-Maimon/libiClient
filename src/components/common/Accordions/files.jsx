@@ -6,9 +6,9 @@ import PopupRemove from '../Popup remove';
 import { Modal } from 'react-bootstrap';
 import Popup from '../Popup';
 import './style.css'
+const REACT_APP_IP = process.env.REACT_APP_IP
 
 function Accordions({ setData, data, student, setStudent }) {
-    const REACT_APP_IP = process.env.REACT_APP_IP
     const navigate = useNavigate()
     const [arrServices, setArr] = useState(["כללי"])
     const [service, setService] = useState("general")
