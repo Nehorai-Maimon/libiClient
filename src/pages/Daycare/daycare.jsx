@@ -162,7 +162,7 @@ function Daycare() {
             onHide={() => setConfirmShow(false)}
         >
             <Modal.Body style={{ color: "green" }}>
-                נשמר בהצלחה!
+            שמירה בוצעה
             </Modal.Body>
         </Modal>
         <Modal

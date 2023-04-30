@@ -1,13 +1,9 @@
 import Accordion from 'react-bootstrap/Accordion';
-import Employment from '../Services/employment';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import BasicFiles from '../Services/basic';
 import PopupRemove from '../Popup remove';
-import General from '../Services/general';
-import Housing from '../Services/housing';
 import { Modal } from 'react-bootstrap';
-import Club from '../Services/club';
 import Popup from '../Popup';
 import './style.css'
 
@@ -16,6 +12,7 @@ function Accordions({ setData, data, student, setStudent }) {
     const [arrServices, setArr] = useState(["כללי"])
     const [service, setService] = useState("general")
     const [show, setShow] = useState(false)
+    const [arrFile, setArrFile] = useState()
 
     useEffect(() => {
         if (show === true) {
@@ -61,41 +58,113 @@ function Accordions({ setData, data, student, setStudent }) {
             .then((response) => response.json())
             .then((result) => { setStudent(result.server); setShow(true) })
             .catch((error) => { console.error('Error:', error); });
+        e.target[0].value = ""
     }
+
+    function selectService(e) {
+        if (e !== undefined) {
+            setService(e)
+        }
+    }
+
+    // useEffect(() => { console.log("service", service) }, [service])
+    // useEffect(() => { console.log(arrFile) }, [arrFile])
+
+    useEffect(() => {
+        let files;
+
+        if (service === "general") {
+            files = [
+                { name: "צילום ת.ז ילד/הורה", date: false },
+                { name: "ויתור סודיות", date: false }
+            ]
+            for (let i in student.general.files) {
+                for (let r in files) {
+                    if (student.general.files[i].inputName === files[r].name) {
+                        files.splice(r, 1)
+                    }
+                }
+            }
+            data?.sensitivity === "כן" || student?.sensitivity === "כן" ?
+                setArrFile([...files, { name: "רגישות רפואית", date: true }])
+                :
+                setArrFile(files)
+        }
+        if (service === "housing") {
+            files = [
+                { name: "תעודת נכה", date: false },
+                { name: "אישור רווחה", date: true }
+            ]
+            for (let i in student.housing.files) {
+                for (let r in files) {
+                    if (student.housing.files[i].inputName === files[r].name) {
+                        files.splice(r, 1)
+                    }
+                }
+            }
+            setArrFile(files)
+        }
+        if (service === "employment") {
+            files = [
+                { name: "תעודת נכה", date: false },
+                { name: "אישור רווחה", date: true }
+            ]
+            for (let i in student.employment.files) {
+                for (let r in files) {
+                    if (student.employment.files[i].inputName === files[r].name) {
+                        files.splice(r, 1)
+                    }
+                }
+            }
+            setArrFile(files)
+        }
+        if (service === "club") {
+            files = [
+                { name: "אבחון", date: true },
+                { name: "רישום שנתי", date: false }
+            ]
+            for (let i in student.club.files) {
+                for (let r in files) {
+                    if (student.club.files[i].inputName === files[r].name) {
+                        files.splice(r, 1)
+                    }
+                }
+            }
+            setArrFile(files)
+        }
+    }, [service])
 
     return <div className="accordionContainer">
         {student && <Accordion defaultActiveKey={0}>
             <Accordion.Item eventKey={0}>
                 <Accordion.Header>טפסים ואישורים</Accordion.Header>
                 <Accordion.Body>
-                    <Accordion defaultActiveKey={0} onSelect={(e) => setService(e)}>
+                    <Accordion defaultActiveKey={0} onSelect={selectService}>
                         {arrServices?.map((e, index) => {
-                            let eventKey = "";
+                            let eventKey;
                             if (e === "כללי") {
                                 eventKey = "general";
-                            } else if (e === "דיור") {
+                            }
+                            if (e === "דיור") {
                                 eventKey = "housing";
-                            } else if (e === "תעסוקה") {
+                            }
+                            if (e === "תעסוקה") {
                                 eventKey = "employment";
-                            } else if (e === "מועדונית") {
+                            }
+                            if (e === "מועדונית") {
                                 eventKey = "club";
                             }
                             return <Accordion.Item eventKey={eventKey}>
                                 <Accordion.Header>{<div className='remove'>{e}  {index > 0 && <PopupRemove student={student} service={e} data={data} index={index} setArr={setArr} arrServices={arrServices} />}</div>}</Accordion.Header>
                                 <Accordion.Body>
-                                    {/* {e === "כללי" && <General eventKey="general" service={service} saveFile={saveFile} student={student} setData={setData} data={data} />}
-                                    {e === "דיור" && <Housing eventKey="housing" service={service} saveFile={saveFile} student={student} setData={setData} data={data} />}
-                                    {e === "תעסוקה" && <Employment eventKey="employment" service={service} saveFile={saveFile} student={student} setData={setData} data={data} />}
-                                    {e === "מעון" && <button onClick={() => navigate(`/dayCare`)}>ניהול מעון</button>}
-                                    {e === "מועדונית" && <Club eventKey="club" service={service} saveFile={saveFile} student={student} setData={setData} data={data} />} */}
-                                    {e === "כללי" && <BasicFiles arrFile={[{ name: "צילום ת.ז ילד/הורה", date: false }, { name: "ויתור סודיות", date: false }]}
+                                    {e === "כללי" && <BasicFiles arrFile={arrFile} setArrFile={setArrFile}
                                         service={service} saveFile={saveFile} student={student} setData={setData} data={data} />}
-                                    {e === "דיור" && <Housing arrFile={[{ name: "תעודת נכה", date: false }, { name: "אישור רווחה", date: true }]}
+                                    {e === "דיור" && <BasicFiles arrFile={arrFile} setArrFile={setArrFile}
                                         service={service} saveFile={saveFile} student={student} setData={setData} data={data} />}
-                                    {e === "תעסוקה" && <Employment arrFile={[{ name: "תעודת נכה", date: false }, { name: "אישור רווחה", date: true }]}
+                                    {e === "תעסוקה" && <BasicFiles arrFile={arrFile} setArrFile={setArrFile}
                                         service={service} saveFile={saveFile} student={student} setData={setData} data={data} />}
                                     {e === "מעון" && <button onClick={() => navigate(`/dayCare`)}>ניהול מעון</button>}
-                                    {e === "מועדונית" && <Club arrFile={[{ name: "אבחון", date: true }, { name: "רישום שנתי", date: false }]}
+                                    {e === "מועדונית" && <BasicFiles arrFile={arrFile} setArrFile={setArrFile}
                                         service={service} saveFile={saveFile} student={student} setData={setData} data={data} />}
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -113,7 +182,7 @@ function Accordions({ setData, data, student, setStudent }) {
         >
             <Modal.Header closeButton>
                 <Modal.Body style={{ color: "green" }}>
-                    נשמר בהצלחה!
+                    שמירה בוצעה
                 </Modal.Body>
             </Modal.Header>
         </Modal>

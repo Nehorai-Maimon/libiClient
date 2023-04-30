@@ -10,6 +10,8 @@ function Login() {
 
     const login = async (e) => {
         e.preventDefault();
+        // על מנת להוסיף עובד חדש צריך לעבור לניתוב הזאת
+        // fetch('http://localhost:4000/worker/register', {
         fetch('http://localhost:4000/worker/login', {
             headers: {
                 'Content-Type': 'application/json'

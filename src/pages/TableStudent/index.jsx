@@ -135,97 +135,95 @@ function Table() {
     //         console.log("hiii:" + difference.map(e => e));
     //     }
     // }
+    
+    return <div className={styles.container}>
+        <div className={styles.filters}>
+            <div className={styles.subfilter}>
+                <button onClick={() => navigate('/new')}>➕</button>
+                <Select className={styles.select} placeholder={"מין"} options={["מין", "זכר", "נקבה"]} name={"gender"} onChange={(e) => setGender(e.target.value)} />
+                <Select className={styles.select} placeholder={"מגיל"} options={options} onChange={(e) => setAgeMin(e.target.value)} />
+                <Select className={styles.select} placeholder={"עד גיל"} options={options} onChange={(e) => setAgeMax(e.target.value)} />
+                <Select className={styles.select} placeholder={"שירותים"} options={servicesOp} onChange={(e) => setServices(e.target.value)} />
+                <Select className={styles.select} placeholder={"ישוב"} options={cityOp} onChange={(e) => setCity(e.target.value)} />
+                <button onClick={resate}>הצג את כולם</button>
+                <button onClick={() => setFilterStudentd(studentWithExpiration)}>חניכים עם מסמכים פגי תוקף ({studentWithExpiration?.length})</button>
 
-    return <div>
-        <div className={styles.container}>
-            <div className={styles.filters}>
-                <div className={styles.subfilter}>
-                    <button onClick={() => navigate('/new')}>➕</button>
-                    <Select className={styles.select} placeholder={"מין"} options={["מין", "זכר", "נקבה"]} name={"gender"} onChange={(e) => setGender(e.target.value)} />
-                    <Select className={styles.select} placeholder={"מגיל"} options={options} onChange={(e) => setAgeMin(e.target.value)} />
-                    <Select className={styles.select} placeholder={"עד גיל"} options={options} onChange={(e) => setAgeMax(e.target.value)} />
-                    <Select className={styles.select} placeholder={"שירותים"} options={servicesOp} onChange={(e) => setServices(e.target.value)} />
-                    <Select className={styles.select} placeholder={"ישוב"} options={cityOp} onChange={(e) => setCity(e.target.value)} />
-                    <button onClick={resate}>הצג את כולם</button>
-                    <button onClick={resate}>חניכים עם מסמכים פגי תוקף ({studentWithExpiration?.length})</button>
-
-                </div>
-                <div className={styles.search}>
-                    <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} />
-
-
-                    <CSVLink data={csvData}><img
-                        src={excel_icon} alt="Excel" className={styles.icon} /></CSVLink>
-                </div>
             </div>
-            <table>
-                <tbody>
+            <div className={styles.search}>
+                <Input placeholder={"...חיפוש"} name={"search"} onChange={(e) => filterSearch(e.target.value)} />
 
-                    <tr>
-                        <th>תעודת זהות</th>
-                        <th>שם פרטי</th>
-                        <th>שם משפחה</th>
-                        <th>גיל</th>
-                        <th>מין</th>
-                        <th>איש קשר</th>
-                        <th>טלפון</th>
-                        {/* <th>שירותים</th> */}
-                        <th>מסמכים ואישורים</th>
-                        <th>עריכה</th>
-                        <th>שליחת תזכורת</th>
-                    </tr>
-                    {filterStudents?.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
 
-                        filterStudents?.map((val, key) => {
-                            let generalArr = []
-                            let difference = []
-                            val?.general?.files.map(e => { generalArr.push(e.name) })
-                            difference = gerneralFiles.filter(x => !generalArr.includes(x))
-
-                            if (val?.arrServices?.includes('תעסוקה')) {
-                                let employmentArr = []
-                                let difference1 = []
-                                val?.employment?.files.map(e => { employmentArr.push(e.name) })
-                                difference1 = employmentFiles.filter(x => !employmentArr.includes(x))
-                                if (difference1.length > 0) {
-                                    difference.push(difference1)
-                                }
-                            }
-
-                            if (val?.arrServices?.includes('מעון')) {
-                                let daycareArr = []
-                                let difference2 = []
-                                val?.daycare?.files?.map(e => { daycareArr.push(e.name) })
-                                difference2 = daycareFiles.filter(x => !daycareArr.includes(x))
-                                if (difference2.length > 0) {
-                                    difference.push(difference2)
-                                }
-                            }
-
-                            return < tr
-                                key={key}
-                                onClick={() => setStudent(val)}
-                            >
-                                <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.id}</td>
-                                <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.firstName}</td>
-                                <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.lastName}</td>
-                                <td onClick={() => navigate('/view', { state: { difference, key } })}>{getAge(val.DateOfBirth?.split("/").reverse().join("/"))}</td>
-                                <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.gender}</td>
-                                <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
-                                <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.contact[0].contactPhone}</td>
-                                {difference.length == 0 ?
-                                    <td onClick={() => navigate('/view', { state: { difference, key } })}>{"✅"}</td> :
-                                    <td className={styles.red} onClick={() => navigate('/view', { state: { difference, key } })}>{difference.map(e => e + ", ")}</td>}
-                                <td><button onClick={() => navigate('/edit', { state: key })}>📝</button></td>
-
-                                <td className={difference.length === 0 ? styles.disabled : ""}> <button className={difference.length === 0 ? styles.disabled : ""} disabled={difference.length === 0} onClick={() => sendEmail(val.firstName, difference.map(e => "   *   " + e), val.email)}>✉️</button> </td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </table>
+                <CSVLink data={csvData}><img
+                    src={excel_icon} alt="Excel" className={styles.icon} /></CSVLink>
+            </div>
         </div>
-    </div >
+        <table>
+            <tbody>
+
+                <tr>
+                    <th>תעודת זהות</th>
+                    <th>שם פרטי</th>
+                    <th>שם משפחה</th>
+                    <th>גיל</th>
+                    <th>מין</th>
+                    <th>איש קשר</th>
+                    <th>טלפון</th>
+                    {/* <th>שירותים</th> */}
+                    <th>מסמכים ואישורים</th>
+                    <th>עריכה</th>
+                    <th>שליחת תזכורת</th>
+                </tr>
+                {filterStudents?.length === 0 ? <div className={styles.noResult}>אין תוצאות מתאימות</div> :
+
+                    filterStudents?.map((val, key) => {
+                        let generalArr = []
+                        let difference = []
+                        val?.general?.files.map(e => { generalArr.push(e.name) })
+                        difference = gerneralFiles.filter(x => !generalArr.includes(x))
+
+                        if (val?.arrServices?.includes('תעסוקה')) {
+                            let employmentArr = []
+                            let difference1 = []
+                            val?.employment?.files.map(e => { employmentArr.push(e.name) })
+                            difference1 = employmentFiles.filter(x => !employmentArr.includes(x))
+                            if (difference1.length > 0) {
+                                difference.push(difference1)
+                            }
+                        }
+
+                        if (val?.arrServices?.includes('מעון')) {
+                            let daycareArr = []
+                            let difference2 = []
+                            val?.daycare?.files?.map(e => { daycareArr.push(e.name) })
+                            difference2 = daycareFiles.filter(x => !daycareArr.includes(x))
+                            if (difference2.length > 0) {
+                                difference.push(difference2)
+                            }
+                        }
+
+                        return < tr
+                            key={key}
+                            onClick={() => setStudent(val)}
+                        >
+                            <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.id}</td>
+                            <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.firstName}</td>
+                            <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.lastName}</td>
+                            <td onClick={() => navigate('/view', { state: { difference, key } })}>{getAge(val.DateOfBirth?.split("/").reverse().join("/"))}</td>
+                            <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.gender}</td>
+                            <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.contact[0].contactFirstName} {val.contact[0].contactLastName}-{val.contact[0].relative}</td>
+                            <td onClick={() => navigate('/view', { state: { difference, key } })}>{val.contact[0].contactPhone}</td>
+                            {difference.length == 0 ?
+                                <td onClick={() => navigate('/view', { state: { difference, key } })}>{"✅"}</td> :
+                                <td className={styles.red} onClick={() => navigate('/view', { state: { difference, key } })}>{difference.map(e => e + ", ")}</td>}
+                            <td><button onClick={() => navigate('/edit', { state: key })}>📝</button></td>
+
+                            <td className={difference.length === 0 ? styles.disabled : ""}> <button className={difference.length === 0 ? styles.disabled : ""} disabled={difference.length === 0} onClick={() => sendEmail(val.firstName, difference.map(e => "   *   " + e), val.email)}>✉️</button> </td>
+                        </tr>
+                    })
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 export default Table;
