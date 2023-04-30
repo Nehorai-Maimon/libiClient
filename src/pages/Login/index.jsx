@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import logo from '../../images/logo-1.png'
 import React, { useState } from 'react'
 import styles from "./style.module.css"
+const REACT_APP_IP = process.env.REACT_APP_IP
 
 function Login() {
-    const REACT_APP_IP = process.env.REACT_APP_IP
     const [userLogin, setUserLogin] = useState("")
     const navigate = useNavigate()
 
