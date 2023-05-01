@@ -13,7 +13,7 @@ function Login() {
         e.preventDefault();
         // על מנת להוסיף עובד חדש צריך לעבור לניתוב הזאת
         // fetch('https://' + REACT_APP_IP + '/worker/register', {
-        fetch('http://' + REACT_APP_IP + '/worker/login', {
+        fetch('https://' + REACT_APP_IP + '/worker/login', {
             headers: {
                 'Content-Type': 'application/json'
             },
