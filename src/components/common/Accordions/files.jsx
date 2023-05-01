@@ -51,7 +51,7 @@ function Accordions({ setData, data, student, setStudent }) {
         fd.append("fileDate", fileDate)
         fd.append("fileName", e.target[0].files[0].name)
 
-        fetch('http://' + REACT_APP_IP+ '/student/generalFiles', {
+        fetch('https://' + REACT_APP_IP+ '/student/generalFiles', {
             headers: { studentId: student?._id, place: service, dir },
             method: 'POST',
             body: fd

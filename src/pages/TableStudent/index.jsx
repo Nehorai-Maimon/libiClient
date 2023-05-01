@@ -18,14 +18,14 @@ function Table() {
     const token = JSON.parse(localStorage.getItem('token'))
     // לשאול את מיכל איך להציג רק חניכים עם פג תוקף
     useEffect(() => {
-        fetch('http://' + REACT_APP_IP + '/student', {
+        fetch('https://' + REACT_APP_IP + '/student', {
             headers: { "token": `bearer ${token}` }
         })
             .then((response) => response.json())
             .then(data => setStudents(data))
             .catch(error => console.error('Error:', error));
 
-        fetch('http://' + REACT_APP_IP + '/student/studentWithExpiration', {
+        fetch('https://' + REACT_APP_IP + '/student/studentWithExpiration', {
             headers: { "token": `bearer ${token}` }
         })
             .then((response) => response.json())

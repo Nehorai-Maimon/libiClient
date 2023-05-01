@@ -16,7 +16,7 @@ function StudentView() {
 
     useEffect(() => {
         if (wantToDelete) {
-            fetch('http://' + REACT_APP_IP+ '/student/dayCare/deleteFile', {
+            fetch('https://' + REACT_APP_IP+ '/student/dayCare/deleteFile', {
                 headers: { "content-type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ key: deleteOp, studentId: student?._id })
@@ -62,7 +62,7 @@ function StudentView() {
     // console.log(currentYear);
 
     function downloadFile(filePath) {
-        fetch('http://' + REACT_APP_IP+ '/student/files', {
+        fetch('https://' + REACT_APP_IP+ '/student/files', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ filePath })

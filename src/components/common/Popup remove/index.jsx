@@ -13,7 +13,7 @@ function PopupRemove({ student, service, data, index, setArr, arrServices }) {
         newList.splice(index, 1);
         setArr(newList);
 
-        fetch('http://' + REACT_APP_IP + '/student/updateArrService', {
+        fetch('https://' + REACT_APP_IP + '/student/updateArrService', {
             headers: {
                 studentId: student?._id,
                 'Content-Type': 'application/json'

@@ -24,7 +24,7 @@ function CreateStudent() {
                 for (let r in fileArray[i].files) {
                     name = fileArray[i].files[r].name
                     fd.append("files", fileArray[i].files[r].file)
-                    fetch('http://' + REACT_APP_IP+ '/student/generalFiles', {
+                    fetch('https://' + REACT_APP_IP+ '/student/generalFiles', {
                         headers: { studentId: student?._id, place, dir, name },
                         method: 'POST',
                         body: fd
@@ -39,7 +39,7 @@ function CreateStudent() {
                 for (let r in fileArray[i].filesOp) {
                     name = fileArray[i].filesOp[r].name
                     fd.append("files", fileArray[i].filesOp[r].file)
-                    fetch('http://' + REACT_APP_IP+ '/student/generalFiles', {
+                    fetch('https://' + REACT_APP_IP+ '/student/generalFiles', {
                         headers: { studentId: student?._id, place, dir, name },
                         method: 'POST',
                         body: fd
@@ -73,7 +73,7 @@ function CreateStudent() {
             }
             console.log("fileArray", fileArray);
             console.log("data", data)
-            fetch('http://' + REACT_APP_IP+ '/student/', {
+            fetch('https://' + REACT_APP_IP+ '/student/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

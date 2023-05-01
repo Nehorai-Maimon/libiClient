@@ -16,7 +16,7 @@ function TableStudentIn({ studentsIn }) {
     const token = JSON.parse(localStorage.getItem('token'))
 
     useEffect(() => {
-        fetch('http://' + REACT_APP_IP + '/student', {
+        fetch('https://' + REACT_APP_IP + '/student', {
             headers: {
                 "Content-Type": "application/json",
                 "token": `bearer ${token}`

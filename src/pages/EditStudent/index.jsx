@@ -51,7 +51,7 @@ function EditStudent() {
     // }
 
     const submit = () => {
-        fetch('http://' + REACT_APP_IP + '/student/updateStudent', {
+        fetch('https://' + REACT_APP_IP + '/student/updateStudent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

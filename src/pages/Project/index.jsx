@@ -16,7 +16,7 @@ function Projects() {
     const [filterProject, setFilterProject] = useState()
 
     useEffect(() => {
-        fetch('http://' + REACT_APP_IP + '/event')
+        fetch('https://' + REACT_APP_IP + '/event')
             .then((response) => response.json())
             .then(data => setProjectsList(data))
             .catch(error => console.error('Error:', error));

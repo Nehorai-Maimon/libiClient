@@ -29,7 +29,7 @@ function PopupProject({ edit, setProjectsList }) {
         setShow(false)
         console.log(project);
 
-        fetch('http://' + REACT_APP_IP + '/event/', {
+        fetch('https://' + REACT_APP_IP + '/event/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(project),

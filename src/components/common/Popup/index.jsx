@@ -19,7 +19,7 @@ function Popup({ student, setArr, arrServices }) {
         const prev = [...arrServices]
         prev.push(newSer)
         setArr([...arrServices, newSer])
-        fetch('http://' + REACT_APP_IP+ '/student/updateArrService', {
+        fetch('https://' + REACT_APP_IP+ '/student/updateArrService', {
             headers: {
                 studentId: student?._id,
                 'Content-Type': 'application/json'

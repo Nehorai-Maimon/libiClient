@@ -42,7 +42,7 @@ function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, serv
     }, [studentFiles])
 
     function downloadFile(filePath) {
-        fetch('http://' + REACT_APP_IP+ '/student/files', {
+        fetch('https://' + REACT_APP_IP+ '/student/files', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ filePath })

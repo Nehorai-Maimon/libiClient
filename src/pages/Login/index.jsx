@@ -12,8 +12,8 @@ function Login() {
     const login = async (e) => {
         e.preventDefault();
         // על מנת להוסיף עובד חדש צריך לעבור לניתוב הזאת
-        // fetch('http://' + REACT_APP_IP + '/worker/register', {
-        fetch('http://' + REACT_APP_IP + '/worker/login', {
+        // fetch('https://' + REACT_APP_IP + '/worker/register', {
+        fetch('https://' + REACT_APP_IP + '/worker/login', {
             headers: {
                 'Content-Type': 'application/json'
             },

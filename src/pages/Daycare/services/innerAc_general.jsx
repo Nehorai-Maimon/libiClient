@@ -43,7 +43,7 @@ function InnerAcc_general({ v, student, setStudent, saveForm, service }) {
     }
 
     function addTeam(team) {
-        fetch('http://' + REACT_APP_IP + '/student/addTeamDaycare', {
+        fetch('https://' + REACT_APP_IP + '/student/addTeamDaycare', {
             headers: {
                 studentId: student?._id,
                 'Content-Type': 'application/json'
