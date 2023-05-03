@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import logo from '../../images/logo-1.png'
 import React, { useState } from 'react'
 import styles from "./style.module.css"
-const REACT_APP_IP = process.env.REACT_APP_IP
 
 function Login() {
     const [userLogin, setUserLogin] = useState("")
@@ -12,8 +11,8 @@ function Login() {
     const login = async (e) => {
         e.preventDefault();
         // על מנת להוסיף עובד חדש צריך לעבור לניתוב הזאת
-        // fetch('https://' + REACT_APP_IP + '/worker/register', {
-        fetch('https://' + REACT_APP_IP + '/worker/login', {
+        // fetch('https://' +'3.78.25.175' + '/worker/register', {
+        fetch('https://' +'3.78.25.175' + '/worker/login', {
             headers: {
                 'Content-Type': 'application/json'
             },

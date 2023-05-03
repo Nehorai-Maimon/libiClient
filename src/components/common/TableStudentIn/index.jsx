@@ -10,13 +10,12 @@ import excel_icon from '../../../images/Excel.png'
 import ProjectContext from "../../../context/ProjectContext";
 
 function TableStudentIn({ studentsIn }) {
-    const REACT_APP_IP = process.env.REACT_APP_IP
     const [students, setStudents] = useState()
     const { project } = useContext(ProjectContext)
     const token = JSON.parse(localStorage.getItem('token'))
 
     useEffect(() => {
-        fetch('https://' + REACT_APP_IP + '/student', {
+        fetch('https://' + '3.78.25.175' + '/student', {
             headers: {
                 "Content-Type": "application/json",
                 "token": `bearer ${token}`

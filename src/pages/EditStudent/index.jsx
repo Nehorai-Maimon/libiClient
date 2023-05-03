@@ -7,7 +7,6 @@ import Accordions from '../../components/common/Accordions/files';
 import React, { useState, useEffect, useContext } from 'react'
 import StudentContext from '../../context/StudentContext';
 import styles from "./style.module.css"
-const REACT_APP_IP = process.env.REACT_APP_IP
 
 function EditStudent() {
     const { student, setStudent } = useContext(StudentContext)
@@ -51,7 +50,7 @@ function EditStudent() {
     // }
 
     const submit = () => {
-        fetch('https://' + REACT_APP_IP + '/student/updateStudent', {
+        fetch('https://' +'3.78.25.175' + '/student/updateStudent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

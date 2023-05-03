@@ -6,7 +6,6 @@ import SwitchBtn from '../../components/common/SwitchBtn/SwitchBtn';
 import Accordions from '../../components/common/Accordions/files';
 import React, { useState, useEffect } from 'react'
 import styles from "./style.module.css"
-const REACT_APP_IP = process.env.REACT_APP_IP
 
 function CreateStudent() {
 
@@ -24,7 +23,7 @@ function CreateStudent() {
                 for (let r in fileArray[i].files) {
                     name = fileArray[i].files[r].name
                     fd.append("files", fileArray[i].files[r].file)
-                    fetch('https://' + REACT_APP_IP+ '/student/generalFiles', {
+                    fetch('https://' + '3.78.25.175' + '/student/generalFiles', {
                         headers: { studentId: student?._id, place, dir, name },
                         method: 'POST',
                         body: fd
@@ -39,7 +38,7 @@ function CreateStudent() {
                 for (let r in fileArray[i].filesOp) {
                     name = fileArray[i].filesOp[r].name
                     fd.append("files", fileArray[i].filesOp[r].file)
-                    fetch('https://' + REACT_APP_IP+ '/student/generalFiles', {
+                    fetch('https://' + '3.78.25.175' + '/student/generalFiles', {
                         headers: { studentId: student?._id, place, dir, name },
                         method: 'POST',
                         body: fd
@@ -73,7 +72,7 @@ function CreateStudent() {
             }
             console.log("fileArray", fileArray);
             console.log("data", data)
-            fetch('https://' + REACT_APP_IP+ '/student/', {
+            fetch('https://' + '3.78.25.175' + '/student/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

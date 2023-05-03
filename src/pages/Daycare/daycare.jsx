@@ -10,7 +10,6 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import './style.css'
 import { Button, Modal } from 'react-bootstrap';
-const REACT_APP_IP = process.env.REACT_APP_IP
 
 function Daycare() {
     const { student, setStudent } = useContext(StudentContext)
@@ -38,7 +37,7 @@ function Daycare() {
         // console.log(form);
         // console.log(place);
 
-        fetch('https://' + REACT_APP_IP + '/student/updateDaycare', {
+        fetch('https://' +'3.78.25.175' + '/student/updateDaycare', {
             headers: {
                 studentId: student?._id, place,
                 'Content-Type': 'application/json'
@@ -67,7 +66,7 @@ function Daycare() {
         fd.append("inputName", name)
         fd.append("fileName", e.target[0].files[0].name)
 
-        fetch('https://' + REACT_APP_IP + '/student/generalFiles', {
+        fetch('https://' +'3.78.25.175' + '/student/generalFiles', {
             headers: { studentId: student?._id, place, dir, currentYear, daycare: true },
             method: 'POST',
             body: fd
@@ -80,7 +79,7 @@ function Daycare() {
 
     useEffect(() => {
         if (wantToDelete) {
-            fetch('https://' + REACT_APP_IP + '/student/dayCare/deleteFile', {
+            fetch('https://' +'3.78.25.175' + '/student/dayCare/deleteFile', {
                 headers: { "content-type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ key: deleteOp.fileKey, studentId: student?._id, year: deleteOp.year })
@@ -97,7 +96,7 @@ function Daycare() {
     }
 
     const addYears = () => {
-        fetch('https://' + REACT_APP_IP + '/student/addYearDaycare', {
+        fetch('https://' +'3.78.25.175' + '/student/addYearDaycare', {
             headers: {
                 studentId: student?._id,
                 'Content-Type': 'application/json'

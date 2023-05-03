@@ -6,7 +6,6 @@ import PopupRemove from '../Popup remove';
 import { Modal } from 'react-bootstrap';
 import Popup from '../Popup';
 import './style.css'
-const REACT_APP_IP = process.env.REACT_APP_IP
 
 function Accordions({ setData, data, student, setStudent }) {
     const navigate = useNavigate()
@@ -51,7 +50,7 @@ function Accordions({ setData, data, student, setStudent }) {
         fd.append("fileDate", fileDate)
         fd.append("fileName", e.target[0].files[0].name)
 
-        fetch('https://' + REACT_APP_IP+ '/student/generalFiles', {
+        fetch('https://' + '3.78.25.175' + '/student/generalFiles', {
             headers: { studentId: student?._id, place: service, dir },
             method: 'POST',
             body: fd

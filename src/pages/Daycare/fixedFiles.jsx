@@ -4,7 +4,6 @@ import File from '../../components/common/File'
 import remove from '../../images/delete.png'
 
 function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, service }) {
-    const REACT_APP_IP = process.env.REACT_APP_IP
 
     const [listFile, setListFile] = useState()
     const [fileName, setFileName] = useState("")
@@ -42,7 +41,7 @@ function FixedFiles({ studentFiles, deleteFile, saveFile, arrfile, student, serv
     }, [studentFiles])
 
     function downloadFile(filePath) {
-        fetch('https://' + REACT_APP_IP+ '/student/files', {
+        fetch('https://' + '3.78.25.175' + '/student/files', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ filePath })

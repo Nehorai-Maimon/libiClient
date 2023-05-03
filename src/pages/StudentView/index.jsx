@@ -5,7 +5,6 @@ import { Button, Modal } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { projects } from '../../fakeData'
 import styles from "./style.module.css"
-const REACT_APP_IP = process.env.REACT_APP_IP
 
 function StudentView() {
     const location = useLocation()
@@ -16,7 +15,7 @@ function StudentView() {
 
     useEffect(() => {
         if (wantToDelete) {
-            fetch('https://' + REACT_APP_IP+ '/student/dayCare/deleteFile', {
+            fetch('https://' + '3.78.25.175' + '/student/dayCare/deleteFile', {
                 headers: { "content-type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ key: deleteOp, studentId: student?._id })
@@ -62,7 +61,7 @@ function StudentView() {
     // console.log(currentYear);
 
     function downloadFile(filePath) {
-        fetch('https://' + REACT_APP_IP+ '/student/files', {
+        fetch('https://' + '3.78.25.175' + '/student/files', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ filePath })

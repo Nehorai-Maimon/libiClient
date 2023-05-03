@@ -7,7 +7,6 @@ import Select from '../Select';
 import './style.css'
 
 function PopupProject({ edit, setProjectsList }) {
-    const REACT_APP_IP = process.env.REACT_APP_IP
 
     let proj = []
     if (edit) {
@@ -29,7 +28,7 @@ function PopupProject({ edit, setProjectsList }) {
         setShow(false)
         console.log(project);
 
-        fetch('https://' + REACT_APP_IP + '/event/', {
+        fetch('https://' + '3.78.25.175' + '/event/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(project),
