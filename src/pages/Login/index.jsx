@@ -12,7 +12,7 @@ function Login() {
         e.preventDefault();
         // על מנת להוסיף עובד חדש צריך לעבור לניתוב הזאת
         // fetch('https://' +'3.78.25.175' + '/worker/register', {
-        fetch('https://' +'3.78.25.175' + '/worker/login', {
+        fetch('http://' +'3.78.25.175' + '/worker/login', {
             headers: {
                 'Content-Type': 'application/json'
             },
